@@ -18,16 +18,11 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'lastname',
-        'username',
-        'website',
-        'avatar',
-        'bio',
         'phone',
-        'gender',
+        'email',
+        'fullname',
+        'username',
+        'password',
     ];
 
     /**
@@ -49,30 +44,4 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-
-    public function posts(){
-        return $this->hasMany(Post::class);
-    }
-    public function post_saved(){
-        return $this->hasMany(Post_saved::class);
-    }
-    public function like(){
-        return $this->hasMany(Like::class);
-    }
-    public function comment(){
-        return $this->hasMany(Comment::class);
-    }
-    public function follower(){
-        return $this->hasMany(Follower::class, 'follower_id');
-    }
-    public function following(){
-        return $this->hasMany(Follower::class, 'user_id');
-    }
-    public function block(){
-        return $this->hasMany(Block::class, 'blocked_id');
-    }
-    public function blocked(){
-        return $this->hasMany(Block::class, 'user_id');
-    }
-
 }
