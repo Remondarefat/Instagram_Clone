@@ -13,7 +13,9 @@
 
         <div class="container">
             <div class="row">
-                <div class="col-md-6 offset-md-3">
+                <div class="col-md-3">
+                </div>
+                <div class="col-md-6">
                     <div class="d-flex align-items-center">
                         <img class="rounded-circle im-pro me-md-2" src="{{'pro.jpg'}}" alt="">
                         <h4>user name</h4>
