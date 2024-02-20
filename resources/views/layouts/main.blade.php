@@ -12,8 +12,11 @@
 
 <body>
     @include('includes.navbar')
-
     @yield('content')
+
+    <script src="{{ asset('js/jQuery-Dev.js') }}"></script>
+    <script src="{{ asset('js/jQuery-p.js') }}"></script>
+    <script src="{{ asset('js/home.js') }}"></script>
 </body>
 
 </html>
