@@ -86,3 +86,72 @@
     height: 35px;
 }
 
+/* create post */
+.modal-title {
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.modal-body {
+    text-align: center;
+}
+.modal-height {
+    min-height: 500px;
+
+}
+.modal-body p {
+    margin-bottom: 20px;
+}
+
+.btn-primary {
+ 
+    cursor: pointer;
+}
+.profile-picture {
+    width: 50px;
+    border-radius: 50%;
+
+}
+#cropButton , #back {
+    display: none;
+    cursor: pointer;
+    text-decoration: none;
+}
+#shareButton , #cropButtonUpload {
+    cursor: pointer;
+    text-decoration: none;
+}
+#backPostModal {
+    cursor: pointer;
+}
+.post-caption , .hashtag {
+    border-color: transparent;
+}
+.user-profile-container {
+    position: relative;
+    left: 467px;
+    margin-top: 50px;
+    width: max-content;
+
+
+}
+.user-profile-pic {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    margin-right: 100px;
+}
+.user-profile-btn {
+    background-color: #EFEFEF;
+    color: black;
+    padding: 2px 5px;
+    width: 150px;
+}
+.user-profile-btn:hover {
+    background-color: #b2adad;
+    color: black;
+}
+.followedby {
+    font-size: 12px;
+}
+/* end of create post style */

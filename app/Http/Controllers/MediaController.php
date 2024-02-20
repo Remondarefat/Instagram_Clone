@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\Media;
+use App\Models\Post;
+use Illuminate\Support\Facades\Auth;
 class MediaController extends Controller
 {
     /**
@@ -27,7 +29,11 @@ class MediaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request -> validate([
+            'media' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+           
+        ]);
+       
     }
 
     /**

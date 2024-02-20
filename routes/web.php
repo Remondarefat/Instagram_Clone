@@ -3,7 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\MediaController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -35,6 +35,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/media', [MediaController::class, 'store'])->name('media');
+Route::get('/user/{id}', [UserController::class, 'show'])->name('user');
 require __DIR__ . '/auth.php';
 
 Route::get('/koko', [UserController::class, 'index']);

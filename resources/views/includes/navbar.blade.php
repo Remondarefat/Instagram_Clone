@@ -111,7 +111,7 @@
                 <line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                     stroke-width="2" x1="12.003" x2="12.003" y1="6.545" y2="17.455"></line>
             </svg>
-            <a class="text-decoration-none text-dark" href="">Create</a>
+            <a class="text-decoration-none text-dark" href=""  data-toggle="modal" data-target="#exampleModalCenter">Create</a>
         </div>
         <!-- Profile Tab -->
         <div class="d-flex gap-3 align-items-center px-2 py-3 mb-3 nav-tab nav-tab-profile">
@@ -131,3 +131,4 @@
         </div>
     </div>
 </div>
+@include('includes.createpost')
