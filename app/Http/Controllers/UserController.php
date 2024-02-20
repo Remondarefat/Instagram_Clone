@@ -11,7 +11,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('koko');
+        return view('posts.home');
     }
 
     /**

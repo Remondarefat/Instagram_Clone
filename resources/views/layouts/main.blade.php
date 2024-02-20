@@ -7,10 +7,15 @@
     <title>Instagram @yield('title')</title>
     {{-- <link rel="stylesheet" href="style.css"> --}}
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <!-- Font Awesome CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
 </head>
 <body>
     {{-- @include('navbar') --}}
 
     @yield('content')
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 </body>
 </html>
