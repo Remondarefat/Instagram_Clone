@@ -13,6 +13,7 @@
     <div class="d-flex align-items-start ">
         <div class="si-bar bg-light border p-2 border-right-3 text-dark">
             <h1>sidebar_with_mina</h1>
+            
         </div>
         <div>
             <div class="flex-row d-flex w-100 mt-5">
