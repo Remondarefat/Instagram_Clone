@@ -1,3 +1,9 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 /* start side bar */
 
 .bt-insta{
@@ -18,13 +24,17 @@
 }
 .offcanvas {
     width: 245px !important;
+    height: 100vh;
+    background-color: #ffffff;
+    position: relative;
 }
 .si-bar{
     width: 400px;
     height: 100vh;
 }
 
-.nav-tab:hover{
+.nav-tab:hover,
+.settings-list:hover{
     background-color: #f5f5f5;
     border-radius: 8px;
     transition: 0.3s;
@@ -36,9 +46,80 @@
 .nav-tab-reels:hover .reels-svg,
 .nav-tab-messenger:hover .messenger-svg,
 .nav-tab-notifications:hover .notifications-svg,
-.nav-tab-create:hover .create-svg{
+.nav-tab-create:hover .create-svg,
+.nav-tab-profile:hover .profile-img{
     scale: 1.2;
     transition: 0.3s;
+}
+
+.nav-tab-profile .profile-img{
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+    background-color: #f5f5f5;
+}
+.searchTabContent{
+    position: absolute;
+    top: 0px;
+    left: 245px;
+    width: 400px;
+    height: 100vh;
+    padding: 20px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: rgba(0, 0, 0, 0.35) 5px 0px 15px;
+
+}
+.searchTabContent input{
+    margin: 30px 0;
+    padding: 10px;
+    border-radius: 5px;
+    width: 100%;
+    border: none;
+    outline: none;
+    background-color: #efefef;
+}
+.searchTabContent .headline{
+    font-size: 20px;
+    position: relative;
+}
+.searchTabContent .headline::before{
+    content: "";
+    width: 100%;
+    height: 2px;
+    background-color: #eee;
+    position: absolute;
+    top: -10px;
+}
+.settings-content{
+    position: absolute;
+    top: 380px;
+    padding: 20px;
+    left: 50px;
+    background-color:#ffffff;
+    width: 250px;
+    height: 300px;
+    border-radius: 15px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    z-index: 5;
+    overflow: visible;
+
+
+}
+.settings-list{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 10px 5px;
+}
+.settings-list-logout{
+    margin-top: 120px;
+    border-top: 3px solid #f5f5f5;
 }
 /* end side bar */
 
