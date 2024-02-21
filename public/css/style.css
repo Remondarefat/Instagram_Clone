@@ -13,7 +13,8 @@
     position: relative;
 }
 
-.nav-tab:hover{
+.nav-tab:hover,
+.settings-list:hover{
     background-color: #f5f5f5;
     border-radius: 8px;
     transition: 0.3s;
@@ -73,6 +74,32 @@
     background-color: #eee;
     position: absolute;
     top: -10px;
+}
+.settings-content{
+    position: absolute;
+    top: 380px;
+    padding: 20px;
+    left: 50px;
+    background-color:#ffffff;
+    width: 250px;
+    height: 300px;
+    border-radius: 15px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    z-index: 5;
+    overflow: visible;
+
+
+}
+.settings-list{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 10px 5px;
+}
+.settings-list-logout{
+    margin-top: 120px;
+    border-top: 3px solid #f5f5f5;
 }
 /* end side bar */
 
