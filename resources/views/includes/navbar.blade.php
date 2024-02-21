@@ -1,4 +1,5 @@
 {{-- sidebar design --}}
+<div class="sidebar">
 <div class="offcanvas offcanvas-start show" tabindex="-4" id="offcanvas" aria-labelledby="offcanvasLabel">
     <div class="offcanvas-body d-flex flex-column p-2">
         <!-- Navigation tabs -->
@@ -38,7 +39,7 @@
             <a class="text-decoration-none text-dark" href="#">Search</a>
         </div>
         <!-- Explore Tab -->
-        <div class="d-flex gap-3 align-items-center px-2 py-3 mb-3 nav-tab nav-tab-explore">
+        {{-- <div class="d-flex gap-3 align-items-center px-2 py-3 mb-3 nav-tab nav-tab-explore">
             <svg aria-label="Explore" fill="currentColor" class="explore-svg" height="24" role="img"
                 viewBox="0 0 24 24" width="24">
                 <title>Explore</title>
@@ -50,9 +51,9 @@
                     stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle>
             </svg>
             <a class="text-decoration-none text-dark" href="">Explore</a>
-        </div>
+        </div> --}}
         <!-- Reels Tab -->
-        <div class="d-flex gap-3 align-items-center px-2 py-3 mb-3 nav-tab nav-tab-reels">
+        {{-- <div class="d-flex gap-3 align-items-center px-2 py-3 mb-3 nav-tab nav-tab-reels">
             <svg aria-label="Reels" fill="currentColor" class="reels-svg" height="24" role="img"
                 viewBox="0 0 24 24" width="24">
                 <title>Reels</title>
@@ -71,9 +72,9 @@
                     fill-rule="evenodd"></path>
             </svg>
             <a class="text-decoration-none text-dark" href="">Reels</a>
-        </div>
+        </div> --}}
         <!-- Messenger Tab -->
-        <div class="d-flex gap-3 align-items-center px-2 py-3 mb-3 nav-tab nav-tab-messenger">
+        {{-- <div class="d-flex gap-3 align-items-center px-2 py-3 mb-3 nav-tab nav-tab-messenger">
             <svg aria-label="Messenger" fill="currentColor" class="messenger-svg" height="24" role="img"
                 viewBox="0 0 24 24" width="24">
                 <title>Messenger</title>
@@ -85,9 +86,9 @@
                     fill-rule="evenodd"></path>
             </svg>
             <a class="text-decoration-none text-dark" href="">Messenger</a>
-        </div>
+        </div> --}}
         <!-- Notifications Tab -->
-        <div class="d-flex gap-3 align-items-center px-2 py-3 mb-3 nav-tab nav-tab-notifications">
+        {{-- <div class="d-flex gap-3 align-items-center px-2 py-3 mb-3 nav-tab nav-tab-notifications">
             <svg aria-label="Notifications" fill="currentColor" class="notifications-svg" height="24"
                 role="img" viewBox="0 0 24 24" width="24">
                 <title>Notifications</title>
@@ -96,7 +97,7 @@
                 </path>
             </svg>
             <a class="text-decoration-none text-dark" href="">Notifications</a>
-        </div>
+        </div> --}}
         <!-- Create Tab -->
         <div class="d-flex gap-3 align-items-center px-2 py-3 mb-3 nav-tab nav-tab-create">
             <svg aria-label="New post" fill="currentColor" class="create-svg" height="24" role="img"
@@ -175,4 +176,5 @@
             </div>
         </div>
     </div>
+</div>
 </div>
