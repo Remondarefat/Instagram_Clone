@@ -1,7 +1,27 @@
 /* start side bar */
 
+.bt-insta{
+    background-color: #EFEFEF;
+    font-weight: bold;
+}
+.bt-insta:hover{
+    background-color: #DBDBDB;
+    font-weight: bold;
+}
+.web{
+
+    text-decoration: none;
+}
+.web:hover{
+    text-decoration: underline;
+
+}
 .offcanvas {
     width: 245px !important;
+}
+.si-bar{
+    width: 400px;
+    height: 100vh;
 }
 
 .nav-tab:hover{
