@@ -15,7 +15,17 @@ $(document).ready(function () {
     });
 });
 
-// modal
+// create post button 
+$(document).ready(function () {
+    const createIcon = $(".nav-tab.nav-tab-create");
+    const additionalTabContent = $(".createpost"); 
+    const uploadModal = $("#exampleModalCenter");
+
+    createIcon.on("click", function () {
+        additionalTabContent.toggleClass("d-none");
+        uploadModal.modal("show"); // Open the upload modal when "Create Post" is clicked
+    });
+});
 $('#exampleModal').on('show.bs.modal', function () {
     $('body').removeClass('modal-open');
 });
