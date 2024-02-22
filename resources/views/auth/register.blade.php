@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <div class="flex justify-center items-center h-screen bg-gray-50">
+    <div class="flex justify-center items-center bg-gray-50 border-solid border-2" >
         <div class="max-w-md w-full">
             <div class="text-center mb-6">
                 <h1 class="text-4xl font-bold text-gray-900">Instagram</h1>

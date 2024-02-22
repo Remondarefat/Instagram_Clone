@@ -1,5 +1,10 @@
 /* start side bar */
-
+*{
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+    
+}
 .offcanvas {
     width: 245px !important;
 }
@@ -23,7 +28,7 @@
 /* end side bar */
 
 
-.im-pro{
+.im-pro ,.post-img{
     width: 50px;
     height: 50px;
 }
@@ -32,3 +37,50 @@
     height: 35px;
 }
 
+/* TODO: Login Form */
+.or-container {
+    text-align: center;
+    position: relative;
+}
+
+.or-word:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: -5px;
+    width: 150px;
+    height: 1px;
+    background-color: lightslategray;
+}
+
+.or-word:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: -5px;
+    width: 150px;
+    height: 1px;
+    background-color: lightslategray;
+}
+/* TODO: Login Form */
+
+/* ? Product Desc Sec */
+.icon{
+    width: 25px;
+}
+.followBtn{
+    text-decoration: none;
+    color: black;
+}
+.followBtn:hover{
+    color:#B0B0B0;
+}
+.comments_sec{
+    height: 55%;
+    overflow-y:auto;
+}
+.likes-img{
+    width: 30px;
+    height: 30px;
+}
+/* ? */

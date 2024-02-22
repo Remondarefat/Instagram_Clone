@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +36,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('auth/{provider}/redirect',[SocialLoginController::class,'redirect'])
+->name('auth.socilaite.redirect');
+Route::get('auth/{provider}/callback',[SocialLoginController::class,'callback'])
+->name('auth.socilaite.callback');
+
+
 require __DIR__ . '/auth.php';
 
 Route::get('/koko', [UserController::class, 'index']);
+
+Route::get('/postDesc', [PostController::class, 'index']);
