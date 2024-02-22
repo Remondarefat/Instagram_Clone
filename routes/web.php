@@ -30,6 +30,16 @@ Route::get('/home', function () {
     return view('home');
 })->name('home');
 
+// post routes
+Route::get('/postprofile', function () {
+    return view('posts.profile');
+});
+
+Route::get('/posthome', function () {
+    return view('posts.home');
+});
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
