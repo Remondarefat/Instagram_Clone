@@ -22,12 +22,13 @@
     text-decoration: underline;
 
 }
-.offcanvas {
-
+.sidebar {
     width: 245px !important;
     height: 100vh;
     background-color: #ffffff;
     position: relative;
+    border-right: 2px solid #efefef;
+    z-index: 5;
 }
 .si-bar{
     width: 400px;
@@ -48,7 +49,8 @@
 .nav-tab-messenger:hover .messenger-svg,
 .nav-tab-notifications:hover .notifications-svg,
 .nav-tab-create:hover .create-svg,
-.nav-tab-profile:hover .profile-img{
+.nav-tab-profile:hover .profile-img,
+.nav-tab-settings:hover .settings-svg{
     scale: 1.2;
     transition: 0.3s;
 }
@@ -73,6 +75,8 @@
     display: flex;
     flex-direction: column;
     box-shadow: rgba(0, 0, 0, 0.35) 5px 0px 15px;
+    background-color: #ffffff;
+    z-index: 8;
 
 }
 .searchTabContent input{
@@ -154,7 +158,7 @@
 }
 
 .btn-primary {
- 
+
     cursor: pointer;
 }
 .profile-picture {
