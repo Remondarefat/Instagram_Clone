@@ -14,3 +14,8 @@ $(document).ready(function () {
         $("#settings-content").slideToggle(500); // Toggle the visibility of the settings content with sliding animation
     });
 });
+
+// modal
+$('#exampleModal').on('show.bs.modal', function () {
+    $('body').removeClass('modal-open');
+});

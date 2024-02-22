@@ -187,8 +187,6 @@
     border-color: transparent;
 }
 .user-profile-container {
-    position: relative;
-    left: 467px;
     margin-top: 50px;
     width: max-content;
 
@@ -214,3 +212,6 @@
     font-size: 12px;
 }
 /* end of create post style */
+.modal-backdrop {
+    display: none !important;
+}
