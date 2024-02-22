@@ -1,18 +1,17 @@
-// Image upload in the modal 
-//the  function reads the contents of the selected image file, 
-// converts it to a data URL, creates an <img> tag with the data URL as its source, 
-// and then inserts the <img> tag into the modal's html
 function displayImage(event) {
     let reader = new FileReader();
     reader.onload = function () {
-       let output = '<img id="croppedImage" src="' + reader.result + '" class="img-fluid">';
-        document.getElementById('uploadedImageContainer').innerHTML = output;
+        let output = '<img id="croppedImage" src="' + reader.result + '" class="img-fluid">';
+        document.getElementById('uploadedImageContainer').innerHTML += output;
         document.getElementById('modalBodyText').style.display = 'none';
         document.getElementById('icon').style.display = 'none';
         document.getElementById('upload-btn').style.display = 'none';
         document.getElementById('cropButtonUpload').style.display = 'block'; 
         document.getElementById('back').style.display = 'block';
         document.getElementById('exampleModalLongTitle').innerText = 'Crop Image'; 
+
+        // Store the image data URL in a hidden input field
+        document.getElementById('imageDataUrl').value = reader.result;
 
         // Initialize Cropper
         initCropper(); 
@@ -27,8 +26,7 @@ function initCropper() {
     });
 
     document.getElementById('cropButtonUpload').addEventListener('click', function () {
-        var canvas = cropper.getCroppedCanvas();
-        var croppedImageDataURL = canvas.toDataURL('image/png');
+        var croppedImageDataURL = cropper.getCroppedCanvas().toDataURL();
         document.getElementById('postModalTitle').innerText = 'Create New Post';
         document.getElementById('croppedImagePrev').src = croppedImageDataURL;
         $('#exampleModalCenter').modal('hide');
@@ -42,7 +40,6 @@ function initCropper() {
         document.getElementById('file-upload').value = '';
     });
 }
-
 
 // Drag and Drop in the modal body
 let modalBody = document.getElementById('modalBody');
@@ -76,7 +73,7 @@ function displayImageFromDrop(file) {
     let reader = new FileReader();
     reader.onload = function () {
         let output = '<img id="croppedImage" src="' + reader.result + '" class="img-fluid" alt="Uploaded Image">';
-        document.getElementById('uploadedImageContainer').innerHTML = output;
+        document.getElementById('uploadedImageContainer').innerHTML += output;
         document.getElementById('modalBodyText').style.display = 'none';
         document.getElementById('icon').style.display = 'none';
         document.getElementById('upload-btn').style.display = 'none';

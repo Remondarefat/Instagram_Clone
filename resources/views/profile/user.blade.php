@@ -1,7 +1,5 @@
 @extends('layouts.main')
 
-@section('content')
-
 <div class="user-profile-container d-flex">
     <div class="image align-self-center">
         <img src="https://i.pinimg.com/564x/cd/04/ff/cd04ff6d7231af8b76b0792087c6d223.jpg" class="user-profile-pic " alt="user image">
@@ -30,4 +28,3 @@
     </div>
     </div>
 </div>
-@endsection

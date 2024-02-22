@@ -117,9 +117,14 @@
     cursor: pointer;
     text-decoration: none;
 }
-#shareButton , #cropButtonUpload {
+ #cropButtonUpload {
     cursor: pointer;
     text-decoration: none;
+}
+#shareButton {
+    background-color: transparent;
+    border: none;
+    color: blue;
 }
 #backPostModal {
     cursor: pointer;
