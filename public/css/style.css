@@ -23,6 +23,7 @@
 
 }
 .offcanvas {
+
     width: 245px !important;
     height: 100vh;
     background-color: #ffffff;
@@ -131,4 +132,8 @@
 .im-com{
     width: 35px;
     height: 35px;
+}
+.sidebar{
+    /* width: 25%; */
+    position: fixed;
 }

@@ -14,9 +14,17 @@
 </head>
 
 <body>
-    {{-- @include('includes.navbar') --}}
-        @yield('content')
-    {{-- @yield('content') --}}
+    <div class=" container-fluid">
+        <div class="row">
+            <div class=" m-0 p-0 col-md-2">
+                @include('includes.navbar')
+            </div>
+            <div class=" col-md-8 offset-1 ">
+                @yield('content')
+            </div>
+        </div>
+    </div>
+    <script src="{{asset('js/bootstrap.min.js')}}"></script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
@@ -24,6 +32,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="{{ asset('js/home.js') }}"></script>
+
 </body>
 
 </html>
