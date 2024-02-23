@@ -55,8 +55,8 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="user d-flex mb-2">
-                                <img class="profile-picture" src="https://media.istockphoto.com/id/1045035708/vector/duckling-simple-vector-icon.jpg?s=612x612&w=0&k=20&c=DPyR6_meVD32JBRKEZiwrAkn0kFY5PT4qxiQblfqkjs=" alt="Profile Picture">
-                                    <p id="username" class="align-self-center fw-bold">Rehab Sabry</p>
+                                <img class="profile-picture" src="{{ auth()->user()->avatar }}" alt="Profile Picture">
+                                    <p id="username" class="align-self-center fw-bold">{{ auth()->user()->username }}</p>
                                 </div>
                                 <div class="form-group">
                                     <textarea class="form-control post-caption" name="caption" id="caption" rows="5" placeholder="Write a caption..."></textarea>
