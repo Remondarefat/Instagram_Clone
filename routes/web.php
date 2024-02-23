@@ -61,6 +61,11 @@ Route::get('/user/{id}', [UserController::class, 'show'])->name('user');
 
 Route::get('/koko', [UserController::class, 'index']);
 
+
+
+// !--------PostDesc Routes-------------------
 Route::get('/postDesc', [PostController::class, 'index']);
+Route::get('postDesc/{post}', [PostController::class, 'show'])->name('postDesc.show')->where('post', '[0-9]+');
+
 });
 require __DIR__ . '/auth.php';

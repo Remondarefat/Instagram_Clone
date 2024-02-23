@@ -2,16 +2,16 @@
 @section('content')
 <div class="container">
     <div class="row  ">
-        <div class="col-md-9 offset-md-2 mt-5 border">
+        <div class="col mt-3 border">
             <div class="row ">
                 <div class="col-md-6">
-                    <img src="post_img.jpg" class="w-100">
+                    <img src="{{$medias[0]->media_url}}" class="w-100">
                 </div>
-                <div class="col-md-6 pt-4 pb-3 ">
+                <div class="col-md-6 pt-2 pb-3 ">
                     <div class="d-flex justify-content-between align-content-center" >
                         <div>
-                            <img src="post_img.jpg" class="post-img rounded-circle">
-                            <span class="fw-bolder ps-1">remonda_refat</span>
+                            <img src="{{$medias[0]->media_url}}" class="post-img rounded-circle">
+                            <span class="fw-bolder ps-1">{{$user->username}}</span>
                             <span></sapn>
                             <a href="#" class="fw-bolder followBtn ">Following</a>
                         </div>
@@ -111,16 +111,11 @@
                             <img src="user.svg" class=" icon">
                                 <div class="ps-3 w-100">
                                         <div class="d-flex justify-content-between  ">
-                                            <p>Add a comment...</p>
+                                            <input placeholder="Add a comment..." class="border-0">
                                             <img src="Like.svg" class="icon ">
                                         </div>
                                 </div>
                         </div>
-
-
-
-
-
                 </div>
             </div>
         </div>

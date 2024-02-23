@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Media;
-use Illuminate\Http\Request;
 use App\Models\Post;
-use App\Models\Post_Media;
+use App\Models\User;
+use App\Models\Media;
 use App\Models\PostMedia;
+use App\Models\Post_Media;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB; 
 use Illuminate\Support\Facades\Auth;
 
@@ -17,7 +18,6 @@ class PostController extends Controller
      */
     public function index()
     {
-        return view('posts.postDesc');
     }
 
     /**
@@ -83,7 +83,12 @@ class PostController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $post=Post::findorfail($id);
+        $user=User::where("id",$post->user_id)->first();
+        $medias=Media::where('post_id',$post->id)->get();
+        
+        // dd($user);
+        return view("posts.postDesc",['posts'=>$post,'user' => $user, "medias" => $medias]);
     }
 
     /**
