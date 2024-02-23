@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post_Media;
 use Illuminate\Http\Request;
-
+use App\Models\Media;
+use App\Models\Post;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 class MediaController extends Controller
 {
     /**
@@ -27,8 +32,12 @@ class MediaController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+       $data = $request->validate([
+            'media_url.*' => 'required',
+            'post_id' => 'required',
+        ]);
+}
+
 
     /**
      * Display the specified resource.

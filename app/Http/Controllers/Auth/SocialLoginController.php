@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Laravel\Socialite\Facades\Socialite;
 
 class SocialLoginController extends Controller
 {
@@ -13,6 +14,6 @@ class SocialLoginController extends Controller
     }
     public function callback($provider){
         $user= Socialite::driver($provider)->user();
-        dd($user);
+        dd($provider);
     }
 }

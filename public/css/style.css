@@ -1,3 +1,9 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 /* start side bar */
 *{
     margin: 0; 
@@ -5,11 +11,37 @@
     box-sizing: border-box; 
     
 }
-.offcanvas {
+.bt-insta{
+    background-color: #EFEFEF;
+    font-weight: bold;
+}
+.bt-insta:hover{
+    background-color: #DBDBDB;
+    font-weight: bold;
+}
+.web{
+
+    text-decoration: none;
+}
+.web:hover{
+    text-decoration: underline;
+
+}
+.sidebar {
     width: 245px !important;
+    height: 100vh;
+    background-color: #ffffff;
+    position: relative;
+    border-right: 2px solid #efefef;
+    z-index: 5;
+}
+.si-bar{
+    width: 400px;
+    height: 100vh;
 }
 
-.nav-tab:hover{
+.nav-tab:hover,
+.settings-list:hover{
     background-color: #f5f5f5;
     border-radius: 8px;
     transition: 0.3s;
@@ -21,9 +53,83 @@
 .nav-tab-reels:hover .reels-svg,
 .nav-tab-messenger:hover .messenger-svg,
 .nav-tab-notifications:hover .notifications-svg,
-.nav-tab-create:hover .create-svg{
+.nav-tab-create:hover .create-svg,
+.nav-tab-profile:hover .profile-img,
+.nav-tab-settings:hover .settings-svg{
     scale: 1.2;
     transition: 0.3s;
+}
+
+.nav-tab-profile .profile-img{
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+    background-color: #f5f5f5;
+}
+.searchTabContent{
+    position: absolute;
+    top: 0px;
+    left: 245px;
+    width: 400px;
+    height: 100vh;
+    padding: 20px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: rgba(0, 0, 0, 0.35) 5px 0px 15px;
+    background-color: #ffffff;
+    z-index: 8;
+
+}
+.searchTabContent input{
+    margin: 30px 0;
+    padding: 10px;
+    border-radius: 5px;
+    width: 100%;
+    border: none;
+    outline: none;
+    background-color: #efefef;
+}
+.searchTabContent .headline{
+    font-size: 20px;
+    position: relative;
+}
+.searchTabContent .headline::before{
+    content: "";
+    width: 100%;
+    height: 2px;
+    background-color: #eee;
+    position: absolute;
+    top: -10px;
+}
+.settings-content{
+    position: absolute;
+    top: 380px;
+    padding: 20px;
+    left: 50px;
+    background-color:#ffffff;
+    width: 250px;
+    height: 300px;
+    border-radius: 15px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    z-index: 5;
+    overflow: visible;
+
+
+}
+.settings-list{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 10px 5px;
+}
+.settings-list-logout{
+    margin-top: 120px;
+    border-top: 3px solid #f5f5f5;
 }
 /* end side bar */
 
@@ -36,8 +142,83 @@
     width: 35px;
     height: 35px;
 }
+.sidebar{
+    /* width: 25%; */
+    position: fixed;
+}/* create post */
+.modal-title {
+    font-weight: bold;
+    margin-bottom: 20px;
+}
 
-/* TODO: Login Form */
+.modal-body {
+    text-align: center;
+}
+.modal-height {
+    min-height: 500px;
+
+}
+.modal-body p {
+    margin-bottom: 20px;
+}
+
+.btn-primary {
+
+    cursor: pointer;
+}
+.profile-picture {
+    width: 50px;
+    border-radius: 50%;
+
+}
+#cropButton , #back {
+    display: none;
+    cursor: pointer;
+    text-decoration: none;
+}
+ #cropButtonUpload {
+    cursor: pointer;
+    text-decoration: none;
+}
+#shareButton {
+    background-color: transparent;
+    border: none;
+    color: blue;
+}
+#backPostModal {
+    cursor: pointer;
+}
+.post-caption , .hashtag {
+    border-color: transparent;
+}
+.user-profile-container {
+    position: relative;
+    left: 467px;
+    margin-top: 50px;
+    width: max-content;
+
+
+}
+.user-profile-pic {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    margin-right: 100px;
+}
+.user-profile-btn {
+    background-color: #EFEFEF;
+    color: black;
+    padding: 2px 5px;
+    width: 150px;
+}
+.user-profile-btn:hover {
+    background-color: #b2adad;
+    color: black;
+}
+.followedby {
+    font-size: 12px;
+}
+/* end of create post style *//* TODO: Login Form */
 .or-container {
     text-align: center;
     position: relative;

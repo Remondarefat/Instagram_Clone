@@ -3,7 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\MediaController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Auth\SocialLoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,19 +31,34 @@ Route::get('/home', function () {
     return view('home');
 })->name('home');
 
+// post routes
+Route::get('/postprofile', function () {
+    return view('posts.profile');
+});
+
+Route::get('/posthome', function () {
+    return view('posts.home');
+});
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+Route::post('/post', [PostController::class, 'store'])->name('posts.store');
 
+
+// !-------------------------socilaite Routes--------------
 Route::get('auth/{provider}/redirect',[SocialLoginController::class,'redirect'])
 ->name('auth.socilaite.redirect');
 Route::get('auth/{provider}/callback',[SocialLoginController::class,'callback'])
 ->name('auth.socilaite.callback');
 
 
+Route::post('/media', [MediaController::class, 'store'])->name('media');
+Route::get('/user/{id}', [UserController::class, 'show'])->name('user');
 require __DIR__ . '/auth.php';
 
 Route::get('/koko', [UserController::class, 'index']);
