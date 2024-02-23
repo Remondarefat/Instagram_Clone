@@ -30,14 +30,14 @@ Route::get('/home', function () {
     return view('home');
 })->name('home');
 
-// post routes
-Route::get('/postprofile', function () {
-    return view('posts.profile');
-});
+// // post routes
+// Route::get('/postprofile', function () {
+//     return view('posts.profile');
+// });
 
-Route::get('/posthome', function () {
-    return view('posts.home');
-});
+// Route::get('/posthome', function () {
+//     return view('posts.home');
+// });
 
 
 
@@ -52,4 +52,8 @@ Route::post('/media', [MediaController::class, 'store'])->name('media');
 Route::get('/user/{id}', [UserController::class, 'show'])->name('user');
 require __DIR__ . '/auth.php';
 
-Route::get('/koko', [UserController::class, 'index']);
+// Route::get('/postprofile',[PostController::class,'index']);
+
+Route::get('/posthome',[PostController::class,'index']);
+
+Route::get('/like-post', [PostController::class, 'like'])->name('like.post');
