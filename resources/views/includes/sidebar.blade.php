@@ -111,11 +111,12 @@
                 <line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                     stroke-width="2" x1="12.003" x2="12.003" y1="6.545" y2="17.455"></line>
             </svg>
-            <a class="text-decoration-none text-dark" href="">Create</a>
+            <button class="create-btn" data-toggle="modal" data-target="#exampleModalCenter">Create</button>
         </div>
+        @include('includes.createpost')
         <!-- Profile Tab -->
         <div class="d-flex gap-3 align-items-center px-2 py-3 mb-3 nav-tab nav-tab-profile">
-            <img class="profile-img" src="{{}}" alt="">
+            <img class="profile-img" src="" alt="">
             <a class="text-decoration-none text-dark" href="">Profile</a>
         </div>
         <!-- Settings Tab -->
@@ -158,8 +159,10 @@
                     <a class="text-decoration-none text-dark" href="#">Saved
                         Posts</a>
                 </li>
-                <li class="settings-list settings-list-logout"><a class="text-decoration-none text-dark"
-                        href="#">Logout</a></li>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="settings-list settings-list-logout ">Logout</button>
+                </form>        
             </ul>
         </div>
 

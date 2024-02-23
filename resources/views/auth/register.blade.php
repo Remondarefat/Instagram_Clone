@@ -1,8 +1,8 @@
 <x-guest-layout>
-    <div class="flex justify-center items-center bg-gray-50 border-solid border-2" >
+    <div class="flex justify-center items-center  bg-gray-50">
         <div class="max-w-md w-full">
             <div class="text-center mb-6">
-                <h1 class="text-4xl font-bold text-gray-900">Instagram</h1>
+                <img src="images/info.svg" alt="logo">
                 <p class="mt-2 text-sm text-gray-600">Sign up to see photos and videos from your friends.</p>
             </div>
             <form class="bg-white shadow-md rounded px-6 pt-6 pb-8 mb-4" method="POST" action="{{ route('register') }}">
@@ -47,11 +47,11 @@
                 </div>
 
                 <div class="text-sm text-gray-600 mb-6">
-                    <p>People who use our service may have uploaded your contact information to Instagram. <a href="#" class="text-blue-500">Learn More</a>.</p>
+                    <p>People who use our service may have uploaded your contact information to Instagram. <a href="https://www.facebook.com/help/instagram/261704639352628?hl=en" class="text-blue-500">Learn More</a>.</p>
                 </div>
 
                 <div class="text-sm text-gray-600 mb-6">
-                    <p>By signing up, you agree to our <a href="#" class="text-blue-500">Terms</a>, <a href="#" class="text-blue-500">Data Policy</a>, and <a href="#" class="text-blue-500">Cookies Policy</a>.</p>
+                    <p>By signing up, you agree to our <a href="https://help.instagram.com/581066165581870/?locale=en_US&hl=en" class="text-blue-500">Terms</a>, <a href="https://www.facebook.com/privacy/policy?hl=en" class="text-blue-500">Privacy Policy</a>, and <a href="https://privacycenter.instagram.com/policies/cookies/" class="text-blue-500">Cookies Policy</a>.</p>
                 </div>
 
                 <div class="flex items-center justify-center">
