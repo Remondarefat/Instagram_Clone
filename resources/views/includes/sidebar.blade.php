@@ -84,7 +84,9 @@
                     d="M17.79 10.132a.659.659 0 0 0-.962-.873l-2.556 2.05a.63.63 0 0 1-.758.002L11.06 9.47a1.576 1.576 0 0 0-2.277.42l-2.567 3.98a.659.659 0 0 0 .961.875l2.556-2.049a.63.63 0 0 1 .759-.002l2.452 1.84a1.576 1.576 0 0 0 2.278-.42Z"
                     fill-rule="evenodd"></path>
             </svg>
-            <a class="text-decoration-none text-dark" href="">Messenger</a>
+            <a class="text-decoration-none text-dark" href="#" data-bs-toggle="modal"
+                data-bs-target="#exampleModal">
+                Messenger</a>
         </div>
         <!-- Notifications Tab -->
         <div class="d-flex gap-3 align-items-center px-2 py-3 mb-3 nav-tab nav-tab-notifications">
@@ -111,7 +113,8 @@
                 <line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                     stroke-width="2" x1="12.003" x2="12.003" y1="6.545" y2="17.455"></line>
             </svg>
-            <a class="text-decoration-none text-dark" href="" data-toggle="modal" data-target="#exampleModalCenter">Create</a>
+            <a class="text-decoration-none text-dark" href="" data-toggle="modal"
+                data-target="#exampleModalCenter">Create</a>
         </div>
         @include('includes.createpost')
         <!-- Profile Tab -->
@@ -174,6 +177,25 @@
                     <p class="headline">Recent</p>
                     <p class=" text-muted mx-auto my-5">No recent searches</p>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header-followers">
+                <h1 class="modal-title fs-6" id="exampleModalLabel">Followers</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>
