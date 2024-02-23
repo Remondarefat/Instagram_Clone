@@ -119,7 +119,7 @@
         @include('includes.createpost')
         <!-- Profile Tab -->
         <div class="d-flex gap-3 align-items-center px-2 py-3 mb-3 nav-tab nav-tab-profile">
-            <img class="profile-img" src="{{}}" alt="">
+            <img class="profile-img" src="" alt="">
             <a class="text-decoration-none text-dark" href="">Profile</a>
         </div>
         <!-- Settings Tab -->
@@ -162,8 +162,10 @@
                     <a class="text-decoration-none text-dark" href="#">Saved
                         Posts</a>
                 </li>
-                <li class="settings-list settings-list-logout"><a class="text-decoration-none text-dark"
-                        href="#">Logout</a></li>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="settings-list settings-list-logout ">Logout</button>
+                </form>
             </ul>
         </div>
 

@@ -18,7 +18,7 @@ use App\Http\Controllers\PostController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Route::get('/dashboard', function () {
@@ -45,11 +45,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
 Route::post('/post', [PostController::class, 'store'])->name('posts.store');
 
 Route::post('/media', [MediaController::class, 'store'])->name('media');
 Route::get('/user/{id}', [UserController::class, 'show'])->name('user');
-require __DIR__ . '/auth.php';
 
 Route::get('/koko', [UserController::class, 'index']);
+});
+require __DIR__ . '/auth.php';
