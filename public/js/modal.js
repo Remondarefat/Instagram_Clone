@@ -1,3 +1,5 @@
+
+var cropper;
 function displayImage(event) {
     let reader = new FileReader();
     reader.onload = function () {
@@ -21,8 +23,8 @@ function displayImage(event) {
 
 function initCropper() {
     var image = document.getElementById('croppedImage');
-    var cropper = new Cropper(image, {
-        aspectRatio: 1
+    cropper = new Cropper(image, {
+                aspectRatio: 1
     });
 
     document.getElementById('cropButtonUpload').addEventListener('click', function () {
@@ -40,6 +42,18 @@ function initCropper() {
         document.getElementById('file-upload').value = '';
     });
 }
+document.getElementById('shareButton').addEventListener('click', function (event) {
+    event.preventDefault();
+
+    var hashtagValue = document.getElementById('hashtag').value.trim();
+    if (!hashtagValue.startsWith('#')) {
+        var errorMessage = document.getElementById('hashtagErrorMessage');
+        errorMessage.innerText = 'Hashtag must start with #';
+        errorMessage.style.display = 'block';
+        event.preventDefault();
+    } 
+    
+});
 
 // Drag and Drop in the modal body
 let modalBody = document.getElementById('modalBody');
@@ -85,3 +99,12 @@ function displayImageFromDrop(file) {
     };
     reader.readAsDataURL(file);
 }
+document.getElementById('shareButton').addEventListener('click', function () {
+    // Get the cropped image data URL from the Cropper instance
+    var croppedImageDataURL = cropper.getCroppedCanvas().toDataURL();
+
+
+// Update the value of the hidden input field with the cropped image data
+    document.getElementById('imageDataUrl').value = croppedImageDataURL;
+    document.getElementById('postForm').submit();
+});

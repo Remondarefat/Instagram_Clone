@@ -64,6 +64,8 @@
                                 <div class="form-group">
                                     <input type="text" name="hashtag" class="form-control hashtag" id="hashtag" placeholder="Hashtags">
                                 </div>
+                                <div id="hashtagErrorMessage" class="alert alert-danger" style="display: none;"></div>
+
                                 <!-- Hidden input field for image data URL -->
                                 <input type="hidden" name="imageDataUrl" id="imageDataUrl">
                             </div>

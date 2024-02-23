@@ -36,29 +36,48 @@ class PostController extends Controller
     { 
         $request->validate([
             'caption' => 'string',
-            'hashtag' => 'string',
-        ]);
-    // dd($request->all());  
-    //  dd($request->imageDataUrl);
-     
-     
+            'hashtag' => ['string' , 'regex:/#[a-zA-Z0-9]+/'],
+            'imageDataUrl' => 'required',
+        ] );
+
         // Create a new post instance
         $post = new Post();
         $post->caption = $request->caption;
         $post->hashtag = $request->hashtag;
         $post->user_id = Auth::user()->id;
         $post->save();
-    // dd( gettype( $request->imageDataUrl));
+
         if ($request->imageDataUrl) {
+            $compressedImageDataUrl = $this->compressAndStoreImage($request->imageDataUrl);
 
             $mediaItem = new Media();
-            $mediaItem->media_url = $request->imageDataUrl;
+            $mediaItem->media_url = $compressedImageDataUrl;
             $mediaItem->post_id = $post->id;
             $mediaItem->save();
             
             }
             return redirect()->back()->with('success', 'post created'); 
 
+        }
+        private function compressAndStoreImage($imageDataUrl, $quality = 75) {
+            // Remove the data URL prefix
+            $data = substr($imageDataUrl, strpos($imageDataUrl, ',') + 1);
+    
+            // Decode the base64 encoded image data
+            $decodedImage = base64_decode($data);
+    
+            // Create an image resource from the decoded image data
+            $image = imagecreatefromstring($decodedImage);
+    
+            // Compress the image
+            ob_start();
+            imagejpeg($image, null, $quality);
+            $compressedImageDataUrl = 'data:image/jpeg;base64,' . base64_encode(ob_get_clean());
+    
+            // Destroy the image resource
+            imagedestroy($image);
+    
+            return $compressedImageDataUrl;
         }
     /**
      * Display the specified resource.
