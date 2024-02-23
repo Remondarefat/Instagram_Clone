@@ -107,13 +107,17 @@
     left: 50px;
     background-color:#ffffff;
     width: 250px;
-    height: 300px;
+    height: 250px;
     border-radius: 15px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     z-index: 5;
     overflow: visible;
 
 
+}
+.create-btn {
+    background-color: transparent;
+    border: none;
 }
 .settings-list{
     display: flex;
@@ -123,8 +127,9 @@
     padding: 10px 5px;
 }
 .settings-list-logout{
-    margin-top: 120px;
-    border-top: 3px solid #f5f5f5;
+    margin-top: 50px;
+    background-color: transparent;
+    border: none;
 }
 /* end side bar */
 

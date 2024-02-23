@@ -10,7 +10,6 @@ use App\Models\Post_Media;
 use App\Models\PostMedia;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {

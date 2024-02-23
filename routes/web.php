@@ -41,19 +41,22 @@ Route::get('/home', function () {
 
 
 
+
+require __DIR__ . '/auth.php';
+
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
 Route::post('/post', [PostController::class, 'store'])->name('posts.store');
 
 Route::post('/media', [MediaController::class, 'store'])->name('media');
 Route::get('/user/{id}', [UserController::class, 'show'])->name('user');
-require __DIR__ . '/auth.php';
 
 // Route::get('/postprofile',[PostController::class,'index']);
 
 Route::get('/posthome',[PostController::class,'index']);
 
 Route::get('/like-post', [PostController::class, 'like'])->name('like.post');
+});
