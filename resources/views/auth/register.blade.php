@@ -47,11 +47,11 @@
                 </div>
 
                 <div class="text-sm text-gray-600 mb-6">
-                    <p>People who use our service may have uploaded your contact information to Instagram. <a href="#" class="text-blue-500">Learn More</a>.</p>
+                    <p>People who use our service may have uploaded your contact information to Instagram. <a href="https://www.facebook.com/help/instagram/261704639352628?hl=en" class="text-blue-500">Learn More</a>.</p>
                 </div>
 
                 <div class="text-sm text-gray-600 mb-6">
-                    <p>By signing up, you agree to our <a href="#" class="text-blue-500">Terms</a>, <a href="#" class="text-blue-500">Data Policy</a>, and <a href="#" class="text-blue-500">Cookies Policy</a>.</p>
+                    <p>By signing up, you agree to our <a href="https://help.instagram.com/581066165581870/?locale=en_US&hl=en" class="text-blue-500">Terms</a>, <a href="https://www.facebook.com/privacy/policy?hl=en" class="text-blue-500">Privacy Policy</a>, and <a href="https://privacycenter.instagram.com/policies/cookies/" class="text-blue-500">Cookies Policy</a>.</p>
                 </div>
 
                 <div class="flex items-center justify-center">

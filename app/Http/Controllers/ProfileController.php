@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfileUpdateRequest;
-use Illuminate\Http\RedirectResponse;
+use App\Models\User;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\View\View;
+use App\Http\Requests\ProfileUpdateRequest;
 
 class ProfileController extends Controller
 {
@@ -24,17 +25,30 @@ class ProfileController extends Controller
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update(Request $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
-        }
+        $data = $request->validate([
+            'bio' => ['required', 'string', 'max:255'],
+            'website' => ['required', 'string', 'max:255'],
+            'gender' => ['required', 'string', 'max:255'],
+            'avatar' => ['nullable', 'mimes:jpg,jpeg,png', 'max:2048'],
+        ]);
 
-        $request->user()->save();
+        // Handle avatar upload
+        if ($request->hasFile('avatar')) {
+            // Store the uploaded avatar in public/avatars directory
+            $avatarPath = $request->file('avatar')->store('public/avatars');
+            // // Update the user's avatar path
+            $data['avatar'] = $avatarPath;
+    }
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        $user = Auth::user();
+
+        $userUpdate = User::findOrFail($user->id);
+        $userUpdate->update($data);
+
+        return Redirect::route('profile.edit');
     }
 
     /**
