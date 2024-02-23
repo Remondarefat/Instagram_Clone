@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use PDO;
 
 class User extends Authenticatable
 {
@@ -48,4 +49,19 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-}
+    //Followings Relation
+    public function followings()
+    {
+        return $this->belongsToMany(User::class, 'users_followers', 'follower_id', 'user_id')->withTimestamps();
+    }
+    //Follow method
+    public function follow(User $user)
+    {
+        return $this->followings()->where('user_id', $user->id)->exists();
+    }
+    //Followers Relation
+    public function followers()
+    {
+        return $this->belongsToMany(User::class, 'users_followers', 'user_id', 'follower_id')->withTimestamps();
+    }
+};

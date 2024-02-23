@@ -1,16 +1,25 @@
 @extends('layouts.main')
-@section('title' , $user->username )
+@section('title', $user->username)
 @section('content')
     <div class="user-profile-container d-flex">
         <div class="image align-self-center">
-            <img src="{{$user->avatar}}" class="user-profile-pic "
-                alt="user image">
+            <img src="{{ $user->avatar }}" class="user-profile-pic " alt="user image">
         </div>
         <div>
             <div class="user-info d-flex">
                 <h5 class="pe-3">{{ $user->username }}</h5>
-                <button type="button" class="btn btn-secondry user-profile-btn me-3"> Following <i
-                        class="fa-solid fa-arrow-down" style="color: #000714;"></i></button>
+                @if (Auth::user()->follow($user))
+                    <form action="{{ route('users.unfollow', $user->id) }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-secondry user-profile-btn me-3">Unfollow</button>
+                    </form>
+                @else
+                    <form action="{{ route('users.follow', $user->id) }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-primary me-3">Follow</button>
+                    </form>
+                @endif
+
                 <button type="button" class="btn btn-secondry user-profile-btn me-3">Message</button>
 
             </div>
