@@ -258,3 +258,10 @@
     color: black;
 }
 /* end of followers / followings */
+.like,.comment,.save{
+
+    cursor: pointer;
+}
+.col-red{
+    color:red;
+}

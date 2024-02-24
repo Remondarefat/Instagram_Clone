@@ -19,7 +19,7 @@ use App\Http\Controllers\PostController;
 */
 
 Route::get('/', function () {
-    return view('auth.login');
+    return view('welcome');
 });
 
 Route::get('/dashboard', function () {
@@ -31,16 +31,14 @@ Route::get('/home', function () {
     return view('home');
 })->name('home');
 
-// post routes
-Route::get('/postprofile', function () {
-    return view('posts.profile');
-});
+// // post routes
+// Route::get('/postprofile', function () {
+//     return view('posts.profile');
+// });
 
-Route::get('/posthome', function () {
-    return view('posts.home');
-});
-
-
+// Route::get('/posthome', function () {
+//     return view('posts.home');
+// });
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -58,4 +56,9 @@ Route::middleware('auth')->group(function () {
 Route::post('/user/{user}/follow', [FollowerController::class, 'follow'])->name('users.follow');
 Route::post('/user/{user}/unfollow', [FollowerController::class, 'unfollow'])->name('users.unfollow');
 
+// Route::get('/postprofile',[PostController::class,'index']);
+
+Route::get('/posthome', [PostController::class, 'index']);
+
+Route::get('/like-post', [PostController::class, 'like'])->name('like.post');
 require __DIR__ . '/auth.php';
