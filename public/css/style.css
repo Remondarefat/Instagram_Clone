@@ -145,7 +145,9 @@
 .sidebar{
     /* width: 25%; */
     position: fixed;
-}/* create post */
+
+}
+/* create post */
 .modal-title {
     font-weight: bold;
     margin-bottom: 20px;
@@ -194,8 +196,6 @@
 .user-profile-container {
     margin-top: 50px;
     width: max-content;
-
-
 }
 .user-profile-pic {
     width: 180px;
@@ -216,7 +216,29 @@
 .followedby {
     font-size: 12px;
 }
-/* end of create post style */
 .modal-backdrop {
     display: none !important;
 }
+
+
+.imageCarousel {
+    width: 300px;
+}
+
+ #uploadedImageContainer {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  #uploadedImageContainer img {
+    max-width: 100%; 
+    height: auto; 
+}
+.carousel-images-width, .each-carousel-img {
+    width: 300px;
+}
+/* end of create post style */
+
+

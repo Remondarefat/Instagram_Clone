@@ -51,5 +51,8 @@ Route::post('/media', [MediaController::class, 'store'])->name('media');
 Route::get('/user/{id}', [UserController::class, 'show'])->name('user');
 
 Route::get('/koko', [UserController::class, 'index']);
+Route::get('/search' , [UserController::class, 'search'])->name('search'); 
 });
+Route::post('/post', [PostController::class, 'store'])->name('posts.store');
+
 require __DIR__ . '/auth.php';

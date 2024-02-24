@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Media;
 use Illuminate\Http\Request;
 use App\Models\Post;
-use App\Models\Post_Media;
-use App\Models\PostMedia;
-use Illuminate\Support\Facades\DB; 
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+
 
 class PostController extends Controller
 {
@@ -33,51 +33,37 @@ class PostController extends Controller
      */
     public function store(Request $request)
     { 
-        $request->validate([
-            'caption' => 'string',
-            'hashtag' => ['string' , 'regex:/#[a-zA-Z0-9]+/'],
-            'imageDataUrl' => 'required',
-        ] );
+            // dd($request->all());
+            $request->validate([
+                'caption' => 'string',
+                'hashtag' => 'array',
+                'croppedImageDataUrls.*' => 'required|string',
+            ]);
+            $post = new Post();
+            $post->caption = $request->caption;
+            $post->hashtag = json_encode($request->hashtag);
+            $post->user_id = Auth::user()->id;
+            $post->save();
 
-        // Create a new post instance
-        $post = new Post();
-        $post->caption = $request->caption;
-        $post->hashtag = $request->hashtag;
-        $post->user_id = Auth::user()->id;
-        $post->save();
+   // Decode the JSON string containing croppedImageDataUrls
+   $croppedImageDataUrls = json_decode($request->croppedImageDataUrls);
 
-        if ($request->imageDataUrl) {
-            $compressedImageDataUrl = $this->compressAndStoreImage($request->imageDataUrl);
+   foreach ($croppedImageDataUrls as $imageDataUrl) {
+       $image = base64_decode(preg_replace('#data:image/\w+;base64,#i', '', $imageDataUrl));
 
-            $mediaItem = new Media();
-            $mediaItem->media_url = $compressedImageDataUrl;
-            $mediaItem->post_id = $post->id;
-            $mediaItem->save();
-            
-            }
-            return redirect()->back()->with('success', 'post created'); 
+       $path = Storage::disk('public')->put('images', $image);
 
+       $media = new Media();
+       $media->media_url = $path;
+       $media->post_id = $post->id;
+       $media->save();
+   }
+    return redirect()->back()->with('success', 'Post created successfully'); 
         }
-        private function compressAndStoreImage($imageDataUrl, $quality = 75) {
-            // Remove the data URL prefix
-            $data = substr($imageDataUrl, strpos($imageDataUrl, ',') + 1);
+     
+     
     
-            // Decode the base64 encoded image data
-            $decodedImage = base64_decode($data);
-    
-            // Create an image resource from the decoded image data
-            $image = imagecreatefromstring($decodedImage);
-    
-            // Compress the image
-            ob_start();
-            imagejpeg($image, null, $quality);
-            $compressedImageDataUrl = 'data:image/jpeg;base64,' . base64_encode(ob_get_clean());
-    
-            // Destroy the image resource
-            imagedestroy($image);
-    
-            return $compressedImageDataUrl;
-        }
+
     /**
      * Display the specified resource.
      */
