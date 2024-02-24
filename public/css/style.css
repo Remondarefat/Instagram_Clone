@@ -216,6 +216,17 @@
     background-color: #b2adad;
     color: black;
 }
+.user-follow-btn{
+    background-color: #0095F6;
+    color: white;
+    padding: 2px 5px;
+    width: 150px;
+}
+.user-follow-btn:hover {
+    background-color: #0069d9;
+    color: white;
+
+}
 .followedby {
     font-size: 12px;
 }

@@ -16,7 +16,7 @@ class FollowerController extends Controller
     }
 
     //Unfollowing method
-    public function unfollow()
+    public function unfollow(User $user)
     {
         $follower = auth()->user();
         $follower->followings()->detach($user->id);

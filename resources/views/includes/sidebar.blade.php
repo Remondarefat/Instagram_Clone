@@ -70,8 +70,7 @@
                     d="M9.763 17.664a.908.908 0 0 1-.454-.787V11.63a.909.909 0 0 1 1.364-.788l4.545 2.624a.909.909 0 0 1 0 1.575l-4.545 2.624a.91.91 0 0 1-.91 0Z"
                     fill-rule="evenodd"></path>
             </svg>
-            <a class="text-decoration-none text-dark" href="#" data-bs-toggle="modal"
-                data-bs-target="#exampleModalFollowing">Reels</a>
+            <a class="text-decoration-none text-dark" href="#">Reels</a>
 
         </div>
         <!-- Messenger Tab -->
@@ -86,8 +85,7 @@
                     d="M17.79 10.132a.659.659 0 0 0-.962-.873l-2.556 2.05a.63.63 0 0 1-.758.002L11.06 9.47a1.576 1.576 0 0 0-2.277.42l-2.567 3.98a.659.659 0 0 0 .961.875l2.556-2.049a.63.63 0 0 1 .759-.002l2.452 1.84a1.576 1.576 0 0 0 2.278-.42Z"
                     fill-rule="evenodd"></path>
             </svg>
-            <a class="text-decoration-none text-dark" href="#" data-bs-toggle="modal"
-                data-bs-target="#exampleModalFollowers">
+            <a class="text-decoration-none text-dark" href="#">
                 Messenger</a>
         </div>
         <!-- Notifications Tab -->
@@ -180,113 +178,6 @@
                 <div class="searchInfo d-flex flex-column">
                     <p class="headline">Recent</p>
                     <p class=" text-muted mx-auto my-5">No recent searches</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Followers Modal -->
-<div class="modal fade" id="exampleModalFollowers" tabindex="-1" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header-followers p-2">
-                <h1 class="modal-title fs-6 fw-bold mx-auto my-auto" id="exampleModalLabel">Followers</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body followersList ">
-                <input type="text" placeholder="Search" name="follower" class="followerSearch">
-            </div>
-            <div class="modal-footer">
-                <div class="row follower-item align-items-center w-100">
-                    <div class="col-auto">
-                        <img src="" alt="" class="follower-image ms-1 bg-black">
-                    </div>
-                    <div class="col">
-                        <p class="d-inline fw-bold">Username</p>
-                        <p class="text-muted mb-0">Fullname</p>
-                    </div>
-                    <div class="col-auto ms-auto">
-                        <button type="button" class="following-btn">Remove</button>
-                    </div>
-                </div>
-                <div class="row follower-item align-items-center w-100">
-                    <div class="col-auto">
-                        <img src="" alt="" class="follower-image ms-1 bg-black">
-                    </div>
-                    <div class="col">
-                        <p class="d-inline fw-bold">Username</p>
-                        <p class="text-muted mb-0">Fullname</p>
-                    </div>
-                    <div class="col-auto ms-auto">
-                        <button type="button" class="following-btn">Remove</button>
-                    </div>
-                </div>
-                <div class="row follower-item align-items-center w-100">
-                    <div class="col-auto">
-                        <img src="" alt="" class="follower-image ms-1 bg-black">
-                    </div>
-                    <div class="col">
-                        <p class="d-inline fw-bold">Username</p>
-                        <p class="text-muted mb-0">Fullname</p>
-                    </div>
-                    <div class="col-auto ms-auto">
-                        <button type="button" class="following-btn">Remove</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Following Modal -->
-<div class="modal fade" id="exampleModalFollowing" tabindex="-1" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header-followers p-2">
-                <h1 class="modal-title fs-6 fw-bold mx-auto my-auto" id="exampleModalLabel">Following</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body followersList ">
-                <input type="text" placeholder="Search" name="follower" class="followerSearch">
-            </div>
-            <div class="modal-footer">
-                <div class="row follower-item align-items-center w-100">
-                    <div class="col-auto">
-                        <img src="" alt="" class="follower-image ms-1 bg-black">
-                    </div>
-                    <div class="col">
-                        <p class="d-inline fw-bold">Username</p>
-                        <p class="text-muted mb-0">Fullname</p>
-                    </div>
-                    <div class="col-auto ms-auto">
-                        <button type="button" class="following-btn">Following</button>
-                    </div>
-                </div>
-                <div class="row follower-item align-items-center w-100">
-                    <div class="col-auto">
-                        <img src="" alt="" class="follower-image ms-1 bg-black">
-                    </div>
-                    <div class="col">
-                        <p class="d-inline fw-bold">Username</p>
-                        <p class="text-muted mb-0">Fullname</p>
-                    </div>
-                    <div class="col-auto ms-auto">
-                        <button type="button" class="following-btn">Following</button>
-                    </div>
-                </div>
-                <div class="row follower-item align-items-center w-100">
-                    <div class="col-auto">
-                        <img src="" alt="" class="follower-image ms-1 bg-black">
-                    </div>
-                    <div class="col">
-                        <p class="d-inline fw-bold">Username</p>
-                        <p class="text-muted mb-0">Fullname</p>
-                    </div>
-                    <div class="col-auto ms-auto">
-                        <button type="button" class="following-btn">Following</button>
-                    </div>
                 </div>
             </div>
         </div>
