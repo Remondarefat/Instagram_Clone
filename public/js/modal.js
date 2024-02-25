@@ -22,6 +22,9 @@ function displayImage(event) {
                 aspectRatio: 1,
                 viewMode: 1,
                 guides: false,
+                autoCropArea: 1,
+                responsive: true ,
+                background: false ,
                 dragMode: "move",
             });
             croppers.push(cropper);
@@ -52,18 +55,25 @@ function initCropper() {
         croppers.push(cropper);
     });
 }
-
-document
-    .getElementById("cropButtonUpload")
-    .addEventListener("click", function () {
-        croppers.forEach(function (cropper) {
-            // converts this canvas to a data URL using the toDataURL() method
-            var croppedImageDataURL = cropper.getCroppedCanvas().toDataURL();
-            croppedImageDataURLs.push(croppedImageDataURL);
-        });
-        // Display cropped images in the post modal carousel
-        displayCroppedImages(croppedImageDataURLs);
+function populateCroppedImageData() {
+    croppedImageDataURLs = []; // Clear the array first
+    croppers.forEach(function (cropper) {
+        // converts this canvas to a data URL using the toDataURL() method
+        var croppedImageDataURL = cropper.getCroppedCanvas().toDataURL();
+        croppedImageDataURLs.push(croppedImageDataURL);
     });
+    
+}
+document.getElementById("cropButtonUpload").addEventListener("click", function () {
+    // Call the function to populate croppedImageDataURLs
+    populateCroppedImageData();
+    // Display cropped images in the post modal carousel
+    console.log(croppedImageDataURLs);
+
+    displayCroppedImages(croppedImageDataURLs);
+});
+
+
 
 function displayCroppedImages(imageDataURLs) {
     const carouselInner = document.querySelector("#postModal .carousel-inner");
@@ -74,10 +84,10 @@ function displayCroppedImages(imageDataURLs) {
         if (index === 0) {
             carouselItem.classList.add("active");
         }
-
-        const aspectRatio = 1;
         const image = document.createElement("img");
         image.src = imageDataURL;
+        image.style.width = "100%"; 
+        image.style.height = "100%"; 
         carouselItem.appendChild(image);
         carouselInner.appendChild(carouselItem);
     });
@@ -88,16 +98,40 @@ function displayCroppedImages(imageDataURLs) {
 $("#postModal").on("hidden.bs.modal", function () {
     console.log("Modal hidden");
     $("#nextModal").modal("show");
+
 });
+
 
 // Convert the croppedImageDataURLs array to a JSON string
 const croppedImageDataURLsJSON = JSON.stringify(croppedImageDataURLs);
 
 document.getElementById("shareButton").addEventListener("click", function () {
-    // Set the value of the hidden input field to the JSON string representation of croppedImageDataURLs
-    document.getElementById("croppedImageDataUrls").value =
-        croppedImageDataURLsJSON;
+    populateCroppedImageData();
 
-    // Submit the form
+    // Set the value of the hidden input field to the JSON string representation of croppedImageDataURLs
+document.getElementById("croppedImageDataUrls").value = JSON.stringify(croppedImageDataURLs);
+console.log(croppedImageDataURLs);
+
+const hashtagInput = document.getElementById("hashtag");
+const hashtags = hashtagInput.value.split(" ").filter(hashtag => hashtag.startsWith("#"));
+
+if (hashtags.length > 0) {
+    document.getElementById("hashtag").value = JSON.stringify(hashtags);
     document.getElementById("postForm").submit();
+
+} else {
+    var errorMessage = document.getElementById('hashtagErrorMessage');
+    errorMessage.innerText = 'Hashtag must start with #';
+    errorMessage.style.display = 'block';
+    event.preventDefault();
+}
+});
+document.getElementById('backPostModal').addEventListener('click', function () {
+    $('#postModal').modal('hide');
+    $('#exampleModalCenter').modal('show');
+    
+});
+document.getElementById('back').addEventListener('click', function () {
+    $('#exampleModalCenter').modal('hide');
+    
 });

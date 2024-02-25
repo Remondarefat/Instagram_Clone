@@ -1,7 +1,7 @@
+
 <!-- Modal for uploading image -->
 
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-    aria-hidden="true">
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header d-flex align-items-center justify-content-center">
@@ -10,15 +10,12 @@
                 </a>
                 <h5 class="modal-title ps-5 pe-5" id="exampleModalLongTitle">Create new post</h5>
                 <div class="d-flex align-items-end">
-                    <a id="cropButtonUpload" class="ms-5" style="display: none;">Next</a>
+                    <a id="cropButtonUpload" class="ms-5" style="display: none;" >Next</a>
                 </div>
             </div>
-            <div class="modal-body modal-height d-flex justify-content-center align-items-center flex-column"
-                id="modalBody">
-                <!-- instagram create post icon  -->
-                <svg id="icon" aria-label="Icon to represent media such as images or videos"
-                    class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="77" role="img"
-                    viewBox="0 0 97.6 77.3" width="96">
+            <div class="modal-body modal-height d-flex justify-content-center align-items-center flex-column" id="modalBody">
+               <!-- instagram create post icon  -->
+   <svg id="icon" aria-label="Icon to represent media such as images or videos" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="77" role="img" viewBox="0 0 97.6 77.3" width="96">
                     <title>Icon to represent media such as images or videos</title>
                     <path
                         d="M16.3 24h.3c2.8-.2 4.9-2.6 4.8-5.4-.2-2.8-2.6-4.9-5.4-4.8s-4.9 2.6-4.8 5.4c.1 2.7 2.4 4.8 5.1 4.8zm-2.4-7.2c.5-.6 1.3-1 2.1-1h.2c1.7 0 3.1 1.4 3.1 3.1 0 1.7-1.4 3.1-3.1 3.1-1.7 0-3.1-1.4-3.1-3.1 0-.8.3-1.5.8-2.1z"
@@ -33,10 +30,9 @@
                 <div class="d-flex justify-content-center align-items-center flex-column" id="dragDropArea">
                     <p id="modalBodyText">Drag photos and videos here</p>
                     <label for="file-upload" class="btn btn-primary" id="upload-btn">Select from computer</label>
-                    <input id="file-upload" type="file" name="images[]" style="display: none;"
-                        onchange="displayImage(event)" multiple>
+                    <input id="file-upload" type="file" name="images[]" style="display: none;" onchange="displayImage(event)" accept="image/*,video/*" multiple>
                 </div>
-
+                
                 <!-- Display uploaded image -->
                 <div id="uploadedImageContainer"></div>
             </div>
@@ -44,8 +40,7 @@
     </div>
 </div>
 <!-- Crop and post details modal -->
-<div class="modal fade" id="postModal" tabindex="-1" role="dialog" aria-labelledby="postModalTitle"
-    aria-hidden="true">
+<div class="modal fade share-modal" id="postModal" tabindex="-1" role="dialog" aria-labelledby="postModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <form action="{{ route('posts.store') }}" id="postForm" method="post" enctype="multipart/form-data">
             @csrf
@@ -63,38 +58,32 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-6">
-                                <div id="imageCarousel" class="carousel slide" data-bs-ride="carousel">
-                                    <div class="carousel-inner">
-                                        <!-- Cropped images will be displayed here -->
-                                    </div>
-                                    <a class="carousel-control-prev"href="#imageCarousel" role="button"
-                                        data-slide="prev">
-                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                        <span class="sr-only">Previous</span>
-                                    </a>
-                                    <a class="carousel-control-next" href="#imageCarousel" role="button"
-                                        data-slide="next">
-                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                        <span class="sr-only">Next</span>
-                                    </a>
+                                <div id="imageCarousel" class="carousel slide carousel-images-width" data-bs-ride="carousel">
+                                    <div class="carousel-inner d-flex" >
+                                                        </div>
+                                                        <a class="carousel-control-prev"href="#imageCarousel" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#imageCarousel" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-5 ms-5">
                                 <div class="user d-flex mb-2">
                                     <img class="profile-picture" src="{{ auth()->user()->avatar }}" alt="">
-                                    <p id="username" class="align-self-center fw-bold">{{ auth()->user()->username }}
-                                    </p>
+                                    <p id="username" class="align-self-center fw-bold">{{ auth()->user()->username }}</p>
                                 </div>
                                 <div class="form-group">
                                     <textarea class="form-control post-caption" name="caption" id="caption" rows="5"
                                         placeholder="Write a caption..."></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" name="hashtag" class="form-control hashtag" id="hashtag"
-                                        placeholder="Hashtags">
+                                    <input type="text" name="hashtag[]" class="form-control hashtag" id="hashtag" placeholder="Hashtags" multiple>
                                 </div>
-                                <div id="hashtagErrorMessage" class="alert alert-danger" style="display: none;">
-                                </div>
+                                <div id="hashtagErrorMessage" class="alert alert-danger" style="display: none;"></div>
                                 <!-- Hidden input field for image data URL -->
                                 <input type="hidden" name="croppedImageDataUrls" id="croppedImageDataUrls">
                             </div>
