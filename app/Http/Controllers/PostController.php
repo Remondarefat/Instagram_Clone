@@ -9,10 +9,9 @@ use App\Models\Media;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Post_Media;
-use App\Models\PostMedia;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+
 
 class PostController extends Controller
 {
@@ -42,60 +41,45 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
+            // dd($request->all());
+            $request->validate([
+                'caption' => 'string',
+                'hashtag' => 'array',
+                'croppedImageDataUrls.*' => 'required',
+            ]);
+            $post = new Post();
+            $post->caption = $request->caption;
+            $post->hashtag = json_encode($request->hashtag);
+            $post->user_id = Auth::user()->id;
+            $post->save();
 
-        $request->validate([
-            'caption' => 'string',
-            'hashtag' => ['string', 'regex:/#[a-zA-Z0-9]+/'],
-            'croppedImageDataUrls.*' => 'required|exists:request|array|min:1',
-            // 'user_id' => 'required',
-            // 'post_id' => 'required',
-        ]);
-        $post = new Post();
-        $post->caption = $request->caption;
-        $post->hashtag = $request->hashtag;
-        $post->user_id = Auth::user()->id;
-        $post->save();
+  // Decode the JSON string containing croppedImageDataUrls
+$croppedImageDataUrls = json_decode($request->croppedImageDataUrls);
 
-        // Save each cropped image as a Media instance related to the post
-        if (is_array($request->croppedImageDataUrls) || is_object($request->croppedImageDataUrls)) {
-            foreach ($request->croppedImageDataUrls as $croppedImageDataUrl) {
-                // Extract base64 image data
-                $data = explode(',', $croppedImageDataUrl)[1];
-                // Create Media instance and save it
-                $mediaItem = new Media();
-                $mediaItem->media_url = $data; // Store base64 encoded image data
-                $mediaItem->post_id = $post->id; // Ensure the post_id is set correctly
-                $mediaItem->save();
-            }
-        } else {
-            // Handle the case where $request->croppedImageDataUrls is not an array or an object
-            // For example, you can return an error response or log the issue
-            dd('Error: $request->croppedImageDataUrls is not an array or an object');
+foreach ($croppedImageDataUrls as $imageDataUrl) {
+    // Remove the data URI scheme from the image URL
+    $imageDataUrl = preg_replace('#^data:image/\w+;base64,#i', '', $imageDataUrl);
+    // Decode the base64-encoded image data into binary data
+    $imageData = base64_decode($imageDataUrl);
+    // Generate a unique filename for the image
+    $filename = uniqid() . '.png';
+    // Store the image file in the public/images directory
+    $path = public_path('images/' . $filename);
+    // Save the image file to the server
+    file_put_contents($path, $imageData);
+
+    // Save the image path to the database
+    $media = new Media();
+    $media->media_url = $filename;
+    $media->post_id = $post->id;
+    $media->save();
+}
+    return redirect()->back()->with('success', 'Post created successfully'); 
         }
-        return redirect()->back()->with('success', 'post created');
-    }
-    private function compressAndStoreImage($imageDataUrl, $quality = 75)
-    {
-        // Remove the data URL prefix
-        $data = substr($imageDataUrl, strpos($imageDataUrl, ',') + 1);
+     
+     
+    
 
-        // Decode the base64 encoded image data
-        $decodedImage = base64_decode($data);
-
-        // Create an image resource from the decoded image data
-        $image = imagecreatefromstring($decodedImage);
-
-        // Compress the image
-        ob_start();
-        imagejpeg($image, null, $quality);
-        $compressedImageDataUrl = 'data:image/jpeg;base64,' . base64_encode(ob_get_clean());
-
-        // Destroy the image resource
-        imagedestroy($image);
-
-        return $compressedImageDataUrl;
-    }
     /**
      * Display the specified resource.
      */

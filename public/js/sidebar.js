@@ -29,3 +29,4 @@ $(document).ready(function () {
 $("#exampleModal").on("show.bs.modal", function () {
     $("body").removeClass("modal-open");
 });
+
