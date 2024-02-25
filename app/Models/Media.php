@@ -12,10 +12,8 @@ class Media extends Model
         'post_id',
         'media_url',
     ];
-    public function post(){
+    public function post()
+    {
         return $this->belongsTo(Post::class);
     }
-    
-
-    
 }
