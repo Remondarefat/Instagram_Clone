@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
+use App\Models\CommentLike;
 use App\Models\Like;
 use App\Models\Media;
 use Illuminate\Http\Request;
@@ -19,9 +21,11 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::all();
+        $comments=Comment::all();
+        $commentlike=CommentLike::all();
         $userid = Auth::user()->id;
         $like = Like::where('user_id', Auth::user()->id)->get();
-        return view('posts.home', ['posts' => $posts, 'like' => $like, 'userid' => $userid]);
+        return view('posts.home', ['commentlike'=>$commentlike,'posts' => $posts, 'like' => $like, 'userid' => $userid,'comments'=>$comments]);
     }
 
     /**
@@ -125,5 +129,20 @@ foreach ($croppedImageDataUrls as $imageDataUrl) {
 
 
         return response()->json(['message' => "Hello from PHP method! $id"]);
+    }
+
+
+    public function comment(Request $request){
+
+        $postid=$request->input('id');
+        $postcomment=$request->input('postcomment');
+        $userid=Auth::user()->id;
+        Comment::create([
+            'user_id'=>$userid,
+            'post_id'=>$postid,
+            'comment_body'=>$postcomment
+        ]);
+        return response()->json(['message' => "Hello from PHP method! $postcomment"]);
+
     }
 }

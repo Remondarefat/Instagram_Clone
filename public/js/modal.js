@@ -62,7 +62,7 @@ function populateCroppedImageData() {
         var croppedImageDataURL = cropper.getCroppedCanvas().toDataURL();
         croppedImageDataURLs.push(croppedImageDataURL);
     });
-    
+
 }
 document.getElementById("cropButtonUpload").addEventListener("click", function () {
     // Call the function to populate croppedImageDataURLs
@@ -86,8 +86,8 @@ function displayCroppedImages(imageDataURLs) {
         }
         const image = document.createElement("img");
         image.src = imageDataURL;
-        image.style.width = "100%"; 
-        image.style.height = "100%"; 
+        image.style.width = "100%";
+        image.style.height = "100%";
         carouselItem.appendChild(image);
         carouselInner.appendChild(carouselItem);
     });
@@ -129,9 +129,9 @@ if (hashtags.length > 0) {
 document.getElementById('backPostModal').addEventListener('click', function () {
     $('#postModal').modal('hide');
     $('#exampleModalCenter').modal('show');
-    
+
 });
 document.getElementById('back').addEventListener('click', function () {
     $('#exampleModalCenter').modal('hide');
-    
+
 });

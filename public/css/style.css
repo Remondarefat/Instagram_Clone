@@ -268,7 +268,7 @@
     color: black;
 }
 /* end of followers / followings */
-.like,.comment,.save{
+.like,.comment,.save,.com-like{
 
     cursor: pointer;
 }
@@ -310,6 +310,8 @@
   #uploadedImageContainer img {
     max-width: 100%;
     height: auto;
+    max-width: 100%;
+    height: auto;
 }
 .carousel-images-width, .each-carousel-img {
     width: 300px;
@@ -326,4 +328,9 @@
 .im-pro{
     width: 150px;
     height: 150px;
+}
+.com-input:focus{
+    border: 5px;
+    outline: none
+
 }
