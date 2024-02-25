@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use PDO;
 
 class User extends Authenticatable
 {
@@ -49,43 +48,28 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-    public function posts()
-    {
+    public function posts(){
         return $this->hasMany(Post::class);
     }
-    public function post_saved()
-    {
+    public function post_saved(){
         return $this->hasMany(Post_saved::class);
     }
-    public function like()
-    {
+    public function like(){
         return $this->hasMany(Like::class);
     }
-    public function comment()
-    {
+    public function comment(){
         return $this->hasMany(Comment::class);
     }
-    public function block()
-    {
+    public function follower(){
+        return $this->hasMany(Follower::class, 'follower_id');
+    }
+    public function following(){
+        return $this->hasMany(Follower::class, 'user_id');
+    }
+    public function block(){
         return $this->hasMany(Block::class, 'blocked_id');
     }
-    public function blocked()
-    {
+    public function blocked(){
         return $this->hasMany(Block::class, 'user_id');
     }
-    //Followings Relation
-    public function followings()
-    {
-        return $this->belongsToMany(User::class, 'users_followers', 'follower_id', 'user_id')->withTimestamps();
-    }
-    //Follow method
-    public function follow(User $user)
-    {
-        return $this->followings()->where('user_id', $user->id)->exists();
-    }
-    //Followers Relation
-    public function followers()
-    {
-        return $this->belongsToMany(User::class, 'users_followers', 'user_id', 'follower_id')->withTimestamps();
-    }
-};
+}
