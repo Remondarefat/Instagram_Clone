@@ -117,7 +117,7 @@
         <!-- Profile Tab -->
         <div class="d-flex gap-3 align-items-center px-2 py-3 mb-3 nav-tab nav-tab-profile">
             <img class="profile-img" src="" alt="">
-            <a class="text-decoration-none text-dark" href="">Profile</a>
+            <a class="text-decoration-none text-dark" href="/postprofile">Profile</a>
         </div>
         <!-- Settings Tab -->
 
@@ -162,7 +162,7 @@
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit" class="settings-list settings-list-logout ">Logout</button>
-                </form>        
+                </form>
             </ul>
         </div>
 

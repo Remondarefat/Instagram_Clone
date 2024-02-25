@@ -34,14 +34,22 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show()
     {
-         $user= User::find($id);
-        return view('profile.user', ['user' => $user]);
+        $user = auth()->user();
 
+        if ($user) {
+            // Now explicitly checking if user is not null
+            $user->load(['posts', 'posts.media']); // This assumes you have 'posts' and 'posts.media' relationships defined
+            return view('posts.profile', compact('user'));
+        }
 
-
+        // Handle cases where there is no authenticated user, perhaps redirect or show an error
+        return redirect()->route('login')->with('error', 'You must be logged in to view this page.');
     }
+
+
+
 
     /**
      * Show the form for editing the specified resource.

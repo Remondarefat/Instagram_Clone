@@ -30,10 +30,7 @@ Route::get('/home', function () {
     return view('home');
 })->name('home');
 
-// // post routes
-// Route::get('/postprofile', function () {
-//     return view('posts.profile');
-// });
+Route::get('/postprofile', [UserController::class,'show']);
 
 // Route::get('/posthome', function () {
 //     return view('posts.home');

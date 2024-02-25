@@ -227,3 +227,12 @@
 .col-red{
     color:red;
 }
+
+.pro-img-col{
+    padding: 1px;
+}
+
+.im-pro{
+    width: 150px;
+    height: 150px;
+}
