@@ -4,7 +4,7 @@
         <!-- Navigation tabs -->
         <!--Instagram logo-->
         <div class="mb-5">
-            <a class="navbar-brand" href="href="{{ route('home') }}>
+            <a class="navbar-brand" href="{{ route('home') }}">
                 <svg aria-label="Instagram" class="mt-4" fill="currentColor" height="29" role="img"
                     viewBox="32 4 113 32" width="103">
                     <title>Instagram</title>
@@ -169,17 +169,18 @@
             </ul>
         </div>
 
-
-        <!-- Additional Tab Content -->
+        <!-- Additional Tab Content --> 
         <div class="d-none">
             <div class="searchTabContent">
                 <h3>Search</h3>
+                <form action="{{url('/search')}}" method="get">
                 <input type="text" placeholder="Search" name="search">
                 <div class="searchInfo d-flex flex-column">
                     <p class="headline">Recent</p>
                     <p class=" text-muted mx-auto my-5">No recent searches</p>
                 </div>
+                </form>
             </div>
         </div>
-    </div>
+    </div> 
 </div>

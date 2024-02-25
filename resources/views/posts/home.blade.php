@@ -12,7 +12,7 @@
                 <div class="carousel-inner">
                     @foreach ($post->media as $media )
                     <div class="carousel-item active">
-                        <img class="w-100 h-100 me-md-2" src="{{"$media->media_url"}}" alt="">
+                        <img class="w-100 h-100 me-md-2" src="{{ asset("/images/$media->media_url") }}"  alt="">
                         </div>
                     @endforeach
                 </div>
@@ -49,9 +49,9 @@
                         <h4>{{$post->user->username}}</h4>
                     </div>
 
-                    @foreach ($post->media as $media )
-                        <img class="w-100 h-100 me-md-2 mt-md-2" src="{{"$media->media_url"}}" alt="">
-                    @endforeach
+                    <!-- @foreach ($post->media as $media ) -->
+                        <img class="w-100 h-100 me-md-2 mt-md-2" src="{{asset("/images/$media->media_url")}}" alt="">
+                    <!-- @endforeach -->
                     <div class="d-flex mt-md-2 justify-content-between">
                         <div>
 
@@ -102,6 +102,7 @@
         $postid=$(this).parent().parent().parent().find('.postid').text();
         console.log($postid);
            $.ajax({
+        //    url:''
            url: '{{ route('like.post') }}', // Use the route() helper to generate the URL
            method: 'GET',
            dataType: 'json',
