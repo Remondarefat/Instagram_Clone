@@ -15,10 +15,10 @@ $(document).ready(function () {
     });
 });
 
-// create post button 
+// create post button
 $(document).ready(function () {
     const createIcon = $(".nav-tab.nav-tab-create");
-    const additionalTabContent = $(".createpost"); 
+    const additionalTabContent = $(".createpost");
     const uploadModal = $("#exampleModalCenter");
 
     createIcon.on("click", function () {
@@ -26,6 +26,7 @@ $(document).ready(function () {
         uploadModal.modal("show"); // Open the upload modal when "Create Post" is clicked
     });
 });
-$('#exampleModal').on('show.bs.modal', function () {
-    $('body').removeClass('modal-open');
+$("#exampleModal").on("show.bs.modal", function () {
+    $("body").removeClass("modal-open");
 });
+

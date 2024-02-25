@@ -18,10 +18,10 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts=Post::all();
-        $userid=Auth::user()->id;
+        $posts = Post::all();
+        $userid = Auth::user()->id;
         $like = Like::where('user_id', Auth::user()->id)->get();
-        return view('posts.home',['posts'=>$posts,'like'=>$like,'userid'=>$userid]);
+        return view('posts.home', ['posts' => $posts, 'like' => $like, 'userid' => $userid]);
     }
 
     /**
@@ -41,7 +41,7 @@ class PostController extends Controller
             $request->validate([
                 'caption' => 'string',
                 'hashtag' => 'array',
-                'croppedImageDataUrls.*' => 'required|string',
+                'croppedImageDataUrls.*' => 'required',
             ]);
             $post = new Post();
             $post->caption = $request->caption;
@@ -110,16 +110,15 @@ foreach ($croppedImageDataUrls as $imageDataUrl) {
 
     public function like(Request $request)
     {
-        $id=$request->input('id');
-        $userid=Auth::user()->id;
+        $id = $request->input('id');
+        $userid = Auth::user()->id;
         $like = Like::where('user_id', Auth::user()->id)->where('post_id', $id)->first();
-        if ($like){
+        if ($like) {
             $like->delete();
-        }
-        else{
+        } else {
             Like::create([
-                'user_id'=>$userid,
-                'post_id'=>$id
+                'user_id' => $userid,
+                'post_id' => $id
             ]);
         }
 
