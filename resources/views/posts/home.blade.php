@@ -2,8 +2,8 @@
 @section('content')
 <div class="flex-row ">
     <div class="col-md-8 offset-2">
-      @foreach ( $posts as $post )
-      @if ($post->media->count()>1)
+        @foreach ( $posts as $post )
+        @if ($post->media->count()>1)
         <div class="d-flex align-items-center">
             <img class="rounded-circle im-pro me-md-2" src="{{'pro.jpg'}}" alt="">
             <h4>user name</h4>
@@ -55,6 +55,7 @@
                     <div class="d-flex mt-md-2 justify-content-between">
                         <div>
                             <i class="fa-solid h4 fa-heart  like
+
                             @foreach ($like as $li )
                                 @if (Auth::user()->id == $li->user_id && $li->post_id == $post->id)
                                 col-red
@@ -81,8 +82,15 @@
                                     @endif
                                     <h6 class="bold mt-md-1">{{$comment->user->username}}</h6>
                                     <p class=" p-0 m-0  ms-md-2">{{$comment->comment_body}}</p>
+                                    <p class=" p-0 m-0  ms-md-2 com-id d-none">{{$comment->id}}</p>
                                 </div>
-                                <i class="mt-2 com-like fa-solid h4 fa-heart"></i>
+                                <i class="mt-2 com-like fa-solid h4
+                                @foreach ($commentlike as $li )
+                                    @if (Auth::user()->id == $li->user_id && $li->post_id == $post->id && $li->comment_id == $comment->id)
+                                        col-red
+                                    @endif
+                            @endforeach fa-heart"></i>
+
                             </div>
                             @if ($counter == 3)
                                 @break
@@ -158,10 +166,16 @@
 
        $('.com-like').click(function(){
         $(this).toggleClass('col-red');
+        let commentId=$(this).parent().find('.com-id').text();
+        let postid=$(this).parent().parent().parent().find('.postid').text();
         $.ajax({
             url:'{{route('comment.like')}}',
             method:'GET',
             dataType:'json',
+            data:{
+                'postid':postid,
+                'commentId':commentId
+            },
             success:function(response){
                 console.log(response.message);
             },
