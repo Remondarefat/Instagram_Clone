@@ -68,9 +68,10 @@ document.getElementById("cropButtonUpload").addEventListener("click", function (
     // Call the function to populate croppedImageDataURLs
     populateCroppedImageData();
     // Display cropped images in the post modal carousel
+    console.log(croppedImageDataURLs);
+
     displayCroppedImages(croppedImageDataURLs);
 });
-
 
 
 

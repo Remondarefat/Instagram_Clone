@@ -219,6 +219,13 @@
 .modal-backdrop {
     display: none !important;
 }
+.like,.comment,.save{
+
+    cursor: pointer;
+}
+.col-red{
+    color:red;
+}
 
 
 .imageCarousel {
