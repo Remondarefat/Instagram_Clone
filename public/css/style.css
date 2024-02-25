@@ -220,10 +220,15 @@
 .modal-backdrop {
     display: none !important;
 }
-.like,.comment,.save{
+.like,.comment,.save,.com-like{
 
     cursor: pointer;
 }
 .col-red{
     color:red;
+}
+.com-input:focus{
+    border: 5px;
+    outline: none
+
 }

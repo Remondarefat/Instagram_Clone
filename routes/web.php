@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\PostController;
+use App\Models\CommentLike;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,4 +60,8 @@ Route::get('/user/{id}', [UserController::class, 'show'])->name('user');
 Route::get('/posthome',[PostController::class,'index']);
 
 Route::get('/like-post', [PostController::class, 'like'])->name('like.post');
+Route::get('/comment-post', [PostController::class, 'comment'])->name('comment.post');
+Route::get('/comment-like',[CommentLike::class,'commentlike'])->name('comment.like');
+
+
 });

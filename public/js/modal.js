@@ -1,4 +1,5 @@
 
+
 var cropper;
 function displayImage(event) {
     let reader = new FileReader();
@@ -8,15 +9,16 @@ function displayImage(event) {
         document.getElementById('modalBodyText').style.display = 'none';
         document.getElementById('icon').style.display = 'none';
         document.getElementById('upload-btn').style.display = 'none';
-        document.getElementById('cropButtonUpload').style.display = 'block'; 
+        document.getElementById('cropButtonUpload').style.display = 'block';
         document.getElementById('back').style.display = 'block';
-        document.getElementById('exampleModalLongTitle').innerText = 'Crop Image'; 
+        document.getElementById('exampleModalLongTitle').innerText = 'Crop Image';
+
 
         // Store the image data URL in a hidden input field
         document.getElementById('imageDataUrl').value = reader.result;
 
         // Initialize Cropper
-        initCropper(); 
+        initCropper();
     };
     reader.readAsDataURL(event.target.files[0]);
 }
@@ -51,8 +53,8 @@ document.getElementById('shareButton').addEventListener('click', function (event
         errorMessage.innerText = 'Hashtag must start with #';
         errorMessage.style.display = 'block';
         event.preventDefault();
-    } 
-    
+    }
+
 });
 
 // Drag and Drop in the modal body
