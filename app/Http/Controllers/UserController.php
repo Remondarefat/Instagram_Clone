@@ -12,7 +12,16 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('posts.home');
+        $user = auth()->user();
+
+        if ($user) {
+            // Now explicitly checking if user is not null
+            $user->load(['posts', 'posts.media']); // This assumes you have 'posts' and 'posts.media' relationships defined
+            return view('posts.profile', compact('user'));
+        }
+
+        // Handle cases where there is no authenticated user, perhaps redirect or show an error
+        return redirect()->route('login')->with('error', 'You must be logged in to view this page.');
     }
 
     /**
@@ -34,23 +43,12 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show()
+    public function show(string $id)
     {
-        $user = auth()->user();
-
-        if ($user) {
-            // Now explicitly checking if user is not null
-            $user->load(['posts', 'posts.media']); // This assumes you have 'posts' and 'posts.media' relationships defined
-            return view('posts.profile', compact('user'));
-        }
-
-        // Handle cases where there is no authenticated user, perhaps redirect or show an error
-        return redirect()->route('login')->with('error', 'You must be logged in to view this page.');
+        $user = User::find($id);
+        return view('profile.user', ['user' => $user]);
     }
-
-
-
-
+    
     /**
      * Show the form for editing the specified resource.
      */
