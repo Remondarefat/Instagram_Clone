@@ -3,6 +3,30 @@
     padding: 0;
     box-sizing: border-box;
 }
+/* !-----Loading Page------ */
+#loading{
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: fixed;
+    background-color: white;
+    /* background-color: #272727; */
+    z-index: 99999999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #272727;
+    /* opacity: 0.5; */
+}
+#homePage {
+    overflow: hidden;
+}
+img{
+    width: 100px;
+}
+
+/* !-----Loading Page------ */
 
 /* start side bar */
 *{
@@ -251,7 +275,10 @@
 }
 /* TODO: Login Form */
 
-/* ? Product Desc Sec */
+/* ? post Desc Sec */
+.postDesc{
+    height: fit-content;
+}
 .icon{
     width: 25px;
 }
@@ -263,8 +290,9 @@
     color:#B0B0B0;
 }
 .comments_sec{
-    height: 40%;
+    height: 300px;
     overflow-y:auto;
+    
 }
 .likes-img{
     width: 30px;
@@ -274,4 +302,23 @@
     height: 30px;
     width: 30px;
 }
+.borderless-input{
+    border: none;
+    outline: none;
+}
+#postButton{
+    color: rgb(0, 149, 255);
+    font-weight: bolder;
+}
+#postButton:hover{
+    color:#003787;
+}
 /* ? */
+
+.like,.comment,.save{
+
+    cursor: pointer;
+}
+.col-red{
+    color:red;
+}

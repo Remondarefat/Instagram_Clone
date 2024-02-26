@@ -1,9 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MediaController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\SocialLoginController;
 
@@ -19,7 +21,7 @@ use App\Http\Controllers\Auth\SocialLoginController;
 */
 
 Route::get('/', function () {
-    return view('auth.login');
+    return view('welcome');
 });
 
 Route::get('/dashboard', function () {
@@ -31,15 +33,19 @@ Route::get('/home', function () {
     return view('home');
 })->name('home');
 
-// post routes
-Route::get('/postprofile', function () {
-    return view('posts.profile');
-});
+// // post routes
+// Route::get('/postprofile', function () {
+//     return view('posts.profile');
+// });
 
-Route::get('/posthome', function () {
-    return view('posts.home');
-});
+// Route::get('/posthome', function () {
+//     return view('posts.home');
+// });
 
+
+
+
+require __DIR__ . '/auth.php';
 
 
 Route::middleware('auth')->group(function () {
@@ -59,13 +65,19 @@ Route::get('auth/{provider}/callback',[SocialLoginController::class,'callback'])
 Route::post('/media', [MediaController::class, 'store'])->name('media');
 Route::get('/user/{id}', [UserController::class, 'show'])->name('user');
 
-Route::get('/koko', [UserController::class, 'index']);
+// Route::get('/postprofile',[PostController::class,'index']);
 
+Route::get('/posthome',[PostController::class,'index']);
 
+Route::get('/like-post', [PostController::class, 'like'])->name('like.post');
+});
 
 // !--------PostDesc Routes-------------------
 Route::get('/postDesc', [PostController::class, 'index']);
 Route::get('postDesc/{post}', [PostController::class, 'show'])->name('postDesc.show')->where('post', '[0-9]+');
 
-});
-require __DIR__ . '/auth.php';
+
+// ! Like PostDesc
+Route::post('/post/{postId}/toggle-like', [LikeController::class,'toggleLike'])->name('post.toggle-like');
+// ! comment PostDesc
+Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');

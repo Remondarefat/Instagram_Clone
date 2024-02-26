@@ -29,3 +29,28 @@ $(document).ready(function () {
 $('#exampleModal').on('show.bs.modal', function () {
     $('body').removeClass('modal-open');
 });
+// !----- Loading Page -------
+$(document).ready(function(){
+    $("#loading .ring").fadeOut(170 , function() {
+      $("#loading").fadeOut(1800, function(){
+        $("#loading").remove();
+        $("#homePage").css("overflow" , "auto");
+      })
+    });
+  });
+  // !----- Loading Page -------
+//   document.getElementById('postButton').addEventListener('click', function() {
+//     document.getElementById('commentForm').submit();
+// });
+document.getElementById('commentInput').addEventListener('input', function() {
+    var postButton = document.getElementById('postButton');
+    if (this.value.trim() !== '') {
+        postButton.style.display = 'inline'; // Show "Post" text
+    } else {
+        postButton.style.display = 'none'; // Hide "Post" text
+    }
+});
+
+document.getElementById('postButton').addEventListener('click', function() {
+    document.getElementById('commentForm').submit(); // Submit form
+});
