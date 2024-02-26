@@ -119,18 +119,23 @@
     background-color: transparent;
     border: none;
 }
-.settings-list{
+
+.settings-list {
     display: flex;
     align-items: center;
-    justify-content: center;
-    width: 100%;
+    justify-content: flex-start;
     padding: 10px 5px;
+    width: 100%;
 }
-.settings-list-logout{
-    margin-top: 50px;
+
+.settings-list-logout {
     background-color: transparent;
     border: none;
+    border-top: 2px solid #f5f5f5;
+    justify-content: center;
+    padding: 10px 5px;
 }
+
 /* end side bar */
 .modal-backdrop {
     opacity: 0.8 !important; /* Adjust the opacity value as needed */
