@@ -12,7 +12,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('posts.home');
+        $users = User::all();
+        return view('posts.home' , compact('users'));
     }
 
     /**
@@ -64,4 +65,16 @@ class UserController extends Controller
         //
     }
 
+    // public function search (Request $request) {
+    //     $search = $request->search;
+    //     $users = User::where(function ($query) use ($search) {
+    //         $query->where('username', 'like', "%$search%");
+    //     })
+    //     ->get();
+    //     if ($users->count() === 1) {
+    //         return redirect()->route('user', ['id' => $users->first()->id]);
+    //     }
+    
+    //     return view('includes.search')->with('users', $users)->render();
+    // }
 }

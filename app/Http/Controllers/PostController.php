@@ -45,8 +45,9 @@ class PostController extends Controller
             $request->validate([
                 'caption' => 'string',
                 'hashtag' => 'array',
-                'croppedImageDataUrls.*' => 'required',
-            ]);
+                'croppedImageDataUrls.*' => 'required', 
+                'videoDataUrls.*' => 'required', 
+                        ]);
             $post = new Post();
             $post->caption = $request->caption;
             $post->hashtag = json_encode($request->hashtag);
@@ -74,6 +75,21 @@ foreach ($croppedImageDataUrls as $imageDataUrl) {
     $media->post_id = $post->id;
     $media->save();
 }
+   // Decode the JSON string containing videoDataUrls
+   $videoDataUrls = json_decode($request->videoDataUrls);
+
+   foreach ($videoDataUrls as $videoDataUrl) {
+       $videoDataUrl = preg_replace('#^data:video/\w+;base64,#i', '', $videoDataUrl);
+       $videoData = base64_decode($videoDataUrl);
+       $filename = uniqid() . '.mp4';
+       $path = public_path('images/' . $filename);
+       file_put_contents($path, $videoData);
+
+       $media = new Media();
+       $media->media_url = $filename;
+       $media->post_id = $post->id;
+       $media->save();
+   }
     return redirect()->back()->with('success', 'Post created successfully'); 
         }
      
