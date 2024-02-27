@@ -12,8 +12,13 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        return view('posts.home' , compact('users'));
+        $user = auth()->user();
+
+        if ($user) {
+            // Now explicitly checking if user is not null
+            $user->load(['posts', 'posts.media']); // This assumes you have 'posts' and 'posts.media' relationships defined
+            return view('posts.profile', compact('user'));
+        }
     }
 
     /**

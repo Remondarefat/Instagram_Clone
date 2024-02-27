@@ -13,18 +13,15 @@
         <div class="d-flex">
             <h4>{{ $user->username }}</h4>
             <a href="/profile" class="btn bt-insta ms-3">Edit Profile</a>
-            <a href="" class="btn bt-insta ms-3">Saved Post</a>
+            <a href="" class="btn bt-insta ms-3">Saved Posts</a>
         </div>
         <div class="mt-3">
-            <!-- Posts Link -->
             <a href="" class=" text-decoration-none text-dark">{{ $user->posts->count() }} posts</a>
 
-            <!-- Followers Modal Trigger -->
             <a href="#" class="ms-3 text-decoration-none text-dark" data-bs-toggle="modal" data-bs-target="#followersModal">
                 {{ $user->followers()->count() }} followers
             </a>
 
-            <!-- Following Modal Trigger -->
             <a href="#" class="ms-3 text-decoration-none text-dark" data-bs-toggle="modal" data-bs-target="#followingModal">
                 {{ $user->followings()->count() }} following
             </a>
@@ -96,24 +93,34 @@
     <div class="row justify-content-center mb-1">
         @php $postCounter = 0; @endphp
         @foreach($user->posts as $post)
-            @if($post->media->count() > 0)
-                @if($postCounter % 3 == 0 && $postCounter != 0)
-                    </div><div class="row justify-content-center mb-1">
-                @endif
-                <div class="col-md-4 pro-img-col">
-                    {{-- Link to post details --}}
-                    <a href="#" >
+        @if($post->media->count() > 0)
+            @if($postCounter % 3 == 0 && $postCounter != 0)
+                </div><div class="row justify-content-center mb-1">
+            @endif
+            <div class="col-md-4 pro-img-col">
+                <a href="#" >
                     <div class="img-wrapper">
+                        @if(Str::endsWith($post->media->first()->media_url, ['.mp4', '.mov']))
+                        <div class="video-icon-overlay"><i class="fas fa-video"></i></div>
+                        <video class="w-100 post-video" preload="auto" loop muted playsinline>
+                            <source src="{{ asset("/images/" . $post->media->first()->media_url) }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        @else
                         <img class="w-100 post-image" src="{{ asset("/images/" . $post->media->first()->media_url) }}" alt="media">
                         @if($post->media->count() > 1)
                             <span class="multi-image-icon"><i class="fas fa-clone"></i></span>
                         @endif
+                        @endif
                     </div>
-                    </a>
-                </div>
-                @php $postCounter++; @endphp
-            @endif
+                </a>
+            </div>
+            @php $postCounter++; @endphp
+        @endif
         @endforeach
+
+
     </div>
 </div>
+
 @endsection
