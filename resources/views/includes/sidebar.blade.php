@@ -184,45 +184,48 @@
         <div class="d-none">
             <div class="searchTabContent">
                 <h3>Search</h3>
-                <form id="search-form"  method="get">
-                <input type="text" placeholder="Search" name="search">
-                <div class="searchInfo d-flex flex-column">
-                    <p class="headline">Recent</p>
-                    <p class=" text-muted mx-auto my-5">No recent searches</p>
-                </div>
+                <form id="search-form" method="get">
+                    <input type="text" placeholder="Search" name="search" id="search-input">
+                    <!-- Added id attribute -->
+                    <div class="searchInfo d-flex flex-column">
+                        <div id="search-results-container"><!-- Container for search results --></div>
+                        <!-- Added id attribute -->
+                    </div>
                 </form>
             </div>
         </div>
-    </div>
-</div>
-{{-- Blocked Users --}}
-<div class="modal fade" id="exampleModalBlock" tabindex="-1" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header-followers p-2">
-                <h1 class="modal-title fs-6 fw-bold mx-auto my-auto" id="exampleModalLabel">Blocked Users</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                @foreach (Auth::user()->block as $blockedUser)
-                    <div class="row follower-item align-items-center w-100">
-                        <div class="col-auto">
-                            <img src="{{ $blockedUser->avatar }}" alt=""
-                                class="follower-image ms-1 bg-black">
-                        </div>
-                        <div class="col text-start">
-                            <p class="d-inline fw-bold">{{ $blockedUser->username }}</p>
-                            <p class="text-muted mb-0">{{ $blockedUser->fullname }}</p>
-                        </div>
-                        <div class="col-auto ms-auto">
-                            <form action="{{ route('users.unblock', $blockedUser->id) }}" method="POST">
-                                @csrf
-                                <button type="submit" class="btn user-profile-btn me-3">Unblock</button>
-                            </form>
-                        </div>
+
+        {{-- Blocked Users --}}
+        <div class="modal fade" id="exampleModalBlock" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header-followers p-2">
+                        <h1 class="modal-title fs-6 fw-bold mx-auto my-auto" id="exampleModalLabel">Blocked Users</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
                     </div>
-                @endforeach
+                    <div class="modal-body">
+                        @foreach (Auth::user()->block as $blockedUser)
+                            <div class="row follower-item align-items-center w-100">
+                                <div class="col-auto">
+                                    <img src="{{ $blockedUser->avatar }}" alt=""
+                                        class="follower-image ms-1 bg-black">
+                                </div>
+                                <div class="col text-start">
+                                    <p class="d-inline fw-bold">{{ $blockedUser->username }}</p>
+                                    <p class="text-muted mb-0">{{ $blockedUser->fullname }}</p>
+                                </div>
+                                <div class="col-auto ms-auto">
+                                    <form action="{{ route('users.unblock', $blockedUser->id) }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="btn user-profile-btn me-3">Unblock</button>
+                                    </form>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
             </div>
         </div>
     </div>

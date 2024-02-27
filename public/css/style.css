@@ -112,13 +112,18 @@
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     z-index: 5;
     overflow: visible;
-
-
 }
 .create-btn {
     background-color: transparent;
     border: none;
 }
+    /* Add this CSS style */
+    .search-tab:hover {
+        background-color: #efefef;
+        cursor: pointer;
+        transition: 0.3s;
+        /* Optional: Change cursor to pointer on hover */
+    }
 
 .settings-list {
     display: flex;
@@ -299,6 +304,9 @@
     border-radius: 5px;
     border: none;
 }
+
+/* end blocking list */
+
 
 
 .imageCarousel {
