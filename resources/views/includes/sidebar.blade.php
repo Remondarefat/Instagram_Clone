@@ -35,7 +35,7 @@
                 <line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                     stroke-width="2" x1="16.511" x2="22" y1="16.511" y2="22"></line>
             </svg>
-            <a id="search" class="text-decoration-none text-dark" href="{{ route('search') }}">Search</a>
+            <a id="search" class="text-decoration-none text-dark" href="">Search</a>
         </div>
         <!-- Explore Tab -->
         <div class="d-flex gap-3 align-items-center px-2 py-3 mb-3 nav-tab nav-tab-explore">
