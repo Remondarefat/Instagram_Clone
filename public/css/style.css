@@ -161,6 +161,9 @@ img{
     border: none;
 }
 /* end side bar */
+.modal-backdrop {
+    opacity: 0.8 !important; /* Adjust the opacity value as needed */
+}
 
 
 .im-pro {
@@ -174,7 +177,9 @@ img{
 .sidebar{
     /* width: 25%; */
     position: fixed;
-}/* create post */
+
+}
+/* create post */
 .modal-title {
     font-weight: bold;
     margin-bottom: 20px;
@@ -223,8 +228,6 @@ img{
 .user-profile-container {
     margin-top: 50px;
     width: max-content;
-
-
 }
 .user-profile-pic {
     width: 180px;
@@ -242,37 +245,106 @@ img{
     background-color: #b2adad;
     color: black;
 }
+.user-follow-btn{
+    background-color: #0095F6;
+    color: white;
+    padding: 2px 5px;
+    width: 150px;
+}
+.user-follow-btn:hover {
+    background-color: #0069d9;
+    color: white;
+
+}
 .followedby {
     font-size: 12px;
 }
-/*! end of create post style */
 .modal-backdrop {
     display: none !important;
-}/* TODO: Login Form */
-.or-container {
-    text-align: center;
-    position: relative;
+}
+/* Start of followers / followings */
+.modal-header-followers{
+    display: flex;
+    margin-bottom: 5px;
+    border-bottom: 2px solid #f5f5f5;
+}
+.modal-footer {
+    border-top: none; /* Remove the border bottom */
+}
+.followersList .followerSearch{
+    padding: 10px;
+    border-radius: 5px;
+    width: 100%;
+    border: none;
+    outline: none;
+    background-color: #efefef;
+}
+.follower-image{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+.following-btn{
+    background-color: #EFEFEF;
+    color: black;
+    padding: 2px 5px;
+    width: 100px;
+    border-radius: 5px;
+    border: none;
+}
+.following-btn:hover {
+    background-color: #b2adad;
+    color: black;
+}
+/* end of followers / followings */
+.like,.comment,.save,.com-like{
+
+    cursor: pointer;
+}
+.col-red{
+    color:red;
+}
+/* start blocking list */
+.blockBtn{
+    background-color: transparent;
+    cursor: pointer;
+    color: #f1737d;
+    padding: 5px;
+    width: 100%;
+    border-radius: 5px;
+    border: none;
+    border-bottom: 2px solid #f5f5f5;
+}
+.CancelBtn{
+    cursor: pointer;
+    color: black;
+    padding: 5px;
+    width: 100%;
+    border-radius: 5px;
+    border: none;
 }
 
-.or-word:before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: -5px;
-    width: 150px;
-    height: 1px;
-    background-color: lightslategray;
+
+.imageCarousel {
+    width: 300px;
 }
 
-.or-word:after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    right: -5px;
-    width: 150px;
-    height: 1px;
-    background-color: lightslategray;
+#uploadedImageContainer {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+#uploadedImageContainer img {
+    max-width: 100%;
+    height: auto;
 }
+.carousel-images-width, .each-carousel-img {
+    width: 300px;
+}
+/* end of create post style */
+
 /* TODO: Login Form */
 
 /* ? post Desc Sec */
@@ -281,6 +353,7 @@ img{
 }
 .icon{
     width: 25px;
+    cursor: pointer;
 }
 .followBtn{
     text-decoration: none;
@@ -313,12 +386,10 @@ img{
 #postButton:hover{
     color:#003787;
 }
-/* ? */
+/*!-------------------------------------------------- */
 
-.like,.comment,.save{
+.com-input:focus{
+    border: 5px;
+    outline: none
 
-    cursor: pointer;
-}
-.col-red{
-    color:red;
 }

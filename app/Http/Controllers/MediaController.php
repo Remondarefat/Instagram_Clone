@@ -33,7 +33,7 @@ class MediaController extends Controller
     public function store(Request $request)
     {
        $data = $request->validate([
-            'media_url.*' => 'required',
+            'croppedImageDataUrls' => 'required',
             'post_id' => 'required',
         ]);
 }

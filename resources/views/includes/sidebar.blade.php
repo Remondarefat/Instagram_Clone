@@ -4,7 +4,7 @@
         <!-- Navigation tabs -->
         <!--Instagram logo-->
         <div class="mb-5">
-            <a class="navbar-brand" href="href="{{ route('home') }}>
+            <a class="navbar-brand" href="{{ route('home') }}">
                 <svg aria-label="Instagram" class="mt-4" fill="currentColor" height="29" role="img"
                     viewBox="32 4 113 32" width="103">
                     <title>Instagram</title>
@@ -70,7 +70,8 @@
                     d="M9.763 17.664a.908.908 0 0 1-.454-.787V11.63a.909.909 0 0 1 1.364-.788l4.545 2.624a.909.909 0 0 1 0 1.575l-4.545 2.624a.91.91 0 0 1-.91 0Z"
                     fill-rule="evenodd"></path>
             </svg>
-            <a class="text-decoration-none text-dark" href="">Reels</a>
+            <a class="text-decoration-none text-dark" href="#">Reels</a>
+
         </div>
         <!-- Messenger Tab -->
         <div class="d-flex gap-3 align-items-center px-2 py-3 mb-3 nav-tab nav-tab-messenger">
@@ -84,7 +85,8 @@
                     d="M17.79 10.132a.659.659 0 0 0-.962-.873l-2.556 2.05a.63.63 0 0 1-.758.002L11.06 9.47a1.576 1.576 0 0 0-2.277.42l-2.567 3.98a.659.659 0 0 0 .961.875l2.556-2.049a.63.63 0 0 1 .759-.002l2.452 1.84a1.576 1.576 0 0 0 2.278-.42Z"
                     fill-rule="evenodd"></path>
             </svg>
-            <a class="text-decoration-none text-dark" href="">Messenger</a>
+            <a class="text-decoration-none text-dark" href="#">
+                Messenger</a>
         </div>
         <!-- Notifications Tab -->
         <div class="d-flex gap-3 align-items-center px-2 py-3 mb-3 nav-tab nav-tab-notifications">
@@ -111,7 +113,8 @@
                 <line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                     stroke-width="2" x1="12.003" x2="12.003" y1="6.545" y2="17.455"></line>
             </svg>
-            <button class="create-btn" data-toggle="modal" data-target="#exampleModalCenter">Create</button>
+            <a class="text-decoration-none text-dark" href="" data-toggle="modal"
+                data-target="#exampleModalCenter">Create</a>
         </div>
         @include('includes.createpost')
         <!-- Profile Tab -->
@@ -162,21 +165,22 @@
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit" class="settings-list settings-list-logout ">Logout</button>
-                </form>        
+                </form>
             </ul>
         </div>
 
-
-        <!-- Additional Tab Content -->
+        <!-- Additional Tab Content --> 
         <div class="d-none">
             <div class="searchTabContent">
                 <h3>Search</h3>
+                <form action="{{url('/search')}}" method="get">
                 <input type="text" placeholder="Search" name="search">
                 <div class="searchInfo d-flex flex-column">
                     <p class="headline">Recent</p>
                     <p class=" text-muted mx-auto my-5">No recent searches</p>
                 </div>
+                </form>
             </div>
         </div>
-    </div>
+    </div> 
 </div>

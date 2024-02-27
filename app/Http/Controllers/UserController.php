@@ -36,11 +36,8 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-         $user= User::find($id);
+        $user = User::find($id);
         return view('profile.user', ['user' => $user]);
-
-
-
     }
 
     /**
@@ -66,4 +63,5 @@ class UserController extends Controller
     {
         //
     }
+
 }
