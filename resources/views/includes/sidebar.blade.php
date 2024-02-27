@@ -35,7 +35,7 @@
                 <line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                     stroke-width="2" x1="16.511" x2="22" y1="16.511" y2="22"></line>
             </svg>
-            <a class="text-decoration-none text-dark" href="#">Search</a>
+            <a id="search" class="text-decoration-none text-dark" href="">Search</a>
         </div>
         <!-- Explore Tab -->
         <div class="d-flex gap-3 align-items-center px-2 py-3 mb-3 nav-tab nav-tab-explore">
@@ -184,12 +184,12 @@
         <div class="d-none">
             <div class="searchTabContent">
                 <h3>Search</h3>
-                <form action="{{ url('/search') }}" method="get">
-                    <input type="text" placeholder="Search" name="search">
-                    <div class="searchInfo d-flex flex-column">
-                        <p class="headline">Recent</p>
-                        <p class=" text-muted mx-auto my-5">No recent searches</p>
-                    </div>
+                <form id="search-form"  method="get">
+                <input type="text" placeholder="Search" name="search">
+                <div class="searchInfo d-flex flex-column">
+                    <p class="headline">Recent</p>
+                    <p class=" text-muted mx-auto my-5">No recent searches</p>
+                </div>
                 </form>
             </div>
         </div>
