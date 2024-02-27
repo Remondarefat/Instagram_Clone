@@ -12,11 +12,18 @@ class CommentLikeController extends Controller
         $postid=$request->input('postid');
         $commentId=$request->input('commentId');
         $userid=Auth::user()->id;
-        CommentLike::create([
-            'user_id'=>$userid,
-            'post_id'=>$postid,
-            'comment_id'=>$commentId
-        ]);
+        $comment = commentlike::where('user_id', $userid)->where('post_id', $postid)->where('comment_id', $commentId)->first();
+
+        if ($comment) {
+            $comment->delete();
+        } else {
+            CommentLike::create([
+                'user_id'=>$userid,
+                'post_id'=>$postid,
+                'comment_id'=>$commentId
+            ]);
+        }
+
         return response()->json(['message' => "Hello from PHP method! $postid $userid $commentId"]);
     }
 }
