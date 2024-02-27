@@ -15,8 +15,8 @@ function displayImage(event) {
         }
     }
 }
-
 function handleImage(file) {
+    //  built-in object that allows reading the contents of files asynchronously
     let reader = new FileReader();
     reader.onload = function () {
         let output = '<div class="col-md-4 mb-3"><img class="cropped-image" src="' + reader.result + '" class="img-fluid"></div>';
@@ -35,8 +35,8 @@ function handleImage(file) {
         });
         croppers.push(cropper);
     }
+    // generate a data URL representing the file's data
     reader.readAsDataURL(file);
-
     document.getElementById("modalBodyText").style.display = "none";
     document.getElementById("icon").style.display = "none";
     document.getElementById("upload-btn").style.display = "none";
@@ -46,12 +46,15 @@ function handleImage(file) {
 }
 
 function handleVideo(file) {
-    let video = document.createElement('video');
-    video.src = URL.createObjectURL(file); 
-    video.style.width = '100%';
-    // display the video controls
-    video.controls = true;
-    document.getElementById('uploadedImageContainer').appendChild(video);
+    let reader = new FileReader();
+    reader.onload = function () {
+        let videoDataURL = reader.result;
+        document.getElementById('uploadedImageContainer').insertAdjacentHTML("beforeend", '<video src="' + videoDataURL + '" controls style="width: 100%;"></video>');
+
+        videoURLs.push(videoDataURL);
+        videoDataURL.style.width = "100%";
+    };
+    reader.readAsDataURL(file);
 
     document.getElementById('modalBodyText').style.display = 'none';
     document.getElementById('icon').style.display = 'none';
@@ -59,15 +62,7 @@ function handleVideo(file) {
     document.getElementById('cropButtonUpload').style.display = 'block';
     document.getElementById('back').style.display = 'block';
     document.getElementById('exampleModalLongTitle').innerText = 'Upload Video';
-// video = variable ,,,,, video.src = URL.createObjectURL(file)
-    if (video && video.src) {
-        videoURLs.push(video.src);
-    } else {
-        console.error('Invalid video file');
-    }
 }
-
-
 function initCropper() {
     croppers.forEach(function (cropper) {
         cropper.enable();
@@ -81,7 +76,6 @@ function initCropper() {
         croppers.push(cropper);
     });
 }
-
 function populateCroppedImageData() {
     croppedImageDataURLs = [];
 
@@ -142,7 +136,6 @@ document.getElementById("shareButton").addEventListener("click", function () {
     populateCroppedImageData();
     document.getElementById("croppedImageDataUrls").value = JSON.stringify(croppedImageDataURLs);
     document.getElementById("videoDataUrls").value = JSON.stringify(videoURLs);
-
     const hashtagInput = document.getElementById("hashtag");
     const hashtags = hashtagInput.value.trim();
     var firstWord = hashtags.split(' ')[0]
@@ -165,3 +158,51 @@ document.getElementById('backPostModal').addEventListener('click', function () {
 document.getElementById('back').addEventListener('click', function () {
     $('#exampleModalCenter').modal('hide');
 });
+// Drag and Drop in the modal body
+let modalBody = document.getElementById('modalBody');
+let dragDropArea = document.getElementById('dragDropArea');
+modalBody.addEventListener('dragenter', function (e) {
+    e.preventDefault();
+    dragDropArea.classList.add('dragover');
+});
+modalBody.addEventListener('dragover', function (e) {
+    e.preventDefault();
+    dragDropArea.classList.add('dragover');
+});
+modalBody.addEventListener('dragleave', function () {
+    dragDropArea.classList.remove('dragover');
+});
+modalBody.addEventListener('drop', function (e) {
+    e.preventDefault();
+    dragDropArea.classList.remove('dragover');
+    var files = e.dataTransfer.files;
+    if (files.length > 0) {
+        displayImageFromDrop(files[0]);
+    }
+});
+function displayImageFromDrop(file) {
+    let reader = new FileReader();
+    reader.onload = function () {
+        let output = '<img class="cropped-image" src="' + reader.result + '" class="img-fluid" alt="Uploaded Image">';
+        document.getElementById('uploadedImageContainer').innerHTML += output;
+        document.getElementById('modalBodyText').style.display = 'none';
+        document.getElementById('icon').style.display = 'none';
+        document.getElementById('upload-btn').style.display = 'none';
+        document.getElementById('cropButtonUpload').style.display = 'block';
+        document.getElementById('back').style.display = 'block';
+        document.getElementById('exampleModalLongTitle').innerText = 'Crop Image';
+        // Initialize cropper for the dropped image
+        var image = document.querySelector('.cropped-image:last-child');
+        var cropper = new Cropper(image, {
+            aspectRatio: 1,
+            viewMode: 1,
+            guides: false,
+            autoCropArea: 1,
+            responsive: true,
+            background: false,
+            dragMode: 'move'
+        });
+        croppers.push(cropper);
+    };
+    reader.readAsDataURL(file);
+}

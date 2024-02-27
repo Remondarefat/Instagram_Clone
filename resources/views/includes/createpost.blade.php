@@ -57,7 +57,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="container-fluid">
-                        <div class="row">
+                        <div class="row mb-5">
                             <div class="col-md-6">
                                 <div id="imageCarousel" class="carousel slide carousel-images-width" data-bs-ride="carousel">
                                     <div class="carousel-inner d-flex" >
