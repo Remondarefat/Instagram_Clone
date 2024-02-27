@@ -12,16 +12,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = auth()->user();
-
-        if ($user) {
-            // Now explicitly checking if user is not null
-            $user->load(['posts', 'posts.media']); // This assumes you have 'posts' and 'posts.media' relationships defined
-            return view('posts.profile', compact('user'));
-        }
-
-        // Handle cases where there is no authenticated user, perhaps redirect or show an error
-        return redirect()->route('login')->with('error', 'You must be logged in to view this page.');
+        $users = User::all();
+        return view('posts.home' , compact('users'));
     }
 
     /**
@@ -48,7 +40,7 @@ class UserController extends Controller
         $user = User::find($id);
         return view('profile.user', ['user' => $user]);
     }
-    
+
     /**
      * Show the form for editing the specified resource.
      */
@@ -73,4 +65,16 @@ class UserController extends Controller
         //
     }
 
+    // public function search (Request $request) {
+    //     $search = $request->search;
+    //     $users = User::where(function ($query) use ($search) {
+    //         $query->where('username', 'like', "%$search%");
+    //     })
+    //     ->get();
+    //     if ($users->count() === 1) {
+    //         return redirect()->route('user', ['id' => $users->first()->id]);
+    //     }
+
+    //     return view('includes.search')->with('users', $users)->render();
+    // }
 }
