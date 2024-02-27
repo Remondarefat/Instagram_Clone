@@ -66,16 +66,6 @@
                         <i class="fa-solid fa-bookmark h4"></i>
                     </div>
                     <div class="d-flex align-items-center flex-column">
-                        <div class="d-flex align-items-start mt-md-2">
-                            @if ($post->user->avatar==null)
-                                <img class="rounded-circle im-com me-md-2" src="{{'default.jpg'}}" alt="">
-                            @else
-                                <img class="rounded-circle im-com me-md-2" src="{{'rrr.jpg'}}" alt="">
-                            @endif
-                            <h6 class=" p-0 m-0 bold mt-md-1">{{$post->user->username}}</h6>
-                            <h6 class=" p-0 m-0 bold mt-md-1 postid d-none">{{$post->id}}</h6>
-                            <p class="p-0 m-0 ms-md-2">{{ implode(' #', explode(' ', $post->hashtag)) }} - {{ $post->caption }}</p>
-                        </div>
                         @php
                             $counter = 0; // Initialize the counter
                         @endphp
@@ -197,9 +187,5 @@
        });
    });
 
-
-   // Call the PHP method when needed
-
 </script>
 @endsection
-

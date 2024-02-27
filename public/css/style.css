@@ -334,3 +334,28 @@
     outline: none
 
 }
+/* user profile */
+.pro-img-col {
+    padding: 4px;
+}
+
+.img-wrapper {
+    position: relative;
+    overflow: hidden;
+}
+
+.img-wrapper img {
+    transition: transform 0.5s ease;
+}
+
+.img-wrapper:hover .post-image {
+    transform: scale(1.05);
+}
+
+.multi-image-icon {
+    position: absolute;
+    top: 8px; /* Adjust as needed */
+    right: 8px; /* Adjust as needed */
+    color: #fff; /* Adjust color as needed */
+    font-size: 20px; /* Adjust size as needed */
+}
