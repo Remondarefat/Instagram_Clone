@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', $user->username)
+@section('title', "$user->fullname  (@$user->username)-")
 @section('content')
     <div class="user-profile-container d-flex">
         <div class="image align-self-center">

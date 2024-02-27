@@ -323,6 +323,8 @@
   #uploadedImageContainer img {
     max-width: 100%;
     height: auto;
+    max-width: 100%;
+    height: auto;
 }
 .carousel-images-width, .each-carousel-img {
     width: 300px;
@@ -331,8 +333,88 @@
 
 
 
+
+.pro-img-col{
+    padding: 1px;
+}
+
+.im-pro{
+    width: 150px;
+    height: 150px;
+}
 .com-input:focus{
     border: 5px;
     outline: none
 
+}
+/* user profile */
+.pro-img-col {
+    padding: 4px;
+}
+
+.img-wrapper {
+    position: relative;
+    overflow: hidden;
+}
+
+.img-wrapper img {
+    transition: transform 0.5s ease;
+}
+
+.img-wrapper:hover .post-image  {
+    transform: scale(1.05);
+}
+.post-video:hover   {
+    transform: scale(1.05);
+    transition: transform 0.5s ease;
+
+}
+
+.post-video, .post-image {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.video-icon i, .multi-image-icon {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 5px;
+    border-radius: 50%;
+    font-size: 20px;
+}
+.video-icon-overlay {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    color: rgb(255, 255, 255);
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 5px;
+    border-radius: 50%;
+    z-index: 2;
+}
+.img-wrapper {
+    position: relative;
+    width: 100%;
+    padding-top: 100%;
+    overflow: hidden;
+}
+
+.img-wrapper img, .img-wrapper video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+
+/* Hide native video controls */
+.post-video {
+    controls: false;
 }

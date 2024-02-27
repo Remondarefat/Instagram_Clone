@@ -249,9 +249,5 @@
        });
    });
 
-
-   // Call the PHP method when needed
-
 </script>
 @endsection
-
