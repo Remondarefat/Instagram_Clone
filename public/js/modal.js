@@ -222,9 +222,7 @@ document.addEventListener('DOMContentLoaded', function() {
         $("#imageCarousel").css("display", "none");
         $("#videoDataUrls").val('');
         $("#croppedImageDataUrls").val('');
-
     }
-    
     $("#closeModal").on('click', function () {
         clearModalData();
     })
