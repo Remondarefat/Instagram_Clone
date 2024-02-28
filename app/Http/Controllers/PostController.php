@@ -52,8 +52,9 @@ class PostController extends Controller
             $request->validate([
                 'caption' => 'string',
                 'hashtag' => 'array',
-                'croppedImageDataUrls.*' => 'required',
-            ]);
+                'croppedImageDataUrls.*' => 'required', 
+                'videoDataUrls.*' => 'required', 
+                        ]);
             $post = new Post();
             $post->caption = $request->caption;
             $post->hashtag = json_encode($request->hashtag);
@@ -81,6 +82,21 @@ foreach ($croppedImageDataUrls as $imageDataUrl) {
     $media->post_id = $post->id;
     $media->save();
 }
+   // Decode the JSON string containing videoDataUrls
+   $videoDataUrls = json_decode($request->videoDataUrls);
+
+   foreach ($videoDataUrls as $videoDataUrl) {
+       $videoDataUrl = preg_replace('#^data:video/\w+;base64,#i', '', $videoDataUrl);
+       $videoData = base64_decode($videoDataUrl);
+       $filename = uniqid() . '.mp4';
+       $path = public_path('images/' . $filename);
+       file_put_contents($path, $videoData);
+
+       $media = new Media();
+       $media->media_url = $filename;
+       $media->post_id = $post->id;
+       $media->save();
+   }
     return redirect()->back()->with('success', 'Post created successfully'); 
         }
      
@@ -107,6 +123,8 @@ foreach ($croppedImageDataUrls as $imageDataUrl) {
         //! Fetch comments associated with the post
         // dd($post->id);
         $comments = Comment::where('post_id', $post->id)->get();
+        // dd($post->user->username);
+        $likes = Like::where('post_id', $post->id)->get();
         // dd($user);
          //! Check if the user has already liked the post
         $user = auth()->user();
@@ -114,11 +132,12 @@ foreach ($croppedImageDataUrls as $imageDataUrl) {
         $existingLikeComment = CommentLike::where('user_id', $user->id)
         ->whereIn('comment_id', $comments->pluck('id')) // Check if user liked any comment in the collection
         ->first();
-
-        // dd($existingLikeComment);
-
+         // Check if the post is saved by the current user
+        // $isSavedByUser = $post->isSavedByUser($user->id);
+        
         return view("posts.postDesc",['post'=>$post,'user' => $user, "medias" => $medias
-        ,'existingLike' => $existingLike,'existingLikeComment' => $existingLikeComment,'comments' => $comments,'morePosts' => $morePosts]); // Pass more posts to the view]);
+        ,'existingLike' => $existingLike,'existingLikeComment' => $existingLikeComment,'comments' => $comments,'morePosts' => $morePosts
+        ,'likes'=>$likes]); // Pass more posts to the view]);
     }
 
     /**

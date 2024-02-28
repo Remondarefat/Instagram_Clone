@@ -1,6 +1,6 @@
 @extends('layouts.main') 
 @section('content')
-            <div class="row mt-4 border  ">
+            <div class="row mt-4 border   ">
                 <div class="col-md-7  p-0 postDesc ">
                     <div id="carouselExample" class="carousel slide text-center cur">
                         <div class="carousel-inner">
@@ -25,8 +25,12 @@
                 <div class="col-md-5 pt-4 pb-3 postDesc">
                     <div class="d-flex justify-content-between align-content-center" >
                         <div>
-                            <img src="{{$user->avtar}}" class="post-img rounded-circle">
-                            <span class="fw-bolder ps-1">{{$user->username}}</span>
+                        @if ($post->user->avatar==null)
+                            <img class="rounded-circle im-com me-md-2" src="{{asset('default.jpg')}}" alt="">
+                        @else
+                            <img class="rounded-circle im-com me-md-2" src="{{asset($post->user->avatar)}}" alt="">
+                        @endif
+                            <span class="fw-bolder ps-1">{{$post->user->username}}</span>
                             <span></sapn>
                             <a href="#" class="fw-bold followBtn ms-2 ">. Following</a>
                         </div>
@@ -40,35 +44,35 @@
                     <div class="comments_sec pe-3 ">
                         <!-- Display Comments -->
                         @if(!$comments->isEmpty())
-                        @foreach($comments as $comment)
-                            <div class="comments_container mt-1 d-flex align-content-center">
-                                <img src="{{ $comment->user->avatar }}" class="post-img rounded-circle">
-                                <div class="ps-2 w-100">
-                                    <span class="fw-bolder">{{ $user->username }}</span>
-                                    <span class="text-muted ps-1">{{ $comment->created_at->diffForHumans() }}</span>
-                                    <div>
-                                        <div class="d-flex justify-content-between">
-                                            <p>{{ $comment->comment_body }}</p>
-                                            <form action="{{ route('toggleCommentLike', $comment->id) }}" method="post">
-                                                @csrf
-                                                <button type="submit" class="border-0 bg-transparent">
-                                                        @if($existingLikeComment && $existingLikeComment->comment_id == $comment->id)
-                                                            <i class="fa-solid fs-4 fa-heart" style="color: #ff0000;"></i>   
-                                                            @else
-                                                            <i class="fa-regular fs-4 fa-heart"></i>
-                                                        @endif
-                                                </button>
-                                            </form>
-                                        </div>
-                                        <span class="ps-6  text-muted">Reply</span>
+                    @foreach($comments as $comment)
+                        <div class="comments_container mt-1 d-flex align-content-center">
+                            <img src="{{ $comment->user->avatar }}" class="post-img rounded-circle">
+                            <div class="ps-2 w-100">
+                                <span class="fw-bolder">{{ $comment->user->username }}</span> <!-- Change to $comment->user->name -->
+                                <span class="text-muted ps-1">{{ $comment->created_at->diffForHumans() }}</span>
+                                <div>
+                                    <div class="d-flex justify-content-between">
+                                        <p>{{ $comment->comment_body }}</p>
+                                        <form action="{{ route('toggleCommentLike', $comment->id) }}" method="post">
+                                            @csrf
+                                            <button type="submit" class="border-0 bg-transparent">
+                                                @if($existingLikeComment && $existingLikeComment->comment_id == $comment->id)
+                                                    <i class="fa-solid fs-4 fa-heart" style="color: #ff0000;"></i>   
+                                                @else
+                                                    <i class="fa-regular fs-4 fa-heart"></i>
+                                                @endif
+                                            </button>
+                                        </form>
                                     </div>
+                                    <span class="ps-6  text-muted">Reply</span>
                                 </div>
                             </div>
-                        @endforeach
-                        @endif
+                        </div>
+                    @endforeach
+                @endif
                     </div>
                     <hr>
-                    <div class="likes_Sec "> 
+                    <div class="likes_Sec"> 
                         <div class="d-flex justify-content-between">
                             <div class="d-flex align-items-center">
                                     <form  action="{{ route('post.toggle-like', $post->id) }}" method="post">
@@ -84,17 +88,65 @@
                                     </form>
                                     <label for="commentInput"><img src="{{ asset('Messenger.svg') }}" class="icon ms-4 "></label>
                             </div>
-                            <img src="{{ asset('Bookmark.svg') }}" class="icon">
+                            <!------------------------------- SavedPosts  Button ------------------>
+                            @auth
+                            @if (auth()->user()->isSavedByUser($post->id))
+                                <!-- {{-- User has saved the post, show unsave button --}} -->
+                                <form action="{{ route('saved-posts.destroy', $post->id) }}" method="post"
+                                id="unsaveForm{{ $post->id }}">
+                                <input type="hidden" name="post_id" value="{{ $post->id }}">
+                                <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="border-0 p-0" style="background:none;">
+                                    <span class="save-btn">
+                                        <svg aria-label="Save" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor"
+                                            height="24" role="img" viewBox="0 0 24 24" width="24">
+                                            <title>Save</title>
+                                            <polygon fill="#000" points="20 21 12 13.44 4 21 4 3 20 3 20 21"
+                                                stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                stroke-width="2"></polygon>
+                                        </svg>
+                                    </span>
+                                </button>
+                            </form>
+                            @else
+                            <form action="{{ route('saved.posts.store', ['id' => $post->id] ) }}" method="post"
+                                id="saveForm{{ $post->id }}">
+                                <input type="hidden" name="post_id" value="{{ $post->id }}">
+                                <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+                                @csrf
+                                <button type="submit" class="border-0 p-0" style="background:none;">
+                                    <span class="save-btn">
+                                        <svg aria-label="Save" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor"
+                                            height="24" role="img" viewBox="0 0 24 24" width="24">
+                                            <title>Save</title>
+                                            <polygon fill="none" points="20 21 12 13.44 4 21 4 3 20 3 20 21"
+                                                stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                stroke-width="2"></polygon>
+                                        </svg>
+                                    </span>
+                                </button>
+                            </form>
+                            
+                            
+                            @endif
+                            @endauth
+                            <!-- ------------------------------------------------------------- -->
                         </div>
                     </div>
                     <div class="mt-2 d-flex align-content-center ">
                             <img src="{{$user->avatar}}" class="likes-img rounded-circle">
-                            <span  class=" fw-bold ps-1">60 likes</span>
+                        @foreach($likes as $like)
+                            <span  class=" fw-bold ps-1">{{$likes->count()}} likes</span>
+                            
+                            <span class="text-muted ps-1 ">{{ $like->created_at->diffForHumans() }}</span>
+                        @endforeach
                     </div>
-                    <p>1 day ago</p>
-                    <div class=" mt-1 d-flex  ">
+                    
+                    <div class=" mt-2 d-flex  ">
                             <img src="{{ asset('userIcon.webp') }}" class=" rounded-circle" style="width:40px;">
-                                <div class="ps-3 w-100">
+                                <div class="ps-3 w-100 ">
                                         <!----------- Comment Form ----------->
                                     @if(auth()->check())
                                     <form id="commentForm" action="{{ route('comments.store') }}" method="POST">
@@ -110,20 +162,20 @@
                                         <p>You must be logged in to comment.</p>
                                     @endif
                                 </div>
-                        </div>
+                    </div>
                 </div>
             </div>
             <!-- Existing code to display the current post -->
             <!-- Add a section for more posts by the same user -->
             @if ($morePosts->isNotEmpty())
                 <div class="mt-3">
-                    <span>More posts from <span class="fw-bold">{{ $user->username }}</span></span>
+                    <span>More posts from <span class="fw-bold">{{ $post->user->username }}</span></span>
                 </div>
                 <div class="row mt-2 g-1">
                     @foreach ($morePosts as $morePost)
                         <div class="col-md-4">
                             @foreach ($morePost->media as $media)
-                                <img src="{{ asset("/images/$media->media_url")}}" alt="Media" class="w-100">
+                            <a href="{{route('postDesc.show',$post->id)}}"><img src="{{ asset("/images/$media->media_url")}}" alt="Media" class="w-100"></a>
                             @endforeach
                             <!-- Add any additional content you want to display -->
                         </div>

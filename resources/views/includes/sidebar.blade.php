@@ -35,7 +35,7 @@
                 <line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                     stroke-width="2" x1="16.511" x2="22" y1="16.511" y2="22"></line>
             </svg>
-            <a class="text-decoration-none text-dark" href="#">Search</a>
+            <a id="search" class="text-decoration-none text-dark" href="">Search</a>
         </div>
         <!-- Explore Tab -->
         <div class="d-flex gap-3 align-items-center px-2 py-3 mb-3 nav-tab nav-tab-explore">
@@ -152,7 +152,18 @@
                     </svg>
                     <a class="text-decoration-none text-dark" href="#">Settings</a>
                 </li>
-                <li class="settings-list mb-3">
+                <li class="settings-list">
+                    <svg aria-label=""fill="currentColor" class="me-2" height="18" role="img"
+                        viewBox="0 0 24 24" width="18">
+                        <title></title>
+                        <path
+                            d="M20.153 20.106A11.493 11.493 0 0 0 3.893 3.858c-.007.007-.016.009-.023.016s-.009.016-.015.023a11.493 11.493 0 0 0 16.247 16.26c.01-.009.022-.012.03-.02.01-.01.012-.022.021-.031Zm1.348-8.102a9.451 9.451 0 0 1-2.119 5.968L6.033 4.622a9.49 9.49 0 0 1 15.468 7.382Zm-19 0a9.451 9.451 0 0 1 2.118-5.967l13.35 13.35A9.49 9.49 0 0 1 2.5 12.003Z">
+                        </path>
+                    </svg>
+                    <a class="text-decoration-none text-dark" data-bs-toggle="modal"
+                        data-bs-target="#exampleModalBlock" href="#">Blocked Users</a>
+                </li>
+                <li class="settings-list mb-5">
                     <svg aria-label="Saved" class="me-2" fill="currentColor" height="18" role="img"
                         viewBox="0 0 24 24" width="18">
                         <title>Saved</title>
@@ -164,16 +175,16 @@
                 </li>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <button type="submit" class="settings-list settings-list-logout ">Logout</button>
+                    <button type="submit" class="settings-list settings-list-logout w-100 mx-auto ">Logout</button>
                 </form>
             </ul>
         </div>
 
-        <!-- Additional Tab Content --> 
+        <!-- Additional Tab Content -->
         <div class="d-none">
             <div class="searchTabContent">
                 <h3>Search</h3>
-                <form action="{{url('/search')}}" method="get">
+                <form id="search-form"  method="get">
                 <input type="text" placeholder="Search" name="search">
                 <div class="searchInfo d-flex flex-column">
                     <p class="headline">Recent</p>
@@ -182,5 +193,37 @@
                 </form>
             </div>
         </div>
-    </div> 
+    </div>
+</div>
+{{-- Blocked Users --}}
+<div class="modal fade" id="exampleModalBlock" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header-followers p-2">
+                <h1 class="modal-title fs-6 fw-bold mx-auto my-auto" id="exampleModalLabel">Blocked Users</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @foreach (Auth::user()->block as $blockedUser)
+                    <div class="row follower-item align-items-center w-100">
+                        <div class="col-auto">
+                            <img src="{{ $blockedUser->avatar }}" alt=""
+                                class="follower-image ms-1 bg-black">
+                        </div>
+                        <div class="col text-start">
+                            <p class="d-inline fw-bold">{{ $blockedUser->username }}</p>
+                            <p class="text-muted mb-0">{{ $blockedUser->fullname }}</p>
+                        </div>
+                        <div class="col-auto ms-auto">
+                            <form action="{{ route('users.unblock', $blockedUser->id) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn user-profile-btn me-3">Unblock</button>
+                            </form>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
 </div>

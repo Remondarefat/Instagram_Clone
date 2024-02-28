@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\PostSaved;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Post extends Model
 {
@@ -20,13 +21,17 @@ class Post extends Model
     public function media(){
         return $this->hasMany(Media::class);
     }
-    public function post_saved(){
-        return $this->hasMany(Post_saved::class);
-    }
+    // public function savedPosts()
+    // {
+    //     return $this->hasMany(PostSaved::class);
+    // }
     public function like(){
         return $this->hasMany(Like::class);
     }
     public function comment(){
         return $this->hasMany(Comment::class);
     }
+    // !----------------------------
+    
+
 }
