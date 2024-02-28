@@ -42,10 +42,12 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        
             $request->validate([
                 'caption' => 'string',
                 'hashtag_name' => 'string',
                 'croppedImageDataUrls.*' => 'required',
+                'videoDataUrls.*' => 'required',
             ]);
             $post = new Post();
             $post->caption = $request->caption;
@@ -61,52 +63,68 @@ $croppedImageDataUrls = json_decode($request->croppedImageDataUrls);
 foreach ($croppedImageDataUrls as $imageDataUrl) {
     // Remove the data URI scheme from the image URL
     $imageDataUrl = preg_replace('#^data:image/\w+;base64,#i', '', $imageDataUrl);
-        // Decode the base64-encoded image data into binary data
+    // Decode the base64-encoded image data into binary data
     $imageData = base64_decode($imageDataUrl);
     // Generate a unique filename for the image
+
     $filename = uniqid() . '.png';
-    // Store the image file in the public/images directory
-    $path = public_path('images/' . $filename);
-    // Save the image file to the server
-    file_put_contents($path, $imageData);
+// Store the image data directly in the storage directory
+$path = Storage::put('public/images/' . $filename, $imageData);
+
+$path = str_replace('public/', 'storage/', $path);
 
     // Save the image path to the database
     $media = new Media();
     $media->media_url = $filename;
-
     $media->post_id = $post->id;
     $media->save();
+}
 
-    if ($request->has('hashtag_name')) {
-        $hashtags = $request['hashtag_name']; // Your input string
-        $hashtagsArray = explode(' ', $hashtags);
-        foreach ($hashtagsArray as $tag) {
-            $hashtag = new Hashtag();
-            $hashtag->hashtag_name = $tag;
-            $hashtag->post_id = $post->id;
-            $hashtag->save();
-        }
-    // }
+// Decode the JSON string containing videoDataUrls
+$videoDataUrls = json_decode($request->videoDataUrls);
+
+foreach ($videoDataUrls as $videoDataUrl) {
+
+    $videoDataUrl = preg_replace('#^data:video/\w+;base64,#i', '', $videoDataUrl);
+    $videoData = base64_decode($videoDataUrl);
+    $filename = uniqid() . '.mp4';
+    $path = Storage::put('public/images/' . $filename, $videoData);
+    $path = str_replace('public/', 'storage/', $path);
+    $media = new Media();
+    $media->media_url = $filename;
+    $media->post_id = $post->id;
+    $media->save();
+}
+
+if ($request->has('hashtag_name')) {
+    $hashtags = $request['hashtag_name']; // Your input string
+    $hashtagsArray = explode(' ', $hashtags);
+    foreach ($hashtagsArray as $tag) {
+        $hashtag = new Hashtag();
+        $hashtag->hashtag_name = $tag;
+        $hashtag->post_id = $post->id;
+        $hashtag->save();
     }
+// }
 }
     return redirect()->back()->with('success', 'Post created successfully');
         }
 
 
-        public function getPostsByHashtag($hashtag)
-{
-    // Find the hashtag by name
-    $hashtagModel = Hashtag::where('name', $hashtag)->first();
+//         public function getPostsByHashtag($hashtag)
+// {
+//     // Find the hashtag by name
+//     $hashtagModel = Hashtag::where('name', $hashtag)->first();
 
-    // If the hashtag exists, retrieve posts associated with it
-    if ($hashtagModel) {
-        $posts = $hashtagModel->posts()->get();
-        return view('posts.by_hashtag', compact('posts'));
-    } else {
-        // Handle case when hashtag doesn't exist
-        // For example, return a message or redirect
-    }
-}
+//     // If the hashtag exists, retrieve posts associated with it
+//     if ($hashtagModel) {
+//         $posts = $hashtagModel->posts()->get();
+//         return view('posts.by_hashtag', compact('posts'));
+//     } else {
+//         // Handle case when hashtag doesn't exist
+//         // For example, return a message or redirect
+//     }
+// }
 
 
     /**

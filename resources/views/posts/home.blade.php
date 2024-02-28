@@ -140,7 +140,7 @@
                         @endforeach
                         @if ($post->hashtags()->count() > 0)
                             <div>
-                                
+
                             </div>
                         @endif
                     </div>
@@ -164,7 +164,69 @@
         }
     }
     $(document).ready(function() {
-        // JavaScript AJAX functions
-    });
+       $('.like').click(function() {
+        $(this).toggleClass('col-red');
+        let postid=$(this).parent().parent().parent().find('.postid').text();
+        console.log(postid);
+           $.ajax({
+        //    url:''
+           url: '{{ route('like.post') }}', // Use the route() helper to generate the URL
+           method: 'GET',
+           dataType: 'json',
+           data:{'id':postid},
+           success: function(response){
+           },
+           error: function(error) {
+               console.error('Error calling PHP method:', error);
+           }
+       });
+       });
+
+
+       $('.post-comment').click(function(){
+        let postBtn=this;
+        let commentInput=$(this).parent().find('.com-input');
+        let postid=$(this).parent().parent().find('.postid').text();
+        console.log(postid);
+        let postcomment=commentInput.val();
+        console.log(postcomment);
+        $.ajax({
+           url: '{{ route('comment.post') }}', // Use the route() helper to generate the URL
+           method: 'GET',
+           dataType: 'json',
+           data:{'id':postid,'postcomment':postcomment},
+           success: function(response){
+            $(postBtn).addClass('d-none');
+            $(commentInput).val('');
+           },
+           error: function(error) {
+               console.error('Error calling PHP method:', error);
+           }
+       });
+       });
+
+
+       $('.com-like').click(function(){
+        $(this).toggleClass('col-red');
+        let commentId=$(this).parent().find('.com-id').text();
+        let postid=$(this).parent().parent().parent().find('.postid').text();
+        $.ajax({
+            url:'{{route('comment.like')}}',
+            method:'GET',
+            dataType:'json',
+            data:{
+                'postid':postid,
+                'commentId':commentId
+            },
+            success:function(response){
+                console.log(response.message);
+            },
+            error:function(error){
+                console.error('Error calling PHP method:', error);
+            }
+        });
+       });
+   });
+
 </script>
 @endsection

@@ -2,15 +2,19 @@
 <!-- Modal for uploading image -->
 
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
+    <div class="modal-dialog modal-dialog-centered d-flex justify-content-center firstModal" role="document">
+        <div class="modal-content ">
             <div class="modal-header d-flex align-items-center justify-content-center">
                 <a id="back" class="me-5" style="display: none;">
                     <i class="fa-solid fa-arrow-left" style="color: #000000;"></i>
                 </a>
-                <h5 class="modal-title ps-5 pe-5" id="exampleModalLongTitle">Create new post</h5>
+                <!-- <div class="d-flex align-items-center"> -->
+                    <h5 class="modal-title ps-5 pe-5" id="exampleModalLongTitle">Create new post</h5>
+                <!-- </div> -->
                 <div class="d-flex align-items-end">
                     <a id="cropButtonUpload" class="ms-5" style="display: none;" >Next</a>
+                    <button type="button" id="closeModal" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="padding-left: 15px;"></button>
+
                 </div>
             </div>
             <div class="modal-body modal-height d-flex justify-content-center align-items-center flex-column" id="modalBody">
@@ -31,6 +35,7 @@
                     <p id="modalBodyText">Drag photos and videos here</p>
                     <label for="file-upload" class="btn btn-primary" id="upload-btn">Select from computer</label>
                     <input id="file-upload" type="file" name="images[]" style="display: none;" onchange="displayImage(event)" accept="image/*,video/*" multiple>
+                    
                 </div>
 
                 <!-- Display uploaded image -->
@@ -46,22 +51,25 @@
             @csrf
             <div class="modal-content">
                 <div class="modal-header">
+
                     <a id="backPostModal" class="me-5">
                         <i class="fa-solid fa-arrow-left" style="color: #000000;"></i>
                     </a>
                     <h5 class="modal-title" id="postModalTitle">Create New Post</h5>
                     <div class="d-flex align-items-end">
                         <button type="submit" id="shareButton" class="ms-5">Share</button>
+                        <button type="button"  id="closeModal" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="padding-left: 15px;"></button>
+
                     </div>
                 </div>
                 <div class="modal-body">
                     <div class="container-fluid">
-                        <div class="row">
+                        <div class="row mb-5">
                             <div class="col-md-6">
                                 <div id="imageCarousel" class="carousel slide carousel-images-width" data-bs-ride="carousel">
                                     <div class="carousel-inner d-flex" >
-                                                        </div>
-                                                        <a class="carousel-control-prev"href="#imageCarousel" role="button" data-slide="prev">
+                                     </div>
+                            <a class="carousel-control-prev"href="#imageCarousel" role="button" data-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                             <span class="sr-only">Previous</span>
                         </a>
@@ -70,6 +78,8 @@
                             <span class="sr-only">Next</span>
                         </a>
                                 </div>
+                                <div id="videoContainer" style="display: none;"></div>
+
                             </div>
                             <div class="col-md-5 ms-5">
                                 <div class="user d-flex mb-2">
@@ -86,6 +96,8 @@
                                 <div id="hashtagErrorMessage" class="alert alert-danger" style="display: none;"></div>
                                 <!-- Hidden input field for image data URL -->
                                 <input type="hidden" name="croppedImageDataUrls" id="croppedImageDataUrls">
+                                <input type="hidden" name="videoDataUrls" id="videoDataUrls">
+
                             </div>
                         </div>
 

@@ -39,7 +39,7 @@ class ProfileController extends Controller
         if ($request->hasFile('avatar')) {
             // Store the uploaded avatar in public/avatars directory
             $avatarPath = $request->file('avatar')->store('public/avatars');
-            // // Update the user's avatar path
+            // Update the user's avatar path
             $data['avatar'] = $avatarPath;
     }
 

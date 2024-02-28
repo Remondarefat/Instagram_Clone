@@ -48,28 +48,50 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-    public function posts(){
+    public function posts()
+    {
         return $this->hasMany(Post::class);
     }
-    public function post_saved(){
+    public function post_saved()
+    {
         return $this->hasMany(Post_saved::class);
     }
-    public function like(){
+    public function like()
+    {
         return $this->hasMany(Like::class);
     }
-    public function comment(){
+    public function comment()
+    {
         return $this->hasMany(Comment::class);
     }
-    public function follower(){
-        return $this->hasMany(Follower::class, 'follower_id');
+    //Followings Relation
+    public function followings()
+    {
+        return $this->belongsToMany(User::class, 'users_followers', 'follower_id', 'user_id')->withTimestamps();
     }
-    public function following(){
-        return $this->hasMany(Follower::class, 'user_id');
+    //Follow method
+    public function follow(User $user)
+    {
+        return $this->followings()->where('user_id', $user->id)->exists();
     }
-    public function block(){
-        return $this->hasMany(Block::class, 'blocked_id');
+    public function followedBy(User $user)
+    {
+        return $user->followings()->where('user_id', $this->id)->exists();
     }
-    public function blocked(){
-        return $this->hasMany(Block::class, 'user_id');
+
+    //Followers Relation
+    public function followers()
+    {
+        return $this->belongsToMany(User::class, 'users_followers', 'user_id', 'follower_id')->withTimestamps();
+    }
+    //Block Relation
+    public function block()
+    {
+        return $this->belongsToMany(User::class, 'users_block', 'user_id', 'blocked_id')->withTimestamps();
+    }
+    //Block method
+    public function blockUser(User $user)
+    {
+        return $this->block()->where('blocked_id', $user->id)->exists();
     }
 }

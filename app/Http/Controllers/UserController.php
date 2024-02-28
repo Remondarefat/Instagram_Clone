@@ -12,7 +12,13 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('posts.home');
+        $user = auth()->user();
+
+        if ($user) {
+            // Now explicitly checking if user is not null
+            $user->load(['posts', 'posts.media']); // This assumes you have 'posts' and 'posts.media' relationships defined
+            return view('posts.profile', compact('user'));
+        }
     }
 
     /**
@@ -63,5 +69,4 @@ class UserController extends Controller
     {
         //
     }
-
 }

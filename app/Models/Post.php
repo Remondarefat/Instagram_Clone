@@ -16,9 +16,7 @@ class Post extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
-    public function media(){
-        return $this->hasMany(Media::class);
-    }
+
     public function post_saved(){
         return $this->hasMany(Post_saved::class);
     }
@@ -32,5 +30,8 @@ class Post extends Model
     public function hashtags()
     {
         return $this->hasMany(Hashtag::class);
+    }
+    public function media(){
+    return $this->hasMany(Media::class);
     }
 }
