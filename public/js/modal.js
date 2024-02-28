@@ -4,10 +4,10 @@ var croppedImageDataURLs = [];
 
 function displayImage(event) {
     for (let i = 0; i < event.target.files.length; i++) {
-        // use Filereader to read the file asynchronously
+        // use FileReader to read the file asynchronously
         let reader = new FileReader();
         reader.onload = function () {
-            // When the file reading is completed, it Generates HTML markup (<img> tag) to display the uploaded image.
+            // When the file reading is completed, generate HTML markup (<img> tag) to display the uploaded image.
             let output =
                 '<div class="col-md-4 mb-3"><img class="cropped-image" src="' +
                 reader.result +
@@ -23,8 +23,8 @@ function displayImage(event) {
                 viewMode: 1,
                 guides: false,
                 autoCropArea: 1,
-                responsive: true ,
-                background: false ,
+                responsive: true,
+                background: false,
                 dragMode: "move",
             });
             croppers.push(cropper);
@@ -40,6 +40,7 @@ function displayImage(event) {
     document.getElementById("exampleModalLongTitle").innerText = "Crop Image";
     initCropper();
 }
+
 let croppie = null;
 
 function initCropper() {
@@ -55,25 +56,29 @@ function initCropper() {
         croppers.push(cropper);
     });
 }
+
 function populateCroppedImageData() {
     croppedImageDataURLs = []; // Clear the array first
     croppers.forEach(function (cropper) {
-        // converts this canvas to a data URL using the toDataURL() method
+        // Convert canvas to a data URL using the toDataURL() method
         var croppedImageDataURL = cropper.getCroppedCanvas().toDataURL();
         croppedImageDataURLs.push(croppedImageDataURL);
     });
 
+    // Convert the array of data URLs to a string representation with each hashtag separated by a comma and space
+    croppedImageDataURLs = croppedImageDataURLs.map((url) => `"${url}"`);
 }
-document.getElementById("cropButtonUpload").addEventListener("click", function () {
-    // Call the function to populate croppedImageDataURLs
-    populateCroppedImageData();
-    // Display cropped images in the post modal carousel
-    console.log(croppedImageDataURLs);
 
-    displayCroppedImages(croppedImageDataURLs);
-});
+document
+    .getElementById("cropButtonUpload")
+    .addEventListener("click", function () {
+        // Call the function to populate croppedImageDataURLs
+        populateCroppedImageData();
+        // Display cropped images in the post modal carousel
+        console.log(croppedImageDataURLs);
 
-
+        displayCroppedImages(croppedImageDataURLs);
+    });
 
 function displayCroppedImages(imageDataURLs) {
     const carouselInner = document.querySelector("#postModal .carousel-inner");
@@ -95,43 +100,52 @@ function displayCroppedImages(imageDataURLs) {
     $("#exampleModalCenter").modal("hide");
     $("#postModal").modal("show");
 }
+
 $("#postModal").on("hidden.bs.modal", function () {
     console.log("Modal hidden");
     $("#nextModal").modal("show");
-
 });
-
-
-// Convert the croppedImageDataURLs array to a JSON string
-const croppedImageDataURLsJSON = JSON.stringify(croppedImageDataURLs);
 
 document.getElementById("shareButton").addEventListener("click", function () {
     populateCroppedImageData();
 
     // Set the value of the hidden input field to the JSON string representation of croppedImageDataURLs
-document.getElementById("croppedImageDataUrls").value = JSON.stringify(croppedImageDataURLs);
-console.log(croppedImageDataURLs);
+    document.getElementById("croppedImageDataUrls").value =
+        JSON.stringify(croppedImageDataURLs);
+    console.log(croppedImageDataURLs);
 
-const hashtagInput = document.getElementById("hashtag");
-const hashtags = hashtagInput.value.split(" ").filter(hashtag => hashtag.startsWith("#"));
+    // const hashtagInput = document.getElementById("hashtag");
+    // // Extract hashtags from input string and store them as an array
+    // const hashtags = extractHashtags(hashtagInput.value);
 
-if (hashtags.length > 0) {
-    document.getElementById("hashtag").value = JSON.stringify(hashtags);
-    document.getElementById("postForm").submit();
+    // if (hashtags.length > 0) {
+    //     // Convert the array of hashtags to a string representation without enclosing quotes
+    //     const hashtagsString = hashtags.join(", ");
+    //     document.getElementById("hashtag").value = hashtagsString;
+    //     document.getElementById("postForm").submit();
+    // } else {
+    //     var errorMessage = document.getElementById("hashtagErrorMessage");
+    //     errorMessage.innerText = "Please enter at least one valid hashtag.";
+    //     errorMessage.style.display = "block";
+    //     event.preventDefault();
+    // }
+});
 
-} else {
-    var errorMessage = document.getElementById('hashtagErrorMessage');
-    errorMessage.innerText = 'Hashtag must start with #';
-    errorMessage.style.display = 'block';
-    event.preventDefault();
+function extractHashtags(inputString) {
+    // Regular expression to match hashtags
+    const hashtagRegex = /#[^\s#]+/g;
+    // Extract hashtags from input string
+    const hashtags = inputString.match(hashtagRegex);
+    // Remove leading and trailing spaces from each hashtag
+    return hashtags.map((hashtag) => hashtag.trim());
 }
-});
-document.getElementById('backPostModal').addEventListener('click', function () {
-    $('#postModal').modal('hide');
-    $('#exampleModalCenter').modal('show');
 
+document.getElementById("backPostModal").addEventListener("click", function () {
+    $("#postModal").modal("hide");
+    $("#exampleModalCenter").modal("show");
 });
-document.getElementById('back').addEventListener('click', function () {
-    $('#exampleModalCenter').modal('hide');
 
+document.getElementById("back").addEventListener("click", function () {
+    $("#exampleModalCenter").modal("hide");
 });
+

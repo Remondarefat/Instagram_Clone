@@ -81,5 +81,7 @@ Route::get('/like-post', [PostController::class, 'like'])->name('like.post');
 Route::get('/comment-post', [PostController::class, 'comment'])->name('comment.post');
 Route::get('/comment-like',[CommentLikeController::class,'commentlike'])->name('comment.like');
 
+Route::get('/posts/byHashtag/{hashtag}', 'PostController@getPostsByHashtag')->name('posts.byHashtag');
+
 
 require __DIR__ . '/auth.php';
