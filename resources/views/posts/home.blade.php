@@ -8,7 +8,7 @@
             @if ($post->user->avatar==null)
                 <img class="rounded-circle im-com me-md-2" src="{{'default.jpg'}}" alt="">
             @else
-                <img class="rounded-circle im-com me-md-2" src="{{$post->user->avatar}}" alt="">
+                <img class="rounded-circle im-com me-md-2" src="{{str_replace('public/','storage/',$post->user->avatar)}}" alt="">
             @endif
             <h4>{{$post->user->username}}</h4>
         </div>
@@ -50,7 +50,26 @@
 
 
 
-                    <div class="d-flex align-items-center flex-column">
+                    <div class="d-flex  flex-column">
+                        <div class="d-flex align-items-center flex-column">
+                            <div class="d-flex align- mt-md-2 w-100">
+                                @if ($post->user->avatar==null)
+                                <img class="rounded-circle im-com me-md-2" src="{{'default.jpg'}}" alt="">
+                                @else
+                                <img class="rounded-circle im-com me-md-2" src="{{str_replace('public/','storage/',$post->user->avatar)}}" alt="">
+                                @endif
+                                <h6 class="bold mt-md-1">{{$post->user->username}}</h6>
+                                <p class=" p-0 m-0  ms-md-2">{{$post->caption}}</p>
+                                <a href="" class=" hhh p-0 m-0  ms-md-2 ">
+                                    @php
+                                        $string = $post->hashtag;
+                                        $decoded = json_decode($string);
+                                        $hash = trim($decoded[0], '[]"');
+                                    @endphp
+
+                                    {{$hash}}
+                                </a>
+                            </div>
                         @php
                             $counter = 0; // Initialize the counter
                         @endphp
@@ -60,12 +79,12 @@
                         @endphp
                             <div class="d-flex justify-content-between align-items-center w-100">
                                 <div class="d-flex align-items-center mt-md-2">
-                                    @if ($post->user->avatar==null)
+                                    @if ($comment->user->avatar==null)
                                     <img class="rounded-circle im-com me-md-2" src="{{'default.jpg'}}" alt="">
                                     @else
-                                    <img class="rounded-circle im-com me-md-2" src="{{'rrr.jpg'}}" alt="">
+                                    <img class="rounded-circle im-com me-md-2" src="{{str_replace('public/','storage/',$comment->user->avatar)}}" alt="">
                                     @endif
-                                    <h6 class="bold mt-md-1">{{$comment->user->username}}</h6>
+                                    <h6 class="bold mt-md-2">{{$comment->user->username}}</h6>
                                     <p class=" p-0 m-0  ms-md-2">{{$comment->comment_body}}</p>
                                     <p class=" p-0 m-0  ms-md-2 com-id d-none">{{$comment->id}}</p>
                                 </div>
@@ -105,13 +124,18 @@
                         @if ($post->user->avatar==null)
                             <img class="rounded-circle im-com me-md-2" src="{{'default.jpg'}}" alt="">
                         @else
-                            <img class="rounded-circle im-com me-md-2" src="{{$post->user->avatar}}" alt="">
+                            <img class="rounded-circle im-com me-md-2" src="{{str_replace('public/','storage/',$post->user->avatar)}}" alt="">
                         @endif
                         <h4>{{$post->user->username}}</h4>
                     </div>
 
                     @foreach ($post->media as $media )
-                        <img class="w-100 h-100 me-md-2 mt-md-2" src="{{asset("/images/$media->media_url")}}" alt="">
+                    @if (strpos($media->media_url, 'mp4') !== false)
+
+                    <video src="{{asset("/images/$media->media_url")}}" class="w-100 h-100 me-md-2 mt-md-2" controls></video>
+                    @else
+                    <img class="w-100 h-100 me-md-2 mt-md-2" src="{{asset("/images/$media->media_url")}}" alt="">
+                    @endif
                      @endforeach
 
                     <div class="d-flex mt-md-2 justify-content-between">
@@ -128,6 +152,24 @@
                         <i class="fa-solid fa-bookmark h4"></i>
                     </div>
                     <div class="d-flex align-items-center flex-column">
+                        <div class="d-flex align- mt-md-2 w-100">
+                            @if ($post->user->avatar==null)
+                            <img class="rounded-circle im-com me-md-2" src="{{'default.jpg'}}" alt="">
+                            @else
+                            <img class="rounded-circle im-com me-md-2" src="{{str_replace('public/','storage/',$post->user->avatar)}}" alt="">
+                            @endif
+                            <h6 class="bold mt-md-1">{{$post->user->username}}</h6>
+                            <p class=" p-0 m-0  ms-md-2">{{$post->caption}}</p>
+                            <a href="" class=" hhh p-0 m-0  ms-md-2 ">
+                                @php
+                                    $string = $post->hashtag;
+                                    $decoded = json_decode($string);
+                                    $hash = trim($decoded[0], '[]"');
+                                @endphp
+
+                                {{$hash}}
+                            </a>
+                        </div>
                         @php
                             $counter = 0; // Initialize the counter
                         @endphp
@@ -136,11 +178,11 @@
                             $counter++; // Increment the counter
                         @endphp
                             <div class="d-flex justify-content-between align-items-center w-100">
-                                <div class="d-flex align-items-center mt-md-2">
-                                    @if ($post->user->avatar==null)
+                                <div class="d-flex mt-md-2">
+                                    @if ($comment->user->avatar==null)
                                     <img class="rounded-circle im-com me-md-2" src="{{'default.jpg'}}" alt="">
                                     @else
-                                    <img class="rounded-circle im-com me-md-2" src="{{'rrr.jpg'}}" alt="">
+                                    <img class="rounded-circle im-com me-md-2" src="{{str_replace('public/','storage/',$comment->user->avatar)}}" alt="">
                                     @endif
                                     <h6 class="bold mt-md-1">{{$comment->user->username}}</h6>
                                     <p class=" p-0 m-0  ms-md-2">{{$comment->comment_body}}</p>
@@ -188,7 +230,6 @@
        $('.like').click(function() {
         $(this).toggleClass('col-red');
         let postid=$(this).parent().parent().parent().find('.postid').text();
-        console.log(postid);
            $.ajax({
         //    url:''
            url: '{{ route('like.post') }}', // Use the route() helper to generate the URL
@@ -203,14 +244,16 @@
        });
        });
 
+       $('.hhh').click(function(){
+           console.log($(this).text());
+       })
+
 
        $('.post-comment').click(function(){
         let postBtn=this;
         let commentInput=$(this).parent().find('.com-input');
         let postid=$(this).parent().parent().find('.postid').text();
-        console.log(postid);
         let postcomment=commentInput.val();
-        console.log(postcomment);
         $.ajax({
            url: '{{ route('comment.post') }}', // Use the route() helper to generate the URL
            method: 'GET',
@@ -240,7 +283,6 @@
                 'commentId':commentId
             },
             success:function(response){
-                console.log(response.message);
             },
             error:function(error){
                 console.error('Error calling PHP method:', error);
