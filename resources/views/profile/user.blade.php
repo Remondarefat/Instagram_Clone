@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', "$user->fullname  (@$user->username)-")
+@section('title', "$user->fullname (@$user->username)-")
 @section('content')
     <div class="user-profile-container d-flex">
         <div class="image align-self-center">
@@ -20,6 +20,11 @@
                         <form action="{{ route('users.unblock', $user->id) }}" method="POST">
                             @csrf
                             <button class="btn user-profile-btn me-3">Unblock</button>
+                        </form>
+                    @elseif (Auth::user()->followedBy($user))
+                        <form action="{{ route('users.follow', $user->id) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="btn user-follow-btn me-3">Follow Back</button>
                         </form>
                     @else
                         <form action="{{ route('users.follow', $user->id) }}" method="POST">
@@ -57,7 +62,8 @@
                 <!-- mutual followers -->
                 <p class="followedby">Followed by
                     @foreach ($user->followers as $key => $follower)
-                        <span class="fw-bold">{{ $follower->username }}</span>
+                        <a class="text-decoration-none text-dark fw-bold" href="{{ route('user', $follower->id) }}">
+                            {{ $follower->username }}</a>
                         @if ($key < $user->followers->count() - 1)
                             ,
                         @endif
@@ -83,10 +89,15 @@
                         @if ($follower->username !== Auth::user()->username)
                             <div class="row follower-item align-items-center w-100">
                                 <div class="col-auto">
-                                    <img src="{{ $follower->avatar }}" alt="" class="follower-image ms-1 bg-black">
+                                    <a href="{{ route('user', $follower->id) }}">
+                                        <img src="{{ $follower->avatar }}" alt=""
+                                            class="follower-image ms-1 bg-black">
+                                    </a>
                                 </div>
                                 <div class="col">
-                                    <p class="d-inline fw-bold">{{ $follower->username }}</p>
+                                    <a class="text-decoration-none text-dark" href="{{ route('user', $follower->id) }}">
+                                        <p class="d-inline fw-bold">{{ $follower->username }}</p>
+                                    </a>
                                     <p class="text-muted mb-0">{{ $follower->fullname }}</p>
                                 </div>
                                 <div class="col-auto ms-auto">
@@ -98,7 +109,7 @@
                                     @else
                                         <form action="{{ route('users.follow', $follower->id) }}" method="POST">
                                             @csrf
-                                            <button type="submit" class="btn user-follow-btn me-3">Follow</button>
+                                            <button type="submit" class="btn user-follow-btn me-3">Follow Back</button>
                                         </form>
                                     @endif
                                 </div>
@@ -150,11 +161,16 @@
                         @if ($followingUser->username !== Auth::user()->username)
                             <div class="row follower-item align-items-center w-100">
                                 <div class="col-auto">
-                                    <img src="{{ $followingUser->avatar }}" alt=""
-                                        class="follower-image ms-1 bg-black">
+                                    <a href="{{ route('user', $followingUser->id) }}">
+                                        <img src="{{ $followingUser->avatar }}" alt=""
+                                            class="follower-image ms-1 bg-black">
+                                    </a>
                                 </div>
                                 <div class="col">
-                                    <p class="d-inline fw-bold">{{ $followingUser->username }}</p>
+                                    <a class="text-decoration-none text-dark"
+                                        href="{{ route('user', $followingUser->id) }}">
+                                        <p class="d-inline fw-bold">{{ $followingUser->username }}</p>
+                                    </a>
                                     <p class="text-muted mb-0">{{ $followingUser->fullname }}</p>
                                 </div>
                                 <div class="col-auto ms-auto">
