@@ -181,15 +181,16 @@
         </div>
 
         <!-- Additional Tab Content -->
+<!-- Additional Tab Content -->
         <div class="d-none">
             <div class="searchTabContent">
                 <h3>Search</h3>
-                <form id="search-form"  method="get">
-                <input type="text" placeholder="Search" name="search">
-                <div class="searchInfo d-flex flex-column">
-                    <p class="headline">Recent</p>
-                    <p class=" text-muted mx-auto my-5">No recent searches</p>
-                </div>
+                <form id="search-form" method="get">
+                    <input type="text" placeholder="Search" name="search" id="search-input">
+                    <div class="searchInfo d-flex flex-column">
+                        <p class="headline">Recent</p>
+                        <div id="search-results-container"><!-- Container for search results --></div>
+                    </div>
                 </form>
             </div>
         </div>

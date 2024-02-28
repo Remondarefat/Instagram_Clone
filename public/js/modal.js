@@ -206,3 +206,26 @@ function displayImageFromDrop(file) {
     };
     reader.readAsDataURL(file);
 }
+document.addEventListener('DOMContentLoaded', function() {
+    function clearModalData() {
+        $("#uploadedImageContainer").html("");
+        $("#modalBodyText").css("display", "block");
+        $("#icon").css("display", "block");
+        $("#upload-btn").css("display", "block");
+        $("#cropButtonUpload").css("display", "none");
+        $("#back").css("display", "none");
+        $("#hashtag").val('');
+        $("#hashtagErrorMessage").css("display", "none");
+        $("#postForm").css("display", "none");
+        $("#postModal").modal("hide");
+        $("#videoContainer").css("display", "none");
+        $("#imageCarousel").css("display", "none");
+        $("#videoDataUrls").val('');
+        $("#croppedImageDataUrls").val('');
+
+    }
+    
+    $("#closeModal").on('click', function () {
+        clearModalData();
+    })
+});

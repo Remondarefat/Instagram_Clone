@@ -41,8 +41,9 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        
             // dd($request->all());
-            $request->validate([
+           $request->validate([
                 'caption' => 'string',
                 'hashtag' => 'array',
                 'croppedImageDataUrls.*' => 'required', 
@@ -60,31 +61,30 @@ $croppedImageDataUrls = json_decode($request->croppedImageDataUrls);
 foreach ($croppedImageDataUrls as $imageDataUrl) {
     // Remove the data URI scheme from the image URL
     $imageDataUrl = preg_replace('#^data:image/\w+;base64,#i', '', $imageDataUrl);
-    // Decode the base64-encoded image data into binary data
-    $imageData = base64_decode($imageDataUrl);
-    // Generate a unique filename for the image
-    $filename = uniqid() . '.png';
-    // Store the image file in the public/images directory
-    $path = public_path('images/' . $filename);
-    // Save the image file to the server
-    file_put_contents($path, $imageData);
+// Decode the base64-encoded image data into binary data
+$imageData = base64_decode($imageDataUrl);
+// Generate a unique filename for the image
+$filename = uniqid() . '.png';
+// Store the image data directly in the storage directory
+$path = Storage::put('public/images/' . $filename, $imageData);
 
-    // Save the image path to the database
-    $media = new Media();
-    $media->media_url = $filename;
-    $media->post_id = $post->id;
-    $media->save();
+$path = str_replace('public/', 'storage/', $path);
+$media = new Media();
+$media->media_url = $filename;
+$media->post_id = $post->id;
+$media->save();
+
 }
    // Decode the JSON string containing videoDataUrls
    $videoDataUrls = json_decode($request->videoDataUrls);
 
    foreach ($videoDataUrls as $videoDataUrl) {
+
        $videoDataUrl = preg_replace('#^data:video/\w+;base64,#i', '', $videoDataUrl);
        $videoData = base64_decode($videoDataUrl);
        $filename = uniqid() . '.mp4';
-       $path = public_path('images/' . $filename);
-       file_put_contents($path, $videoData);
-
+       $path = Storage::put('public/images/' . $filename, $videoData);
+       $path = str_replace('public/', 'storage/', $path);
        $media = new Media();
        $media->media_url = $filename;
        $media->post_id = $post->id;
