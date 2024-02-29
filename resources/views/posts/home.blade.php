@@ -178,15 +178,10 @@
                             @endif
                             <h6 class="bold mt-md-1">{{$post->user->username}}</h6>
                             <p class=" p-0 m-0  ms-md-2">{{$post->caption}}</p>
-                            <a href="" class=" hhh p-0 m-0  ms-md-2 ">
-                                @php
-                                    $string = $post->hashtag;
-                                    $decoded = json_decode($string);
-                                    $hash = trim($decoded[0], '[]"');
-                                @endphp
 
-                                {{$hash}}
-                            </a>
+                            @foreach ($post->hashtags as $hashtag )
+                                <a href="" class=" p-0 m-0  ms-md-2 hash">{{$hashtag->hashtag_name}}</a>
+                            @endforeach
                         </div>
                         @php
                             $counter = 0; // Initialize the counter

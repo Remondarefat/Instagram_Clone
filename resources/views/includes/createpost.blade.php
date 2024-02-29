@@ -37,7 +37,7 @@
                     <input id="file-upload" type="file" name="images[]" style="display: none;" onchange="displayImage(event)" accept="image/*,video/*" multiple>
                     
                 </div>
-                
+
                 <!-- Display uploaded image -->
                 <div id="uploadedImageContainer"></div>
             </div>
@@ -91,7 +91,7 @@
                                         placeholder="Write a caption..."></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" name="hashtag[]" class="form-control hashtag" id="hashtag" placeholder="Hashtags" multiple>
+                                    <input type="text" name="hashtag_name" class="form-control hashtag" id="hashtag" placeholder="Hashtags">
                                 </div>
                                 <div id="hashtagErrorMessage" class="alert alert-danger" style="display: none;"></div>
                                 <!-- Hidden input field for image data URL -->

@@ -10,7 +10,6 @@ class Post extends Model
     use HasFactory;
     protected $fillable = [
         'caption',
-        'hashtag',
         'user_id',
     ];
 
@@ -26,6 +25,11 @@ class Post extends Model
     }
     public function comment(){
         return $this->hasMany(Comment::class);
+    }
+
+    public function hashtags()
+    {
+        return $this->hasMany(Hashtag::class);
     }
     public function media(){
     return $this->hasMany(Media::class);
