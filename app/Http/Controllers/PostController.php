@@ -41,13 +41,13 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        
+
             // dd($request->all());
            $request->validate([
                 'caption' => 'string',
                 'hashtag' => 'array',
-                'croppedImageDataUrls.*' => 'required', 
-                'videoDataUrls.*' => 'required', 
+                'croppedImageDataUrls.*' => 'required',
+                'videoDataUrls.*' => 'required',
                         ]);
             $post = new Post();
             $post->caption = $request->caption;
@@ -90,11 +90,11 @@ $media->save();
        $media->post_id = $post->id;
        $media->save();
    }
-    return redirect()->back()->with('success', 'Post created successfully'); 
+    return redirect()->back()->with('success', 'Post created successfully');
         }
-     
-     
-    
+
+
+
 
     /**
      * Display the specified resource.
@@ -135,16 +135,19 @@ $media->save();
         $like = Like::where('user_id', Auth::user()->id)->where('post_id', $id)->first();
         if ($like) {
             $like->delete();
+            $response=['action'=>'unlike'];
         } else {
             Like::create([
                 'user_id' => $userid,
                 'post_id' => $id
             ]);
+            $response=['action'=>'like'];
         }
+        $likeCount = Like::where('post_id', $id)->count();
 
 
 
-        return response()->json(['message' => "Hello from PHP method! $id"]);
+        return response()->json(['action'=>$response,'likeCount'=>$likeCount]);
     }
 
 
@@ -158,7 +161,8 @@ $media->save();
             'post_id'=>$postid,
             'comment_body'=>$postcomment
         ]);
-        return response()->json(['message' => "Hello from PHP method! $postcomment"]);
+        $comments=Comment::where('post_id',$postid)->get();
+        return response()->json(['comments' => $comments]);
 
     }
 }
