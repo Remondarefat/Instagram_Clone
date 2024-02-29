@@ -1,13 +1,15 @@
-@extends('layouts.app')
+@extends('layouts.main')
 
 @section('content')
-    <h1>Posts with Hashtag: {{ $hashtag }}</h1>
-
-    <!-- @if (!is_null($posts)) -->
-    @foreach($posts as $post)
-        <div class="post">
-            <h2>{{ $post->caption }}</h2>
-            <!-- Display post content here -->
+    <h1>Posts with Hashtag: </h1>
+<div class="container">
+    <div class="row">
+        @foreach()
+        <div class="col-md-4">
+            <h1>Hello</h1>
         </div>
-    @endforeach
+        @endforeach
+    </div>
+</div>
+
 @endsection

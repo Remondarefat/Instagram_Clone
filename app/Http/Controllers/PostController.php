@@ -42,7 +42,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        
+
             $request->validate([
                 'caption' => 'string',
                 'hashtag_name' => 'string',
@@ -97,7 +97,7 @@ foreach ($videoDataUrls as $videoDataUrl) {
 }
 
 if ($request->has('hashtag_name')) {
-    $hashtags = $request['hashtag_name']; // Your input string
+    $hashtags = $request['hashtag_name'];
     $hashtagsArray = explode(' ', $hashtags);
     foreach ($hashtagsArray as $tag) {
         $hashtag = new Hashtag();
@@ -105,7 +105,7 @@ if ($request->has('hashtag_name')) {
         $hashtag->post_id = $post->id;
         $hashtag->save();
     }
-// }
+
 }
     return redirect()->back()->with('success', 'Post created successfully');
         }
