@@ -23,7 +23,7 @@
                     d="M22 23h-6.001a1 1 0 0 1-1-1v-5.455a2.997 2.997 0 1 0-5.993 0V22a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V11.543a1.002 1.002 0 0 1 .31-.724l10-9.543a1.001 1.001 0 0 1 1.38 0l10 9.543a1.002 1.002 0 0 1 .31.724V22a1 1 0 0 1-1 1Z">
                 </path>
             </svg>
-            <a class="text-decoration-none text-dark fw-bold" href="{{ route('home') }}">Home</a>
+            <a class="text-decoration-none text-dark fw-bold" href="/posthome">Home</a>
         </div>
         <!-- Search Tab -->
         <div class="d-flex gap-3 align-items-center px-2 py-3 mb-3 nav-tab nav-tab-search">
@@ -120,7 +120,7 @@
         <!-- Profile Tab -->
         <div class="d-flex gap-3 align-items-center px-2 py-3 mb-3 nav-tab nav-tab-profile">
             <img class="profile-img" src="" alt="">
-            <a class="text-decoration-none text-dark" href="">Profile</a>
+            <a class="text-decoration-none text-dark" href="/postprofile">Profile</a>
         </div>
         <!-- Settings Tab -->
 
@@ -184,45 +184,48 @@
         <div class="d-none">
             <div class="searchTabContent">
                 <h3>Search</h3>
-                <form id="search-form"  method="get">
-                <input type="text" placeholder="Search" name="search">
-                <div class="searchInfo d-flex flex-column">
-                    <p class="headline">Recent</p>
-                    <p class=" text-muted mx-auto my-5">No recent searches</p>
-                </div>
+                <form id="search-form" method="get">
+                    <input type="text" placeholder="Search" name="search" id="search-input">
+                    <!-- Added id attribute -->
+                    <div class="searchInfo d-flex flex-column">
+                        <div id="search-results-container"><!-- Container for search results --></div>
+                        <!-- Added id attribute -->
+                    </div>
                 </form>
             </div>
         </div>
-    </div>
-</div>
-{{-- Blocked Users --}}
-<div class="modal fade" id="exampleModalBlock" tabindex="-1" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header-followers p-2">
-                <h1 class="modal-title fs-6 fw-bold mx-auto my-auto" id="exampleModalLabel">Blocked Users</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                @foreach (Auth::user()->block as $blockedUser)
-                    <div class="row follower-item align-items-center w-100">
-                        <div class="col-auto">
-                            <img src="{{ $blockedUser->avatar }}" alt=""
-                                class="follower-image ms-1 bg-black">
-                        </div>
-                        <div class="col text-start">
-                            <p class="d-inline fw-bold">{{ $blockedUser->username }}</p>
-                            <p class="text-muted mb-0">{{ $blockedUser->fullname }}</p>
-                        </div>
-                        <div class="col-auto ms-auto">
-                            <form action="{{ route('users.unblock', $blockedUser->id) }}" method="POST">
-                                @csrf
-                                <button type="submit" class="btn user-profile-btn me-3">Unblock</button>
-                            </form>
-                        </div>
+
+        {{-- Blocked Users --}}
+        <div class="modal fade" id="exampleModalBlock" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header-followers p-2">
+                        <h1 class="modal-title fs-6 fw-bold mx-auto my-auto" id="exampleModalLabel">Blocked Users</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
                     </div>
-                @endforeach
+                    <div class="modal-body">
+                        @foreach (Auth::user()->block as $blockedUser)
+                            <div class="row follower-item align-items-center w-100">
+                                <div class="col-auto">
+                                    <img src="{{ $blockedUser->avatar }}" alt=""
+                                        class="follower-image ms-1 bg-black">
+                                </div>
+                                <div class="col text-start">
+                                    <p class="d-inline fw-bold">{{ $blockedUser->username }}</p>
+                                    <p class="text-muted mb-0">{{ $blockedUser->fullname }}</p>
+                                </div>
+                                <div class="col-auto ms-auto">
+                                    <form action="{{ route('users.unblock', $blockedUser->id) }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="btn user-profile-btn me-3">Unblock</button>
+                                    </form>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
             </div>
         </div>
     </div>

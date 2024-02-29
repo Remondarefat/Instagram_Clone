@@ -29,6 +29,48 @@ $(document).ready(function () {
 $("#exampleModal").on("show.bs.modal", function () {
     $("body").removeClass("modal-open");
 });
+
+//search content
+const searchInput = document.getElementById("search-input");
+const searchResultsContainer = document.getElementById(
+    "search-results-container"
+);
+
+searchInput.addEventListener("input", function () {
+    const query = this.value.trim();
+
+    if (query.length === 0) {
+        searchResultsContainer.innerHTML = "No recent searches";
+        return;
+    }
+
+    fetch(`/search?query=${query}`)
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.length > 0) {
+                let resultsHtml = '<ul class="list-unstyled hover ">'; // Start building the HTML for search results
+                data.forEach((result) => {
+                    resultsHtml += `<a href="/user/${result.id}" class="text-decoration-none text-black d-flex align-items-center rounded-4 mb-2 p-2 search-tab">
+                        <li class="d-flex align-items-center hover">
+                            <img class="me-2 rounded-circle" src="${result.avatar}" alt="">
+                            <div>
+                                <p class="fw-bold mb-0">${result.username}</p>
+                                <p class="text-muted mb-0">${result.fullname}</p>
+                            </div>
+                    </li>
+                </a>`;
+                });
+                resultsHtml += "</ul>"; // Close the list
+                searchResultsContainer.innerHTML = resultsHtml; // Update the container with search results
+            } else {
+                searchResultsContainer.innerHTML = "No results found";
+            }
+        })
+        .catch((error) =>
+            console.error("Error fetching search results:", error)
+        );
+});
+
 // !----- Loading Page -------
 $(document).ready(function(){
     $("#loading .ring").fadeOut(170 , function() {

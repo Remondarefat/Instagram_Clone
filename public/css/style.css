@@ -141,13 +141,18 @@ img{
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     z-index: 5;
     overflow: visible;
-
-
 }
 .create-btn {
     background-color: transparent;
     border: none;
 }
+    /* Add this CSS style */
+    .search-tab:hover {
+        background-color: #efefef;
+        cursor: pointer;
+        transition: 0.3s;
+        /* Optional: Change cursor to pointer on hover */
+    }
 
 .settings-list {
     display: flex;
@@ -329,6 +334,9 @@ img{
     border: none;
 }
 
+/* end blocking list */
+
+
 
 .imageCarousel {
     width: 300px;
@@ -342,6 +350,8 @@ img{
     overflow-x: hidden;
   }
 #uploadedImageContainer img {
+    max-width: 100%;
+    height: auto;
     max-width: 100%;
     height: auto;
 }
@@ -392,9 +402,115 @@ img{
     color:#003787;
 }
 /*!-------------------------------------------------- */
+/* !---Saved Posts---- */
+.Savedpost {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
 
+.Savedpost .layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%; 
+    height: 100%;
+    background-color: #ffffff4d;
+    padding: 10px 15px;
+    border-radius: 5px;
+    opacity: 0;
+}
+
+
+.Savedpost:hover .layer {
+    opacity: 1;
+}
+
+
+/* !---Saved Posts---- */
+
+
+.pro-img-col{
+    padding: 1px;
+}
+
+.im-pro{
+    width: 150px;
+    height: 150px;
+}
 .com-input:focus{
     border: 5px;
     outline: none
 
+}
+/* user profile */
+.pro-img-col {
+    padding: 4px;
+}
+
+.img-wrapper {
+    position: relative;
+    overflow: hidden;
+}
+
+.img-wrapper img {
+    transition: transform 0.5s ease;
+}
+
+.img-wrapper:hover .post-image  {
+    transform: scale(1.05);
+}
+.post-video:hover   {
+    transform: scale(1.05);
+    transition: transform 0.5s ease;
+
+}
+
+.post-video, .post-image {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.video-icon i, .multi-image-icon {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 5px;
+    border-radius: 50%;
+    font-size: 20px;
+}
+.video-icon-overlay {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    color: rgb(255, 255, 255);
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 5px;
+    border-radius: 50%;
+    z-index: 2;
+}
+.img-wrapper {
+    position: relative;
+    width: 100%;
+    padding-top: 100%;
+    overflow: hidden;
+}
+
+.img-wrapper img, .img-wrapper video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+
+/* Hide native video controls */
+.post-video {
+    controls: false;
 }

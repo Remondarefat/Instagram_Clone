@@ -6,7 +6,7 @@
                         <div class="carousel-inner">
                             @foreach ($post->media as $media )
                             <div class="carousel-item active">
-                                <img class="w-100 h-100 me-md-2" src="{{ asset("/images/$media->media_url") }}"  alt="">
+                                <img class="w-100 h-auto me-md-2" src="{{ asset("/images/$media->media_url") }}"  alt="">
                             </div>
                             @endforeach
                         </div>
@@ -56,8 +56,17 @@
                                         <form action="{{ route('toggleCommentLike', $comment->id) }}" method="post">
                                             @csrf
                                             <button type="submit" class="border-0 bg-transparent">
-                                                @if($existingLikeComment && $existingLikeComment->comment_id == $comment->id)
-                                                    <i class="fa-solid fs-4 fa-heart" style="color: #ff0000;"></i>   
+                                                @php
+                                                    $liked = false;
+                                                    foreach($existingLikeComments as $existingLikeComment) {
+                                                        if ($existingLikeComment && $existingLikeComment->comment_id == $comment->id) {
+                                                            $liked = true;
+                                                            break;
+                                                        }
+                                                    }
+                                                @endphp
+                                                @if($liked)
+                                                    <i class="fa-solid fs-4 fa-heart" style="color: #ff0000;"></i>
                                                 @else
                                                     <i class="fa-regular fs-4 fa-heart"></i>
                                                 @endif
@@ -90,49 +99,40 @@
                             </div>
                             <!------------------------------- SavedPosts  Button ------------------>
                             @auth
-                            @if (auth()->user()->isSavedByUser($post->id))
-                                <!-- {{-- User has saved the post, show unsave button --}} -->
-                                <form action="{{ route('saved-posts.destroy', $post->id) }}" method="post"
-                                id="unsaveForm{{ $post->id }}">
-                                <input type="hidden" name="post_id" value="{{ $post->id }}">
-                                <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="border-0 p-0" style="background:none;">
-                                    <span class="save-btn">
-                                        <svg aria-label="Save" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor"
-                                            height="24" role="img" viewBox="0 0 24 24" width="24">
-                                            <title>Save</title>
-                                            <polygon fill="#000" points="20 21 12 13.44 4 21 4 3 20 3 20 21"
-                                                stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                                stroke-width="2"></polygon>
-                                        </svg>
-                                    </span>
-                                </button>
-                            </form>
-                            @else
-                            <form action="{{ route('saved.posts.store', ['id' => $post->id] ) }}" method="post"
-                                id="saveForm{{ $post->id }}">
-                                <input type="hidden" name="post_id" value="{{ $post->id }}">
-                                <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
-                                @csrf
-                                <button type="submit" class="border-0 p-0" style="background:none;">
-                                    <span class="save-btn">
-                                        <svg aria-label="Save" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor"
-                                            height="24" role="img" viewBox="0 0 24 24" width="24">
-                                            <title>Save</title>
-                                            <polygon fill="none" points="20 21 12 13.44 4 21 4 3 20 3 20 21"
-                                                stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                                stroke-width="2"></polygon>
-                                        </svg>
-                                    </span>
-                                </button>
-                            </form>
-                            
-                            
-                            @endif
-                            @endauth
-                            <!-- ------------------------------------------------------------- -->
+                           
+    @if ($post->isSavedByUser(auth()->user()->id))
+        <form action="{{ route('saved-posts.destroy', ['id' => $post->id]) }}" method="post" id="unsaveForm{{ $post->id }}">
+            <input type="hidden" name="post_id" value="{{ $post->id }}">
+            <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+            @csrf
+            @method('DELETE')
+            
+            <button type="submit" class="border-0 p-0" style="background:none;">
+                <span class="save-btn">
+                    <svg aria-label="Unsave" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24">
+                        <title>Unsave</title>
+                        <polygon fill="#000" points="20 21 12 13.44 4 21 4 3 20 3 20 21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polygon>
+                    </svg>
+                </span>
+            </button>
+        </form>
+    @else
+        <form action="{{ route('saved.posts.store', ['id' => $post->id]) }}" method="post" id="saveForm{{ $post->id }}">
+            <input type="hidden" name="post_id" value="{{ $post->id }}">
+            <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+            @csrf
+            <button type="submit" class="border-0 p-0" style="background:none;">
+                <span class="save-btn">
+                    <svg aria-label="Save" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24">
+                        <title>Save</title>
+                        <polygon fill="none" points="20 21 12 13.44 4 21 4 3 20 3 20 21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polygon>
+                    </svg>
+                </span>
+            </button>
+        </form>
+    @endif
+@endauth
+                            <!-- ----------------------------------------------------------------------------------------------- -->
                         </div>
                     </div>
                     <div class="mt-2 d-flex align-content-center ">
@@ -175,7 +175,7 @@
                     @foreach ($morePosts as $morePost)
                         <div class="col-md-4">
                             @foreach ($morePost->media as $media)
-                            <a href="{{route('postDesc.show',$post->id)}}"><img src="{{ asset("/images/$media->media_url")}}" alt="Media" class="w-100"></a>
+                            <a href="{{ route('postDesc.show', $morePost->id) }}"><img src="{{ asset("/images/$media->media_url")}}" alt="Media" class="w-100"></a>
                             @endforeach
                             <!-- Add any additional content you want to display -->
                         </div>

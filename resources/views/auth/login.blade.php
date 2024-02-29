@@ -6,7 +6,7 @@
     <form method="POST" action="{{ route('login') }}" class="p-5 border-solid border-2 ">
         @csrf
         <div  class=" p-5">
-            <img src="info.svg" >
+            <img src="{{asset('info.svg')}}" >
         </div>
         <!-- Email Address -->
         <div class="mt-5">
@@ -43,14 +43,8 @@
                 <div class="or-container p-3">
                     <span class="or-word text-light fw-bold">OR</span>
                 </div>
-                <div class="text-center text-bg-info">
-                    <a class="text-info" href="{{route('auth.socilaite.redirect','google')}}">Log in with Google account</a>
-                    <i class="fa-brands fa-google"></i>
-                </div>
-                <div class="text-center">
-                    <a class="text-info" href="{{route('auth.socilaite.redirect','google')}}">Log in with Facebook account</a>
-                    <i class="fa-brands fa-facebook "></i>
-                </div>
+                
+            
 
 
             @if (Route::has('password.request'))

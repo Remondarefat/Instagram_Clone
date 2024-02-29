@@ -7,6 +7,8 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BlockController;
 use App\Http\Controllers\MediaController;
+use App\Http\Controllers\SearchController;
+
 
 use App\Http\Controllers\CommentController;
 
@@ -18,6 +20,12 @@ use App\Http\Controllers\FollowerController;
 
 use App\Http\Controllers\PostSavedController;
 use App\Http\Controllers\CommentLikeController;
+use App\Http\Controllers\Auth\SocialLoginController;
+
+
+
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -43,20 +51,7 @@ Route::get('/home', function () {
     return view('home');
 })->name('home');
 
-// // post routes
-// Route::get('/postprofile', function () {
-//     return view('posts.profile');
-// });
-
-// Route::get('/posthome', function () {
-//     return view('posts.home');
-// });
-
-
-
-
-require __DIR__ . '/auth.php';
-
+Route::get('/postprofile', [UserController::class,'index']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -66,10 +61,10 @@ Route::post('/post', [PostController::class, 'store'])->name('posts.store');
 
 
 // !-------------------------socilaite Routes--------------
-Route::get('auth/{provider}/redirect',[SocialLoginController::class,'redirect'])
-->name('auth.socilaite.redirect');
-Route::get('auth/{provider}/callback',[SocialLoginController::class,'callback'])
-->name('auth.socilaite.callback');
+
+
+// Route::get('auth/{provider}/redirect' , [SocialLoginController::class, 'redirect'])->name('auth.socialite.redirect');
+// Route::get('auth/{provider}/callback' , [SocialLoginController::class, 'callback'])->name('auth.socialite.callback');
 
 
 Route::post('/media', [MediaController::class, 'store'])->name('media');
@@ -82,10 +77,10 @@ Route::get('/user/{id}', [UserController::class, 'show'])->name('user');
     Route::get('/like-post', [PostController::class, 'like'])->name('like.post');
 });
 
-//Testing for follow
+//Routes for follow
 Route::post('/user/{user}/follow', [FollowerController::class, 'follow'])->name('users.follow');
 Route::post('/user/{user}/unfollow', [FollowerController::class, 'unfollow'])->name('users.unfollow');
-//Testing for block
+//Routes for block
 Route::post('/user/{user}/block', [BlockController::class, 'block'])->name('users.block');
 Route::post('/user/{user}/unblock', [BlockController::class, 'unblock'])->name('users.unblock');
 
@@ -96,8 +91,7 @@ Route::get('/posthome', [PostController::class, 'index']);
 Route::get('/like-post', [PostController::class, 'like'])->name('like.post');
 Route::get('/comment-post', [PostController::class, 'comment'])->name('comment.post');
 Route::get('/comment-like', [CommentLikeController::class, 'commentlike'])->name('comment.like');
-Route::get('/search' , [UserController::class, 'search'])->name('search');
-
+Route::get('/search', [SearchController::class, 'search'])->name('search');
 require __DIR__ . '/auth.php';
 
 // !--------PostDesc Routes-------------------
@@ -113,7 +107,7 @@ Route::post('/comments', [CommentController::class, 'store'])->name('comments.st
 Route::post('/toggle-comment-like/{commentId}', [CommentLikeController::class, 'toggleCommentLike'])->name('toggleCommentLike');
 
 // ! Saved posts
-// Route::post('/save-post/{id}', [PostSavedController::class, 'save'])->name('save.post');
 Route::post('posts/{id}/save', [PostSavedController::class, 'store'])->name('saved.posts.store');
 Route::delete('/saved-posts/{id}', [PostSavedController::class, 'destroy'])->name('saved-posts.destroy');
+Route::get('/saved-posts', [PostSavedController::class, 'index'])->name('saved.posts.index');
 

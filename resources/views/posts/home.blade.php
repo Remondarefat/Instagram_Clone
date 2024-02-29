@@ -47,46 +47,39 @@
                         </div>
                         <!-- ---------------------------------------SAved Posts -->
                         @auth
-                                @if (auth()->user() && auth()->user()->isSavedByUser($post->id))
-                                
-                                <form action="{{ route('saved-posts.destroy', $post->id) }}" method="post"
-                                id="unsaveForm{{ $post->id }}">
-                                <input type="hidden" name="post_id" value="{{ $post->id }}">
-                                <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="border-0 p-0" style="background:none;">
-                                    <span class="save-btn">
-                                        <svg aria-label="Save" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor"
-                                            height="24" role="img" viewBox="0 0 24 24" width="24">
-                                            <title>Save</title>
-                                            <polygon fill="#000" points="20 21 12 13.44 4 21 4 3 20 3 20 21"
-                                                stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                                stroke-width="2"></polygon>
-                                        </svg>
-                                    </span>
-                                </button>
-                            </form>
-                            @else
-                                <form action="{{ route('saved.posts.store', ['id' => $post->id] ) }}" method="post"
-                                    id="saveForm{{ $post->id }}">
-                                    <input type="hidden" name="post_id" value="{{ $post->id }}">
-                                    <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
-                                    @csrf
-                                    <button type="submit" class="border-0 p-0" style="background:none;">
-                                        <span class="save-btn">
-                                            <svg aria-label="Save" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor"
-                                                height="24" role="img" viewBox="0 0 24 24" width="24">
-                                                <title>Save</title>
-                                                <polygon fill="none" points="20 21 12 13.44 4 21 4 3 20 3 20 21"
-                                                    stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                                    stroke-width="2"></polygon>
-                                            </svg>
-                                        </span>
-                                    </button>
-                                </form>
-                            @endif
-                            @endauth
+                           
+    @if ($post->isSavedByUser(auth()->user()->id))
+        <form action="{{ route('saved-posts.destroy', ['id' => $post->id]) }}" method="post" id="unsaveForm{{ $post->id }}">
+            <input type="hidden" name="post_id" value="{{ $post->id }}">
+            <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+            @csrf
+            @method('DELETE')
+            
+            <button type="submit" class="border-0 p-0" style="background:none;">
+                <span class="save-btn">
+                    <svg aria-label="Unsave" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24">
+                        <title>Unsave</title>
+                        <polygon fill="#000" points="20 21 12 13.44 4 21 4 3 20 3 20 21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polygon>
+                    </svg>
+                </span>
+            </button>
+        </form>
+    @else
+        <form action="{{ route('saved.posts.store', ['id' => $post->id]) }}" method="post" id="saveForm{{ $post->id }}">
+            <input type="hidden" name="post_id" value="{{ $post->id }}">
+            <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+            @csrf
+            <button type="submit" class="border-0 p-0" style="background:none;">
+                <span class="save-btn">
+                    <svg aria-label="Save" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24">
+                        <title>Save</title>
+                        <polygon fill="none" points="20 21 12 13.44 4 21 4 3 20 3 20 21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polygon>
+                    </svg>
+                </span>
+            </button>
+        </form>
+    @endif
+@endauth
                             <!-- --------------------------------------------------------------------------- -->
                     </div>
 
@@ -169,46 +162,38 @@
                         </div>
                         <!-- ---------------------------------------SAved Posts -->
                         @auth
-                                @if (auth()->user() && auth()->user()->isSavedByUser($post->id))
-                                
-                                <form action="{{ route('saved-posts.destroy', $post->id) }}" method="post"
-                                id="unsaveForm{{ $post->id }}">
-                                <input type="hidden" name="post_id" value="{{ $post->id }}">
-                                <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="border-0 p-0" style="background:none;">
-                                    <span class="save-btn">
-                                        <svg aria-label="Save" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor"
-                                            height="24" role="img" viewBox="0 0 24 24" width="24">
-                                            <title>Save</title>
-                                            <polygon fill="#000" points="20 21 12 13.44 4 21 4 3 20 3 20 21"
-                                                stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                                stroke-width="2"></polygon>
-                                        </svg>
-                                    </span>
-                                </button>
-                            </form>
+                            @if ($post->isSavedByUser(auth()->user()->id))
+                                <form action="{{ route('saved-posts.destroy', ['id' => $post->id]) }}" method="post" id="unsaveForm{{ $post->id }}">
+                                    <input type="hidden" name="post_id" value="{{ $post->id }}">
+                                    <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+                                    @csrf
+                                    @method('DELETE')
+                                    
+                                    <button type="submit" class="border-0 p-0" style="background:none;">
+                                        <span class="save-btn">
+                                            <svg aria-label="Unsave" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24">
+                                                <title>Unsave</title>
+                                                <polygon fill="#000" points="20 21 12 13.44 4 21 4 3 20 3 20 21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polygon>
+                                            </svg>
+                                        </span>
+                                    </button>
+                                </form>
                             @else
-                                <form action="{{ route('saved.posts.store', ['id' => $post->id] ) }}" method="post"
-                                    id="saveForm{{ $post->id }}">
+                                <form action="{{ route('saved.posts.store', ['id' => $post->id]) }}" method="post" id="saveForm{{ $post->id }}">
                                     <input type="hidden" name="post_id" value="{{ $post->id }}">
                                     <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
                                     @csrf
                                     <button type="submit" class="border-0 p-0" style="background:none;">
                                         <span class="save-btn">
-                                            <svg aria-label="Save" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor"
-                                                height="24" role="img" viewBox="0 0 24 24" width="24">
+                                            <svg aria-label="Save" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24">
                                                 <title>Save</title>
-                                                <polygon fill="none" points="20 21 12 13.44 4 21 4 3 20 3 20 21"
-                                                    stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                                    stroke-width="2"></polygon>
+                                                <polygon fill="none" points="20 21 12 13.44 4 21 4 3 20 3 20 21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polygon>
                                             </svg>
                                         </span>
                                     </button>
                                 </form>
                             @endif
-                            @endauth
+                        @endauth
                             <!-- --------------------------------------------------------------------------- -->
                     </div>
                     <div class="d-flex align-items-center flex-column">
@@ -333,9 +318,5 @@
        });
    });
 
-
-   // Call the PHP method when needed
-
 </script>
 @endsection
-

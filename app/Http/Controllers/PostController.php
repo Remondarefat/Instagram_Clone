@@ -120,24 +120,23 @@ foreach ($croppedImageDataUrls as $imageDataUrl) {
         ->orderByDesc('created_at')
         ->take(9) // Adjust as needed
         ->get();
+        
         //! Fetch comments associated with the post
-        // dd($post->id);
         $comments = Comment::where('post_id', $post->id)->get();
-        // dd($post->user->username);
         $likes = Like::where('post_id', $post->id)->get();
         // dd($user);
          //! Check if the user has already liked the post
         $user = auth()->user();
         $existingLike = Like::where('user_id', $user->id)->where('post_id', $post->id)->first();
-        $existingLikeComment = CommentLike::where('user_id', $user->id)
+        $existingLikeComments = CommentLike::where('user_id', $user->id)
         ->whereIn('comment_id', $comments->pluck('id')) // Check if user liked any comment in the collection
-        ->first();
+        ->get();
          // Check if the post is saved by the current user
         // $isSavedByUser = $post->isSavedByUser($user->id);
         
         return view("posts.postDesc",['post'=>$post,'user' => $user, "medias" => $medias
-        ,'existingLike' => $existingLike,'existingLikeComment' => $existingLikeComment,'comments' => $comments,'morePosts' => $morePosts
-        ,'likes'=>$likes]); // Pass more posts to the view]);
+        ,'existingLike' => $existingLike,'existingLikeComments' => $existingLikeComments,'comments' => $comments,'morePosts' => $morePosts
+        ,'likes'=>$likes ]); 
     }
 
     /**
