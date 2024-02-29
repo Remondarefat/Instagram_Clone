@@ -55,29 +55,29 @@ class PostController extends Controller
             $post->save();
 
 
-            // }
-            // $post->save();
-  // Decode the JSON string containing croppedImageDataUrls
+        // }
+        // $post->save();
+// Decode the JSON string containing croppedImageDataUrls
 $croppedImageDataUrls = json_decode($request->croppedImageDataUrls);
 
 foreach ($croppedImageDataUrls as $imageDataUrl) {
-    // Remove the data URI scheme from the image URL
-    $imageDataUrl = preg_replace('#^data:image/\w+;base64,#i', '', $imageDataUrl);
-    // Decode the base64-encoded image data into binary data
-    $imageData = base64_decode($imageDataUrl);
-    // Generate a unique filename for the image
+// Remove the data URI scheme from the image URL
+$imageDataUrl = preg_replace('#^data:image/\w+;base64,#i', '', $imageDataUrl);
+// Decode the base64-encoded image data into binary data
+$imageData = base64_decode($imageDataUrl);
+// Generate a unique filename for the image
 
-    $filename = uniqid() . '.png';
+$filename = uniqid() . '.png';
 // Store the image data directly in the storage directory
 $path = Storage::put('public/images/' . $filename, $imageData);
 
 $path = str_replace('public/', 'storage/', $path);
 
-    // Save the image path to the database
-    $media = new Media();
-    $media->media_url = $filename;
-    $media->post_id = $post->id;
-    $media->save();
+// Save the image path to the database
+$media = new Media();
+$media->media_url = $filename;
+$media->post_id = $post->id;
+$media->save();
 }
 
 // Decode the JSON string containing videoDataUrls
@@ -85,15 +85,15 @@ $videoDataUrls = json_decode($request->videoDataUrls);
 
 foreach ($videoDataUrls as $videoDataUrl) {
 
-    $videoDataUrl = preg_replace('#^data:video/\w+;base64,#i', '', $videoDataUrl);
-    $videoData = base64_decode($videoDataUrl);
-    $filename = uniqid() . '.mp4';
-    $path = Storage::put('public/images/' . $filename, $videoData);
-    $path = str_replace('public/', 'storage/', $path);
-    $media = new Media();
-    $media->media_url = $filename;
-    $media->post_id = $post->id;
-    $media->save();
+$videoDataUrl = preg_replace('#^data:video/\w+;base64,#i', '', $videoDataUrl);
+$videoData = base64_decode($videoDataUrl);
+$filename = uniqid() . '.mp4';
+$path = Storage::put('public/images/' . $filename, $videoData);
+$path = str_replace('public/', 'storage/', $path);
+$media = new Media();
+$media->media_url = $filename;
+$media->post_id = $post->id;
+$media->save();
 }
 
 if ($request->has('hashtag_name')) {
@@ -107,29 +107,17 @@ if ($request->has('hashtag_name')) {
     }
 
 }
-    return redirect()->back()->with('success', 'Post created successfully');
+return redirect()->back()->with('success', 'Post created successfully');
         }
 
 
-//         public function getPostsByHashtag($hashtag)
-// {
-//     // Find the hashtag by name
-//     $hashtagModel = Hashtag::where('name', $hashtag)->first();
-
-//     // If the hashtag exists, retrieve posts associated with it
-//     if ($hashtagModel) {
-//         $posts = $hashtagModel->posts()->get();
-//         return view('posts.by_hashtag', compact('posts'));
-//     } else {
-//         // Handle case when hashtag doesn't exist
-//         // For example, return a message or redirect
-//     }
-// }
 
 
-    /**
-     * Display the specified resource.
-     */
+
+
+
+
+
     public function show(string $id)
     {
         //
@@ -166,16 +154,19 @@ if ($request->has('hashtag_name')) {
         $like = Like::where('user_id', Auth::user()->id)->where('post_id', $id)->first();
         if ($like) {
             $like->delete();
+            $response=['action'=>'unlike'];
         } else {
             Like::create([
                 'user_id' => $userid,
                 'post_id' => $id
             ]);
+            $response=['action'=>'like'];
         }
+        $likeCount = Like::where('post_id', $id)->count();
 
 
 
-        return response()->json(['message' => "Hello from PHP method! $id"]);
+        return response()->json(['action'=>$response,'likeCount'=>$likeCount]);
     }
 
 
@@ -189,9 +180,17 @@ if ($request->has('hashtag_name')) {
             'post_id'=>$postid,
             'comment_body'=>$postcomment
         ]);
-        return response()->json(['message' => "Hello from PHP method! $postcomment"]);
+        $comments=Comment::where('post_id',$postid)->get();
+        return response()->json(['comments' => $comments]);
 
     }
 
-
+    public function hash(string $hash)
+    {
+        $ha = "#" . $hash;
+        $posts = Post::whereHas('hashtags', function ($query) use ($ha) {
+            $query->where('hashtag_name', $ha);
+        })->get();
+        return view ('by_hashtag', ['posts' => $posts, 'hashtag_name' => $ha]);
+    }
 }

@@ -24,7 +24,7 @@ use App\Models\CommentLike;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Route::get('/dashboard', function () {
@@ -72,6 +72,6 @@ Route::get('/comment-like', [CommentLikeController::class, 'commentlike'])->name
 // Route::get('/posts/byHashtag/{hashtag}', 'PostController@getPostsByHashtag')->name('posts.byHashtag');
 Route::get('/search', [SearchController::class, 'search'])->name('search');
 
-Route::get('hashtag' ,[HashtagController::class, 'index']);
+Route::get('/hashtag/{hashtagName}', [PostController::class, 'hash']);
 
 require __DIR__ . '/auth.php';
