@@ -3,12 +3,12 @@
 @section('content')
     <div class="user-profile-container d-flex">
         <div class="image align-self-center">
-            <img src="{{ $user->avatar }}" class="user-profile-pic" alt="user image">
+            <img src="{{ Storage::url($user->avatar) }}" class="user-profile-pic" alt="user image">
         </div>
         <div>
             <div class="user-info d-flex">
                 <h5 class="pe-3">{{ $user->username }}</h5>
-                @if (Auth::check() && $user->id !== Auth::user()->id) {{-- Check if the user is not viewing their own profile --}}
+                @if (Auth::check() && $user->id !== Auth::user()->id)
                     @if (Auth::user()->follow($user))
                         <form action="{{ route('users.unfollow', $user->id) }}" method="POST">
                             @csrf
@@ -46,16 +46,16 @@
                 </a>
             </div>
 
-            <div class="followers-info d-flex mt-4 d-flex">
-                <p class="me-5"><span class="fw-bold">581</span> posts</p>
-                <button type="button" class="me-5 border-0 bg-white" data-bs-toggle="modal"
-                    data-bs-target="#exampleModalFollowers"><span>{{ $user->followers()->count() }}</span>
-                    Followers
+            <div class="followers-info d-flex mt-4">
+                <p class="me-5 mb-0"><span class="">{{ $user->posts->count() }}</span> posts</p>
+                <button type="button" class="me-5 border-0 bg-transparent" data-bs-toggle="modal" data-bs-target="#exampleModalFollowers">
+                    <span>{{ $user->followers()->count() }}</span> Followers
                 </button>
-                <button type="button" class="me-5 border-0 bg-white" data-bs-toggle="modal"
-                    data-bs-target="#exampleModalFollowing"><span>{{ $user->followings()->count() }}</span>
-                    Followings</button>
+                <button type="button" class="me-5 border-0 bg-transparent" data-bs-toggle="modal" data-bs-target="#exampleModalFollowing">
+                    <span>{{ $user->followings()->count() }}</span> Followings
+                </button>
             </div>
+
             <div>
                 <h4>{{ $user->fullname }}</h4>
                 <p>{{ $user->bio }}</p>
@@ -196,5 +196,45 @@
         </div>
     </div>
 
+
+
+
+<hr class="w-75 mx-auto my-5">
+
+<div class="container">
+    <div class="row justify-content-center mb-1">
+        @php $postCounter = 0; @endphp
+        @foreach($user->posts as $post)
+        @if($post->media->count() > 0)
+            @if($postCounter % 3 == 0 && $postCounter != 0)
+                </div><div class="row justify-content-center mb-1">
+            @endif
+            <div class="col-md-4 pro-img-col">
+                <a href="{{route('postDesc.show',$post->id)}}" >
+                    <div class="img-wrapper">
+                        @if(Str::endsWith($post->media->first()->media_url, ['.mp4', '.mov']))
+                        <div class="video-icon-overlay"><i class="fas fa-video"></i></div>
+                        <video class="w-100 post-video" preload="auto" loop muted playsinline>
+                            <source src="{{ asset("storage/images/" . $post->media->first()->media_url) }}" type="video/mp4">
+                        </video>
+                        @else
+                        <img class="w-100 post-image" src="{{ asset("storage/images/" . $post->media->first()->media_url) }}" alt="media">
+                        @if($post->media->count() > 1)
+                            <span class="multi-image-icon"><i class="fas fa-clone"></i></span>
+                        @endif
+                        @endif
+                    </div>
+                </a>
+            </div>
+            @php $postCounter++; @endphp
+        @endif
+        @endforeach
+
+
+    </div>
+
+
+
+</div>
 
 @endsection

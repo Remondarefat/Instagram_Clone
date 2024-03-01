@@ -8,7 +8,7 @@
             @if ($post->user->avatar==null)
                 <img class="rounded-circle im-com me-md-2" src="{{'default.jpg'}}" alt="">
             @else
-                <img class="rounded-circle im-com me-md-2" src="{{storage/$post->user->avatar}}" alt="">
+                <img class="rounded-circle im-com me-md-2" src="{{Storage::url($post->user->avatar)}}" alt="">
             @endif
             <h4>{{$post->user->username}}</h4>
             <input type="text">
@@ -17,8 +17,8 @@
                 <div class="carousel-inner">
                     @foreach ($post->media as $media )
                     <div class="carousel-item active">
-                        <img class="w-100 h-100 me-md-2" src="{{asset("storage/images/$media->media_url")}}"  alt="">
-                        </div>
+                    <a href="{{route('postDesc.show',$post->id)}}"><img class="w-100 h-100 me-md-2" src="{{ asset("/images/$media->media_url") }}"  alt=""></a>
+                    </div>
                     @endforeach
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
@@ -43,12 +43,47 @@
                                 @if (Auth::user()->id == $li->user_id && $li->post_id == $post->id)
                                 col-red
                                 @endif
-                                @endforeach "></i>
-                                <i class="fa-solid fa-comment ms-md-2 h4 "></i>
-                            </div>
-                            <i class="fa-solid fa-bookmark h4"></i>
+                            @endforeach "></i>
+                            <i class="fa-solid fa-comment ms-md-2 h4 "></i>
                         </div>
-                        <h6 class="like-count">
+                        <!-- ---------------------------------------SAved Posts -->
+                        @auth
+
+    @if ($post->isSavedByUser(auth()->user()->id))
+        <form action="{{ route('saved-posts.destroy', ['id' => $post->id]) }}" method="post" id="unsaveForm{{ $post->id }}">
+            <input type="hidden" name="post_id" value="{{ $post->id }}">
+            <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+            @csrf
+            @method('DELETE')
+
+            <button type="submit" class="border-0 p-0" style="background:none;">
+                <span class="save-btn">
+                    <svg aria-label="Unsave" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24">
+                        <title>Unsave</title>
+                        <polygon fill="#000" points="20 21 12 13.44 4 21 4 3 20 3 20 21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polygon>
+                    </svg>
+                </span>
+            </button>
+        </form>
+    @else
+        <form action="{{ route('saved.posts.store', ['id' => $post->id]) }}" method="post" id="saveForm{{ $post->id }}">
+            <input type="hidden" name="post_id" value="{{ $post->id }}">
+            <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+            @csrf
+            <button type="submit" class="border-0 p-0" style="background:none;">
+                <span class="save-btn">
+                    <svg aria-label="Save" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24">
+                        <title>Save</title>
+                        <polygon fill="none" points="20 21 12 13.44 4 21 4 3 20 3 20 21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polygon>
+                    </svg>
+                </span>
+            </button>
+        </form>
+    @endif
+@endauth
+                            <!-- --------------------------------------------------------------------------- -->
+                    </div>
+                    <h6 class="like-count">
                             @if ($post->like->count() > 0)
                             {{$post->like->count()}} likes
                             @else
@@ -138,9 +173,9 @@
                     @foreach ($post->media as $media )
                     @if (strpos($media->media_url, 'mp4') !== false)
 
-                    <video src="{{asset("storage/images/$media->media_url")}}" class="w-100 h-100 me-md-2 mt-md-2" controls></video>
+                    <a href="{{route('postDesc.show',$post->id)}}"><video src="{{asset("storage/images/$media->media_url")}}" class="w-100 h-100 me-md-2 mt-md-2" controls></video></a>
                     @else
-                    <img class="w-100 h-100 me-md-2 mt-md-2" src="{{asset("storage/images/$media->media_url")}}" alt="">
+                    <a href="{{route('postDesc.show',$post->id)}}"><img class="w-100 h-100 me-md-2 mt-md-2" src="{{asset("storage/images/$media->media_url")}}" alt=""></a>
                     @endif
                      @endforeach
 
@@ -155,7 +190,41 @@
                             @endforeach "></i>
                             <i class="fa-solid fa-comment ms-md-2 h4 "></i>
                         </div>
-                        <i class="fa-solid fa-bookmark h4"></i>
+                        <!-- ---------------------------------------SAved Posts ------------------------------------------->
+                        @auth
+                            @if ($post->isSavedByUser(auth()->user()->id))
+                                <form action="{{ route('saved-posts.destroy', ['id' => $post->id]) }}" method="post" id="unsaveForm{{ $post->id }}">
+                                    <input type="hidden" name="post_id" value="{{ $post->id }}">
+                                    <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button type="submit" class="border-0 p-0" style="background:none;">
+                                        <span class="save-btn">
+                                            <svg aria-label="Unsave" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24">
+                                                <title>Unsave</title>
+                                                <polygon fill="#000" points="20 21 12 13.44 4 21 4 3 20 3 20 21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polygon>
+                                            </svg>
+                                        </span>
+                                    </button>
+                                </form>
+                            @else
+                                <form action="{{ route('saved.posts.store', ['id' => $post->id]) }}" method="post" id="saveForm{{ $post->id }}">
+                                    <input type="hidden" name="post_id" value="{{ $post->id }}">
+                                    <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+                                    @csrf
+                                    <button type="submit" class="border-0 p-0" style="background:none;">
+                                        <span class="save-btn">
+                                            <svg aria-label="Save" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24">
+                                                <title>Save</title>
+                                                <polygon fill="none" points="20 21 12 13.44 4 21 4 3 20 3 20 21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polygon>
+                                            </svg>
+                                        </span>
+                                    </button>
+                                </form>
+                            @endif
+                        @endauth
+                            <!-- --------------------------------------------------------------------------- -->
                     </div>
                     <h6 class="like-count">
                         @if ($post->like->count() > 0)
@@ -180,6 +249,7 @@
                                 $cleanedHashtag = str_replace('#', '', $hashtag->hashtag_name);
                             @endphp
                             <a href="{{ url("/hashtag/$cleanedHashtag") }}" class=" p-0 m-0  ms-md-2 hash">{{$hashtag->hashtag_name}}</a>
+
                             @endforeach
                         </div>
                         @php
@@ -317,6 +387,10 @@
         });
        });
    });
+
+$('.hash').click(function(){
+
+})
 
 </script>
 @endsection

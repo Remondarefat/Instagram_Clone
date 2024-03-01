@@ -9,7 +9,16 @@ use App\Models\Media;
 use App\Models\Comment;
 use App\Models\Post_Media;
 use App\Models\CommentLike;
+
+
+use App\Models\User;
+
+
+use App\Models\PostMedia;
+
 use Illuminate\Http\Request;
+
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -43,16 +52,16 @@ class PostController extends Controller
     public function store(Request $request)
     {
 
-        $request->validate([
-            'caption' => 'string',
-            'hashtag_name' => 'string',
-            'croppedImageDataUrls.*' => 'required',
-            'videoDataUrls.*' => 'required',
-        ]);
-        $post = new Post();
-        $post->caption = $request->caption;
-        $post->user_id = Auth::user()->id;
-        $post->save();
+            $request->validate([
+                'caption' => 'string',
+                'hashtag_name' => 'string',
+                'croppedImageDataUrls.*' => 'required',
+                'videoDataUrls.*' => 'required',
+            ]);
+            $post = new Post();
+            $post->caption = $request->caption;
+            $post->user_id = Auth::user()->id;
+            $post->save();
 
 
         // }
@@ -97,15 +106,15 @@ $media->save();
 }
 
 if ($request->has('hashtag_name')) {
-$hashtags = $request['hashtag_name']; // Your input string
-$hashtagsArray = explode(' ', $hashtags);
-foreach ($hashtagsArray as $tag) {
-    $hashtag = new Hashtag();
-    $hashtag->hashtag_name = $tag;
-    $hashtag->post_id = $post->id;
-    $hashtag->save();
-}
-// }
+    $hashtags = $request['hashtag_name'];
+    $hashtagsArray = explode(' ', $hashtags);
+    foreach ($hashtagsArray as $tag) {
+        $hashtag = new Hashtag();
+        $hashtag->hashtag_name = $tag;
+        $hashtag->post_id = $post->id;
+        $hashtag->save();
+    }
+
 }
 return redirect()->back()->with('success', 'Post created successfully');
         }
@@ -120,7 +129,35 @@ return redirect()->back()->with('success', 'Post created successfully');
 
     public function show(string $id)
     {
-        //
+        $post=Post::findorfail($id);
+        $user=User::where("id",$post->user_id)->first();
+        $medias=Media::where('post_id',$post->id)->get();
+        // Fetch more posts by the same user along with media URLs
+        $morePosts = Post::where('user_id', $user->id)
+        ->where('id', '!=', $post->id) // Exclude the current post
+        ->with(['media' => function ($query) {
+            $query->select('media_url', 'post_id');
+        }])
+        ->orderByDesc('created_at')
+        ->take(9) // Adjust as needed
+        ->get();
+
+        //! Fetch comments associated with the post
+        $comments = Comment::where('post_id', $post->id)->get();
+        $likes = Like::where('post_id', $post->id)->get();
+        // dd($user);
+         //! Check if the user has already liked the post
+        $user = auth()->user();
+        $existingLike = Like::where('user_id', $user->id)->where('post_id', $post->id)->first();
+        $existingLikeComments = CommentLike::where('user_id', $user->id)
+        ->whereIn('comment_id', $comments->pluck('id')) // Check if user liked any comment in the collection
+        ->get();
+         // Check if the post is saved by the current user
+        // $isSavedByUser = $post->isSavedByUser($user->id);
+
+        return view("posts.postDesc",['post'=>$post,'user' => $user, "medias" => $medias
+        ,'existingLike' => $existingLike,'existingLikeComments' => $existingLikeComments,'comments' => $comments,'morePosts' => $morePosts
+        ,'likes'=>$likes ]);
     }
 
     /**
@@ -145,12 +182,6 @@ return redirect()->back()->with('success', 'Post created successfully');
     public function destroy(string $id)
     {
         //
-    }
-    public function hash(string $hash)
-    {
-        $hastags=Hashtag::all();
-        dd($hashtags);
-        return "moataz";
     }
 
     public function like(Request $request)
@@ -191,5 +222,12 @@ return redirect()->back()->with('success', 'Post created successfully');
 
     }
 
-
+    public function hash(string $hash)
+    {
+        $ha = "#" . $hash;
+        $posts = Post::whereHas('hashtags', function ($query) use ($ha) {
+            $query->where('hashtag_name', $ha);
+        })->get();
+        return view ('by_hashtag', ['posts' => $posts, 'hashtag_name' => $ha]);
+    }
 }

@@ -70,3 +70,20 @@ searchInput.addEventListener("input", function () {
             console.error("Error fetching search results:", error)
         );
 });
+
+
+//   document.getElementById('postButton').addEventListener('click', function() {
+//     document.getElementById('commentForm').submit();
+// });
+document.getElementById('commentInput').addEventListener('input', function() {
+    var postButton = document.getElementById('postButton');
+    if (this.value.trim() !== '') {
+        postButton.style.display = 'inline'; // Show "Post" text
+    } else {
+        postButton.style.display = 'none'; // Hide "Post" text
+    }
+});
+
+document.getElementById('postButton').addEventListener('click', function() {
+    document.getElementById('commentForm').submit(); // Submit form
+});

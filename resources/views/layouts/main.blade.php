@@ -17,16 +17,40 @@
 </head>
 
 <body>
+    <!-- !------Loading Page-- -->
+    <div id="loading">
+        <div class="ring d-flex flex-column align-items-center justify-content-between w-100 h-100 mb-5">
+            <div></div>
+            <img src="{{ asset('R.png') }}" >
+            <div class="text-center Loding_text d-flex flex-column ">
+                <span class="text-muted">From</span>
+                <img src="{{ asset('OIP.jpeg') }}">
+            </div>
+        </div>
+    </div>
+    <!--!------------------------------------------->
     <div class=" container-fluid">
         <div class="row">
             <div class=" m-0 p-0 col-md-2">
-                @include('includes.sidebar')
+                @include('includes.sidebar') 
             </div>
-            <div class=" col-md-8 offset-1 ">
+            <div class=" col-md-8 offset-1  ">
                 @yield('content')
             </div>
         </div>
     </div>
+    <script>
+        // !----- Loading Page -------
+        $(document).ready(function(){
+            $("#loading .ring").fadeOut(170 , function() {
+            $("#loading").fadeOut(1800, function(){
+                $("#loading").remove();
+                $("#homePage").css("overflow" , "auto");
+            })
+            });
+        });
+  // !----- Loading Page -------
+    </script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 
 

@@ -15,7 +15,7 @@
             <div class="max-w-xl flex items-center justify-between">
                 <div class="flex-shrink-0">
                     <div class="mt-1 relative rounded-full overflow-hidden bg-gray-100 h-14 w-14">
-                        <img id="preview-image" src="{{ Auth::user()->profile_photo_url }}" alt="Profile Picture" class="h-full w-full object-cover" />
+                        <img id="preview-image" src="{{asset(str_replace('public/','storage/',Auth::user()->avatar))}}" alt="Profile Picture" class="h-full w-full object-cover" />
                         <input type="file" name="avatar" id="avatar" class="absolute inset-0 opacity-0 cursor-pointer">
                     </div>
                 </div>

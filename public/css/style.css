@@ -3,9 +3,38 @@
     padding: 0;
     box-sizing: border-box;
 }
+/* !-----Loading Page------ */
+#loading{
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: fixed;
+    background-color: white;
+    /* background-color: #272727; */
+    z-index: 99999999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #272727;
+    /* opacity: 0.5; */
+}
+#homePage {
+    overflow: hidden;
+}
+img{
+    width: 100px;
+}
+
+/* !-----Loading Page------ */
 
 /* start side bar */
-
+*{
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+    
+}
 .bt-insta{
     background-color: #EFEFEF;
     font-weight: bold;
@@ -147,7 +176,7 @@
 }
 
 
-.im-pro{
+.im-pro {
     width: 50px;
     height: 50px;
 }
@@ -313,14 +342,14 @@
     width: 300px;
 }
 
- #uploadedImageContainer {
+#uploadedImageContainer {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
     max-width: 100%;
     overflow-x: hidden;
   }
-  #uploadedImageContainer img {
+#uploadedImageContainer img {
     max-width: 100%;
     height: auto;
     max-width: 100%;
@@ -331,7 +360,74 @@
 }
 /* end of create post style */
 
+/* TODO: Login Form */
 
+/* ? post Desc Sec */
+.postDesc{
+    height: fit-content;
+}
+.icon{
+    width: 25px;
+    cursor: pointer;
+}
+.followBtn{
+    text-decoration: none;
+    color: black;
+}
+.followBtn:hover{
+    color:#B0B0B0;
+}
+.comments_sec{
+    height: 240px;
+    overflow-y:auto;
+    
+}
+.likes-img{
+    width: 30px;
+    height: 30px;
+}
+.post-img{
+    height: 30px;
+    width: 30px;
+}
+.borderless-input{
+    border: none;
+    outline: none;
+}
+#postButton{
+    color: rgb(0, 149, 255);
+    font-weight: bolder;
+}
+#postButton:hover{
+    color:#003787;
+}
+/*!-------------------------------------------------- */
+/* !---Saved Posts---- */
+.Savedpost {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.Savedpost .layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%; 
+    height: 100%;
+    background-color:rgba(128, 128, 128, 0.607);
+    padding: 10px 15px;
+    border-radius: 5px;
+    opacity: 0;
+}
+
+
+.Savedpost:hover .layer {
+    opacity: 1;
+}
+
+
+/* !---Saved Posts---- */
 
 
 .pro-img-col{
@@ -421,3 +517,42 @@
 .hash{
     color:rgb(95,130,162);
 }
+
+
+.ved{
+    width: 100%;
+    height: 380px;
+}
+
+
+
+/* ------------------------------ */
+/* TODO: Login Form */
+.or-container {
+    text-align: center;
+    position: relative;
+}
+
+.or-word:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: -5px;
+    width: 150px;
+    height: 1px;
+    background-color: lightslategray;
+}
+
+.or-word:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: -5px;
+    width: 150px;
+    height: 1px;
+    background-color: lightslategray;
+}
+/* TODO: Login Form */
+
+
+/* ? */

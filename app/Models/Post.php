@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\PostSaved;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Post extends Model
 {
@@ -34,4 +35,15 @@ class Post extends Model
     public function media(){
     return $this->hasMany(Media::class);
     }
+    // !-----------
+    public function savedPosts()
+    {
+        return $this->hasMany(PostSaved::class, 'post_id');
+    }
+    
+    public function isSavedByUser($userId)
+    {
+        return $this->savedPosts()->where('user_id', $userId)->exists();
+    }
+
 }

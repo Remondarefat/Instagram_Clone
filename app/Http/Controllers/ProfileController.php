@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Like;
+use App\Models\Post;
 use App\Models\User;
+use App\Models\Comment;
 use Illuminate\View\View;
+use App\Models\CommentLike;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
@@ -15,17 +19,18 @@ class ProfileController extends Controller
     /**
      * Display the user's profile form.
      */
+
     public function edit(Request $request): View
     {
-        return view('profile.edit', [
-            'user' => $request->user(),
-        ]);
+
+        return view('profile.edit');
+
     }
 
     /**
      * Update the user's profile information.
      */
-    public function update(Request $request): RedirectResponse
+    public function update(Request $request)
     {
 
         $data = $request->validate([
@@ -47,8 +52,14 @@ class ProfileController extends Controller
 
         $userUpdate = User::findOrFail($user->id);
         $userUpdate->update($data);
+        $posts = Post::all();
+        $comments=Comment::all();
+        $commentlike=CommentLike::all();
+        $userid = Auth::user()->id;
+        $like = Like::where('user_id', Auth::user()->id)->get();
 
-        return Redirect::route('profile.edit');
+        return view('posts.home', ['commentlike'=>$commentlike,'posts' => $posts, 'like' => $like, 'userid' => $userid,'comments'=>$comments]);
+
     }
 
     /**

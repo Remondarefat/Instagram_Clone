@@ -119,7 +119,7 @@
         @include('includes.createpost')
         <!-- Profile Tab -->
         <div class="d-flex gap-3 align-items-center px-2 py-3 mb-3 nav-tab nav-tab-profile">
-            <img class="profile-img" src="" alt="">
+            <img class="profile-img"  src="{{asset(str_replace('public/','storage/',Auth::user()->avatar))}}" alt="">
             <a class="text-decoration-none text-dark" href="/postprofile">Profile</a>
         </div>
         <!-- Settings Tab -->
@@ -150,7 +150,7 @@
                             fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="2">
                         </path>
                     </svg>
-                    <a class="text-decoration-none text-dark" href="#">Settings</a>
+                    <a class="text-decoration-none text-dark" href="{{route('profile.edit')}}">Settings</a>
                 </li>
                 <li class="settings-list">
                     <svg aria-label=""fill="currentColor" class="me-2" height="18" role="img"
@@ -170,7 +170,7 @@
                         <polygon fill="none" points="20 21 12 13.44 4 21 4 3 20 3 20 21" stroke="currentColor"
                             stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polygon>
                     </svg>
-                    <a class="text-decoration-none text-dark" href="#">Saved
+                    <a class="text-decoration-none text-dark" href="{{route('saved.posts.index')}}">Saved
                         Posts</a>
                 </li>
                 <form method="POST" action="{{ route('logout') }}">
