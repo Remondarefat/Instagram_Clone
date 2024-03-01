@@ -71,16 +71,7 @@ searchInput.addEventListener("input", function () {
         );
 });
 
-// !----- Loading Page -------
-$(document).ready(function(){
-    $("#loading .ring").fadeOut(170 , function() {
-      $("#loading").fadeOut(1800, function(){
-        $("#loading").remove();
-        $("#homePage").css("overflow" , "auto");
-      })
-    });
-  });
-  // !----- Loading Page -------
+
 //   document.getElementById('postButton').addEventListener('click', function() {
 //     document.getElementById('commentForm').submit();
 // });

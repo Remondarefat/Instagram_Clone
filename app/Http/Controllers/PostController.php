@@ -52,16 +52,16 @@ class PostController extends Controller
     public function store(Request $request)
     {
 
-        $request->validate([
-            'caption' => 'string',
-            'hashtag_name' => 'string',
-            'croppedImageDataUrls.*' => 'required',
-            'videoDataUrls.*' => 'required',
-        ]);
-        $post = new Post();
-        $post->caption = $request->caption;
-        $post->user_id = Auth::user()->id;
-        $post->save();
+            $request->validate([
+                'caption' => 'string',
+                'hashtag_name' => 'string',
+                'croppedImageDataUrls.*' => 'required',
+                'videoDataUrls.*' => 'required',
+            ]);
+            $post = new Post();
+            $post->caption = $request->caption;
+            $post->user_id = Auth::user()->id;
+            $post->save();
 
 
         // }
@@ -106,15 +106,15 @@ $media->save();
 }
 
 if ($request->has('hashtag_name')) {
-$hashtags = $request['hashtag_name']; // Your input string
-$hashtagsArray = explode(' ', $hashtags);
-foreach ($hashtagsArray as $tag) {
-    $hashtag = new Hashtag();
-    $hashtag->hashtag_name = $tag;
-    $hashtag->post_id = $post->id;
-    $hashtag->save();
-}
-// }
+    $hashtags = $request['hashtag_name'];
+    $hashtagsArray = explode(' ', $hashtags);
+    foreach ($hashtagsArray as $tag) {
+        $hashtag = new Hashtag();
+        $hashtag->hashtag_name = $tag;
+        $hashtag->post_id = $post->id;
+        $hashtag->save();
+    }
+
 }
 return redirect()->back()->with('success', 'Post created successfully');
         }
@@ -222,5 +222,12 @@ return redirect()->back()->with('success', 'Post created successfully');
 
     }
 
-
+    public function hash(string $hash)
+    {
+        $ha = "#" . $hash;
+        $posts = Post::whereHas('hashtags', function ($query) use ($ha) {
+            $query->where('hashtag_name', $ha);
+        })->get();
+        return view ('by_hashtag', ['posts' => $posts, 'hashtag_name' => $ha]);
+    }
 }

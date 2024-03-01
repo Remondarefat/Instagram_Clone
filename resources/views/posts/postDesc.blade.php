@@ -34,9 +34,9 @@
                         @else
                             <img class="rounded-circle im-com me-md-2" src="{{asset($post->user->avatar)}}" alt="">
                         @endif
-                            <span class="fw-bolder ps-1">{{$post->user->username}}</span>
-                            <span></sapn>
-                            <a href="#" class="fw-bold followBtn ms-2 ">. Following</a>
+                            <span class="fw-bolder ">{{$post->user->username}}</span>
+                            <!-- <span></sapn> -->
+                            <!-- <a href="#" class="fw-bold followBtn ms-2 ">. Following</a> -->
                         </div>
                         <div>
                             <img src="{{asset('More.svg')}}" class="icon">
@@ -47,10 +47,29 @@
                     <!-- ------------------ -->
                     <div class="comments_sec pe-3 ">
                         <!-- Display Comments -->
+                        <div class="comments_container mt-1 d-flex align-content-center">
+
+                            <img src="{{asset($post->user->avatar)}}" class="post-img rounded-circle">
+                                <div class=" w-100 ">
+                                    <span class="fw-bolder">{{$post->user->username}}</span> 
+                                    <span class="text-muted ps-1">{{ $post->created_at->diffForHumans() }}</span>
+                                    <div class="ps-2">
+                                        <div class="d-flex  ">
+                                            <p class=" p-0 m-0 pe-3 ">{{$post->caption}}</p>
+                                            @foreach ($post->hashtags as $hashtag )
+                                                @php
+                                                    $cleanedHashtag = str_replace('#', '', $hashtag->hashtag_name);
+                                                @endphp
+                                                <a href="{{ url("/hashtag/$cleanedHashtag") }}" class=" p-0 m-0   hash">{{$hashtag->hashtag_name}}</a>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
                         @if(!$comments->isEmpty())
                     @foreach($comments as $comment)
                         <div class="comments_container mt-1 d-flex align-content-center">
-                            <img src="{{ $comment->user->avatar }}" class="post-img rounded-circle">
+                            <img src="{{ asset($comment->user->avatar )}}" class="post-img rounded-circle">
                             <div class="ps-2 w-100">
                                 <span class="fw-bolder">{{ $comment->user->username }}</span> <!-- Change to $comment->user->name -->
                                 <span class="text-muted ps-1">{{ $comment->created_at->diffForHumans() }}</span>
@@ -140,14 +159,19 @@
                         </div>
                     </div>
                     <div class="mt-2 d-flex align-content-center ">
-                            <img src="{{$user->avatar}}" class="likes-img rounded-circle">
-                        @foreach($likes as $like)
-                            <span  class=" fw-bold ps-1">{{$likes->count()}} likes</span>
-                            
-                            <span class="text-muted ps-1 ">{{ $like->created_at->diffForHumans() }}</span>
-                        @endforeach
+                    @if($likes->isNotEmpty())
+                        <!-- Display the avatar of the last user who liked the post -->
+                        <img src="{{ $likes->last()->user->avatar }}" class="likes-img rounded-circle" alt="Avatar">
+                        
+                        <!-- Display the total number of likes -->
+                        <span class="fw-bold ps-1">{{ $likes->count() }} likes</span>
+                        
+                        <!-- Display the timestamp of the last like -->
+                        <span class="text-muted ps-1">{{ $likes->last()->created_at->diffForHumans() }}</span>
+                    @else
+                        <span class="text-muted">No likes yet</span>
+                    @endif
                     </div>
-                    
                     <div class=" mt-2 d-flex  ">
                             <img src="{{ asset('userIcon.webp') }}" class=" rounded-circle" style="width:40px;">
                                 <div class="ps-3 w-100 ">

@@ -8,7 +8,7 @@
             @if ($post->user->avatar==null)
                 <img class="rounded-circle im-com me-md-2" src="{{'default.jpg'}}" alt="">
             @else
-                <img class="rounded-circle im-com me-md-2" src="{{storage/$post->user->avatar}}" alt="">
+                <img class="rounded-circle im-com me-md-2" src="{{Storage::url($post->user->avatar)}}" alt="">
             @endif
             <h4>{{$post->user->username}}</h4>
         </div>
@@ -82,6 +82,14 @@
 @endauth
                             <!-- --------------------------------------------------------------------------- -->
                     </div>
+                    <h6 class="like-count">
+                            @if ($post->like->count() > 0)
+                            {{$post->like->count()}} likes
+                            @else
+
+                            @endif
+
+                        </h6>
 
 
 
@@ -221,7 +229,11 @@
                             <p class=" p-0 m-0  ms-md-2">{{$post->caption}}</p>
 
                             @foreach ($post->hashtags as $hashtag )
-                                <a href="" class=" p-0 m-0  ms-md-2 hash">{{$hashtag->hashtag_name}}</a>
+                            @php
+                                $cleanedHashtag = str_replace('#', '', $hashtag->hashtag_name);
+                            @endphp
+                            <a href="{{ url("/hashtag/$cleanedHashtag") }}" class=" p-0 m-0  ms-md-2 hash">{{$hashtag->hashtag_name}}</a>
+
                             @endforeach
                         </div>
                         @php
@@ -359,6 +371,10 @@
         });
        });
    });
+
+$('.hash').click(function(){
+
+})
 
 </script>
 @endsection

@@ -5,8 +5,8 @@
 
     <form method="POST" action="{{ route('login') }}" class="p-5 border-solid border-2 ">
         @csrf
-        <div  class=" p-5">
-            <img src="{{asset('info.svg')}}" >
+        <div  class=" p-4 flex justify-center items-center">
+            <img src="{{asset('info.svg')}}" class="w-3/4">
         </div>
         <!-- Email Address -->
         <div class="mt-5">
@@ -44,9 +44,11 @@
                     <span class="or-word text-light fw-bold">OR</span>
                 </div>
                 
-                <x-primary-button class="ms-3">
-                    <a  href="{{route('auth.socialite.redirect', ['provider' => 'facebook'])}}">Facebook</a>
-                </x-primary-button>
+                
+                <div class="text-center "> 
+                <a class="text-blue-500 pe-2"  href="{{route('auth.socialite.redirect', ['provider' => 'facebook'])}}">Log in With Facebook Account</a>
+                <i class="fa-brands fa-facebook text-2xl"></i>
+                </div>
 
             @if (Route::has('password.request'))
                 <div class="text-center">

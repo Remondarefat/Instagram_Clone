@@ -49,6 +49,8 @@
     </div>
 </div>
 
+
+
 <!-- Followers Modal -->
 <div class="modal fade" id="followersModal" tabindex="-1" aria-labelledby="followersModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -99,16 +101,15 @@
                 </div><div class="row justify-content-center mb-1">
             @endif
             <div class="col-md-4 pro-img-col">
-                <a href="#" >
+                <a href="{{route('postDesc.show',$post->id)}}" >
                     <div class="img-wrapper">
                         @if(Str::endsWith($post->media->first()->media_url, ['.mp4', '.mov']))
                         <div class="video-icon-overlay"><i class="fas fa-video"></i></div>
                         <video class="w-100 post-video" preload="auto" loop muted playsinline>
-                            <source src="{{ asset("/images/" . $post->media->first()->media_url) }}" type="video/mp4">
-                            Your browser does not support the video tag.
+                            <source src="{{ asset("storage/images/" . $post->media->first()->media_url) }}" type="video/mp4">
                         </video>
                         @else
-                        <img class="w-100 post-image" src="{{ asset("/images/" . $post->media->first()->media_url) }}" alt="media">
+                        <img class="w-100 post-image" src="{{ asset("storage/images/" . $post->media->first()->media_url) }}" alt="media">
                         @if($post->media->count() > 1)
                             <span class="multi-image-icon"><i class="fas fa-clone"></i></span>
                         @endif

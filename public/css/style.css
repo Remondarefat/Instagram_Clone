@@ -415,7 +415,7 @@ img{
     left: 0;
     width: 100%; 
     height: 100%;
-    background-color: #ffffff4d;
+    background-color:rgba(128, 128, 128, 0.607);
     padding: 10px 15px;
     border-radius: 5px;
     opacity: 0;
@@ -516,6 +516,12 @@ img{
 }
 .hash{
     color:rgb(95,130,162);
+}
+
+
+.ved{
+    width: 100%;
+    height: 380px;
 }
 
 
