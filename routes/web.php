@@ -22,6 +22,8 @@ use App\Models\CommentLike;
 |
 */
 
+Route::get('/hashtag/{hashtagName}', [PostController::class, 'hash']);
+
 Route::get('/', function () {
     return view('auth.login');
 });

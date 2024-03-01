@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Like;
+use App\Models\Hashtag;
 use App\Models\Post;
 use App\Models\Media;
 use App\Models\Comment;
-use App\Models\Hashtag;
 use App\Models\Post_Media;
 use App\Models\CommentLike;
 use Illuminate\Http\Request;
@@ -145,6 +145,12 @@ return redirect()->back()->with('success', 'Post created successfully');
     public function destroy(string $id)
     {
         //
+    }
+    public function hash(string $hash)
+    {
+        $hastags=Hashtag::all();
+        dd($hashtags);
+        return "moataz";
     }
 
     public function like(Request $request)

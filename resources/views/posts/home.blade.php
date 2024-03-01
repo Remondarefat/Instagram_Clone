@@ -11,6 +11,7 @@
                 <img class="rounded-circle im-com me-md-2" src="{{storage/$post->user->avatar}}" alt="">
             @endif
             <h4>{{$post->user->username}}</h4>
+            <input type="text">
         </div>
             <div id="carouselExample" class="carousel slide text-center cur">
                 <div class="carousel-inner">
@@ -69,23 +70,18 @@
                                 @endif
                                 <h6 class="bold mt-md-2">{{$post->user->username}}</h6>
                                 <p class=" p-0 m-0  ms-md-2">{{$post->caption}}</p>
-                                <a href="" class=" hhh p-0 m-0  ms-md-2 ">
-                                    @php
-                                        $string = $post->hashtag;
-                                        $decoded = json_decode($string);
-                                        $hash = trim($decoded[0], '[]"');
-                                    @endphp
-
-                                    {{$hash}}
-                                </a>
+                                @foreach ($post->hashtags as $hashtag )
+                                <input type="submit" value="{{$hashtag->hashtag_name}}">
+                                <a href="/hashtag" class=" p-0 m-0  ms-md-2 hash">{{$hashtag->hashtag_name}}</a>
+                                @endforeach
                             </div>
                         @php
                             $counter = 0; // Initialize the counter
-                        @endphp
+                            @endphp
                         @foreach ($post->comment as $comment )
                         @php
                             $counter++; // Increment the counter
-                        @endphp
+                            @endphp
                             <div class="d-flex justify-content-between mt-md-2 w-100">
                                 <div class="d-flex align-items-center ">
                                     @if ($comment->user->avatar==null)
@@ -121,7 +117,7 @@
 
 
 
-            @else
+                @else
 
 
 
@@ -132,9 +128,9 @@
                 <div class="mt-md-5">
                     <div class="d-flex align-items-center">
                         @if ($post->user->avatar==null)
-                            <img class="rounded-circle im-com me-md-2" src="{{'default.jpg'}}" alt="">
+                        <img class="rounded-circle im-com me-md-2" src="{{'default.jpg'}}" alt="">
                         @else
-                            <img class="rounded-circle im-com me-md-2" src="{{str_replace('public/','storage/',$post->user->avatar)}}" alt="">
+                        <img class="rounded-circle im-com me-md-2" src="{{str_replace('public/','storage/',$post->user->avatar)}}" alt="">
                         @endif
                         <h4>{{$post->user->username}}</h4>
                     </div>
@@ -148,14 +144,14 @@
                     @endif
                      @endforeach
 
-                    <div class="d-flex mt-md-2 justify-content-between">
+                     <div class="d-flex mt-md-2 justify-content-between">
                         <div>
                             <i class="fa-solid h4 fa-heart  like
 
                             @foreach ($like as $li )
-                                @if (Auth::user()->id == $li->user_id && $li->post_id == $post->id)
-                                col-red
-                                @endif
+                            @if (Auth::user()->id == $li->user_id && $li->post_id == $post->id)
+                            col-red
+                            @endif
                             @endforeach "></i>
                             <i class="fa-solid fa-comment ms-md-2 h4 "></i>
                         </div>
@@ -180,7 +176,10 @@
                             <p class=" p-0 m-0  ms-md-2">{{$post->caption}}</p>
 
                             @foreach ($post->hashtags as $hashtag )
-                                <a href="" class=" p-0 m-0  ms-md-2 hash">{{$hashtag->hashtag_name}}</a>
+                            @php
+                                $cleanedHashtag = str_replace('#', '', $hashtag->hashtag_name);
+                            @endphp
+                            <a href="{{ url("/hashtag/$cleanedHashtag") }}" class=" p-0 m-0  ms-md-2 hash">{{$hashtag->hashtag_name}}</a>
                             @endforeach
                         </div>
                         @php
