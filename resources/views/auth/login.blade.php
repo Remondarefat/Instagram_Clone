@@ -60,6 +60,6 @@
         </div>
     </form>
     <div class=" border-solid border-2 mt-3 p-5 text-center ">
-        Don't have an account? <span class="text-red">registration</span>
+        Don't have an account? <a href="{{route('')}}" class="text-blue-500">registration</a>
     </div>
 </x-guest-layout>
