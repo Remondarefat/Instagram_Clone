@@ -13,10 +13,10 @@ class PostSavedController extends Controller
 
     // Retrieve the saved posts for the authenticated user
     $savedPosts = PostSaved::where('user_id', $user->id)
-                           ->with(['post' => function ($query) {
-                               $query->with(['media', 'like', 'comment']);
-                           }])
-                           ->get();
+                            ->with(['post' => function ($query) {
+                                $query->with(['media', 'like', 'comment']);
+                            }])
+                            ->get();
 
     // Calculate likes counts for each saved post
     $likesCounts = [];

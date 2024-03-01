@@ -44,8 +44,9 @@
                     <span class="or-word text-light fw-bold">OR</span>
                 </div>
                 
-            
-
+                <x-primary-button class="ms-3">
+                    <a  href="{{route('auth.socialite.redirect', ['provider' => 'facebook'])}}">Facebook</a>
+                </x-primary-button>
 
             @if (Route::has('password.request'))
                 <div class="text-center">

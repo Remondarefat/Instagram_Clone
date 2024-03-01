@@ -18,8 +18,11 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->timestamps();
-        });
+            $table->timestamps();   
+            $table->string('provider')->nullable();
+            $table->string('provider_id')->nullable();
+            $table->string('provider_token')->nullable();
+        });     
     }
 
     /**
@@ -28,6 +31,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('users');
+        $table->dropColumn('provider');
+            $table->dropColumn('provider_id');
+            $table->dropColumn('provider_token');
 
     }
 };

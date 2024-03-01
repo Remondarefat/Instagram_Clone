@@ -6,7 +6,11 @@
                         <div class="carousel-inner">
                             @foreach ($post->media as $media )
                             <div class="carousel-item active">
-                                <img class="w-100 h-auto me-md-2" src="{{ asset("/images/$media->media_url") }}"  alt="">
+                            @if (strpos($media->media_url, 'mp4') !== false)
+                            <video src="{{asset("storage/images/$media->media_url")}}" class="w-100 h-100 me-md-2 " controls></video>
+                            @else
+                            <img class="w-100 h-100 me-md-2" src="{{asset("storage/images/$media->media_url")}}" alt="">
+                            @endif
                             </div>
                             @endforeach
                         </div>
@@ -168,20 +172,33 @@
             <!-- Existing code to display the current post -->
             <!-- Add a section for more posts by the same user -->
             @if ($morePosts->isNotEmpty())
-                <div class="mt-3">
-                    <span>More posts from <span class="fw-bold">{{ $post->user->username }}</span></span>
-                </div>
-                <div class="row mt-2 g-1">
-                    @foreach ($morePosts as $morePost)
-                        <div class="col-md-4">
-                            @foreach ($morePost->media as $media)
-                            <a href="{{ route('postDesc.show', $morePost->id) }}"><img src="{{ asset("/images/$media->media_url")}}" alt="Media" class="w-100"></a>
-                            @endforeach
-                            <!-- Add any additional content you want to display -->
-                        </div>
-                    @endforeach
-                </div>
-            @endif
+    <div class="mt-3">
+        <span>More posts from <span class="fw-bold">{{ $post->user->username }}</span></span>
+    </div>
+    <div class="row mt-2 g-1">
+        @foreach ($morePosts as $morePost)
+            <div class="col-md-4">
+                @if ($morePost->media->isNotEmpty())
+                    <div class="Savedpost">
+                        <a href="{{ route('postDesc.show', $morePost->id) }}">
+                            <div class="img-wrapper">
+                                @php $media = $morePost->media->first(); @endphp
+                                @if(Str::endsWith($media->media_url, ['.mp4', '.mov']))
+                                    <video class="w-100 post-video" preload="auto" loop muted playsinline>
+                                        <source src="{{ asset("storage/images/" . $media->media_url) }}" type="video/mp4">
+                                    </video>
+                                @else
+                                <img class="w-100 post-image" src="{{ asset("storage/images/" . $media->media_url) }}" alt="media">
+                                
+                                @endif
+                            </div>
+                        </a>
+                    </div>
+                @endif
+            </div>
+        @endforeach
+    </div>
+@endif
 
 
         

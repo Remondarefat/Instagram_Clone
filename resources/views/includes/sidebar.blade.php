@@ -181,6 +181,7 @@
         </div>
 
         <!-- Additional Tab Content -->
+<!-- Additional Tab Content -->
         <div class="d-none">
             <div class="searchTabContent">
                 <h3>Search</h3>

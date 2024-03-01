@@ -514,3 +514,39 @@ img{
 .post-video {
     controls: false;
 }
+.hash{
+    color:rgb(95,130,162);
+}
+
+
+
+/* ------------------------------ */
+/* TODO: Login Form */
+.or-container {
+    text-align: center;
+    position: relative;
+}
+
+.or-word:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: -5px;
+    width: 150px;
+    height: 1px;
+    background-color: lightslategray;
+}
+
+.or-word:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: -5px;
+    width: 150px;
+    height: 1px;
+    background-color: lightslategray;
+}
+/* TODO: Login Form */
+
+
+/* ? */

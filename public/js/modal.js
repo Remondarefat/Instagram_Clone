@@ -91,7 +91,7 @@ document.getElementById("cropButtonUpload").addEventListener("click", function (
 });
 
 function displayCroppedImages(imageDataURLs, videoURL) {
-    populateCroppedImageData(); 
+    populateCroppedImageData();
 
     const carouselInner = document.querySelector("#imageCarousel .carousel-inner");
     carouselInner.innerHTML = "";
@@ -100,59 +100,48 @@ function displayCroppedImages(imageDataURLs, videoURL) {
         document.getElementById("imageCarousel").style.display = "none";
         document.getElementById("videoContainer").style.display = "block";
 
-        // Display the video
-        const video = document.createElement("video");
-        video.src = videoURL;
-        video.style.width = "100%";
-        video.style.height = "100%";
-        video.controls = true;
-        document.getElementById("videoContainer").appendChild(video);
-    } else {
-        // Hide the video container and display the carousel
-        document.getElementById("imageCarousel").style.display = "block";
-        document.getElementById("videoContainer").style.display = "none";
+// Display the video
+const video = document.createElement("video");
+video.src = videoURL;
+video.style.width = "100%";
+video.style.height = "100%";
+video.controls = true;
+document.getElementById("videoContainer").appendChild(video);
+} else {
+// Hide the video container and display the carousel
+document.getElementById("imageCarousel").style.display = "block";
+document.getElementById("videoContainer").style.display = "none";
 
-        // Display images in the carousel
-        imageDataURLs.forEach((imageDataURL, index) => {
-            const carouselItem = document.createElement("div");
-            carouselItem.classList.add("carousel-item");
-            if (index === 0) {
-                carouselItem.classList.add("active");
-            }
-            const image = document.createElement("img");
-            image.src = imageDataURL;
-            image.style.width = "100%";
-            image.style.height = "100%";
-            carouselItem.appendChild(image);
-            carouselInner.appendChild(carouselItem);
-        });
+// Display images in the carousel
+imageDataURLs.forEach((imageDataURL, index) => {
+    const carouselItem = document.createElement("div");
+    carouselItem.classList.add("carousel-item");
+    if (index === 0) {
+        carouselItem.classList.add("active");
     }
-    $("#exampleModalCenter").modal("hide");
-    $("#postModal").modal("show");
+    const image = document.createElement("img");
+    image.src = imageDataURL;
+    image.style.width = "100%";
+    image.style.height = "100%";
+    carouselItem.appendChild(image);
+    carouselInner.appendChild(carouselItem);
+});
+}
+$("#exampleModalCenter").modal("hide");
+$("#postModal").modal("show");
 }
 
 
 document.getElementById("shareButton").addEventListener("click", function () {
-    populateCroppedImageData();
-    document.getElementById("croppedImageDataUrls").value = JSON.stringify(croppedImageDataURLs);
-    document.getElementById("videoDataUrls").value = JSON.stringify(videoURLs);
-    const hashtagInput = document.getElementById("hashtag");
-    const hashtags = hashtagInput.value.trim();
-    var firstWord = hashtags.split(' ')[0]
-    if (hashtags.length === 0 || firstWord.startsWith('#')) {
-        document.getElementById("hashtag").value = hashtags;
-        document.getElementById("postForm").submit();
-    } else{
-        var errorMessage = document.getElementById('hashtagErrorMessage');
-        errorMessage.innerText = 'Hashtag must start with #';
-        errorMessage.style.display = 'block';
-        event.preventDefault();
-    }
+populateCroppedImageData();
+document.getElementById("croppedImageDataUrls").value = JSON.stringify(croppedImageDataURLs);
+document.getElementById("videoDataUrls").value = JSON.stringify(videoURLs);
+
 });
 
 document.getElementById('backPostModal').addEventListener('click', function () {
-    $('#postModal').modal('hide');
-    $('#exampleModalCenter').modal('show');
+$('#postModal').modal('hide');
+$('#exampleModalCenter').modal('show');
 });
 
 document.getElementById('back').addEventListener('click', function () {
@@ -180,6 +169,7 @@ modalBody.addEventListener('drop', function (e) {
         displayImageFromDrop(files[0]);
     }
 });
+
 function displayImageFromDrop(file) {
     let reader = new FileReader();
     reader.onload = function () {
@@ -206,3 +196,34 @@ function displayImageFromDrop(file) {
     };
     reader.readAsDataURL(file);
 }
+
+function extractHashtags(inputString) {
+    // Regular expression to match hashtags
+    const hashtagRegex = /#[^\s#]+/g;
+    // Extract hashtags from input string
+    const hashtags = inputString.match(hashtagRegex);
+    // Remove leading and trailing spaces from each hashtag
+    return hashtags.map((hashtag) => hashtag.trim());
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    function clearModalData() {
+        $("#uploadedImageContainer").html("");
+        $("#modalBodyText").css("display", "block");
+        $("#icon").css("display", "block");
+        $("#upload-btn").css("display", "block");
+        $("#cropButtonUpload").css("display", "none");
+        $("#back").css("display", "none");
+        $("#hashtag").val('');
+        $("#hashtagErrorMessage").css("display", "none");
+        $("#postForm").css("display", "none");
+        $("#postModal").modal("hide");
+        $("#videoContainer").css("display", "none");
+        $("#imageCarousel").css("display", "none");
+        $("#videoDataUrls").val('');
+        $("#croppedImageDataUrls").val('');
+    }
+    $("#closeModal").on('click', function () {
+        clearModalData();
+    })
+});

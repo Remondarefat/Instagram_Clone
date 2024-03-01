@@ -2,7 +2,7 @@
     <div class="flex justify-center items-center  bg-gray-50">
         <div class="max-w-md w-full">
             <div class="text-center mb-6">
-                <img src="images/info.svg" alt="logo">
+                <img src="{{asset('info.svg')}}" alt="logo">
                 <p class="mt-2 text-sm text-gray-600">Sign up to see photos and videos from your friends.</p>
             </div>
             <form class="bg-white shadow-md rounded px-6 pt-6 pb-8 mb-4" method="POST" action="{{ route('register') }}">
