@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\HashtagController;
 use App\Models\CommentLike;
 
 /*
@@ -23,7 +24,7 @@ use App\Models\CommentLike;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Route::get('/dashboard', function () {
@@ -68,6 +69,9 @@ Route::get('/like-post', [PostController::class, 'like'])->name('like.post');
 Route::get('/comment-post', [PostController::class, 'comment'])->name('comment.post');
 Route::get('/comment-like', [CommentLikeController::class, 'commentlike'])->name('comment.like');
 
-Route::get('/posts/byHashtag/{hashtag}', 'PostController@getPostsByHashtag')->name('posts.byHashtag');
+// Route::get('/posts/byHashtag/{hashtag}', 'PostController@getPostsByHashtag')->name('posts.byHashtag');
 Route::get('/search', [SearchController::class, 'search'])->name('search');
+
+Route::get('/hashtag/{hashtagName}', [PostController::class, 'hash']);
+
 require __DIR__ . '/auth.php';

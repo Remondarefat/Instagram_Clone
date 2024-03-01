@@ -40,9 +40,6 @@
                 <div class="mb-4 relative">
                     <x-input-label for="password" :value="__('Password')" />
                     <x-text-input id="password" class="block mt-1 w-full pr-10" type="password" name="password" required autocomplete="new-password" pla/>
-                    <span id="togglePassword" class="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer text-blue-500 hover:text-blue-600">
-                        Show
-                    </span>
                     <x-input-error :messages="$errors->get('password')" class="mt-2" />
                 </div>
 
