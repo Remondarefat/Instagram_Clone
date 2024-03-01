@@ -8,7 +8,7 @@
             @if ($post->user->avatar==null)
                 <img class="rounded-circle im-com me-md-2" src="{{'default.jpg'}}" alt="">
             @else
-                <img class="rounded-circle im-com me-md-2" src="{{storage/$post->user->avatar}}" alt="">
+                <img class="rounded-circle im-com me-md-2" src="{{Storage::url($post->user->avatar)}}" alt="">
             @endif
             <h4>{{$post->user->username}}</h4>
         </div>
