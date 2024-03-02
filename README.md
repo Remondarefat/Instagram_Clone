@@ -14,7 +14,7 @@ Our team has developed an Instagram clone leveraging the Laravel framework and a
 * Mina Naguib
 * Remonda Refaat
 
-Here are screenshots that show the Candella E-commerce application in use.
+Here are screenshots that show the Instagram_Clone in use.
 
 **Sign Up**
 ![Sign Up](/images/register.png?raw=true "Sign Up")
