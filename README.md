@@ -28,7 +28,7 @@ Here are screenshots that show the Candella E-commerce application in use.
 ---
 
 **Home Page**
-![Home Page](/images/home.png?raw=true "Home Page")
+![Home Page](/images/homee.png?raw=true "Home Page")
 
 ---
 
