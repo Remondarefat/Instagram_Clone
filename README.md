@@ -14,11 +14,56 @@ Our team has developed an Instagram clone leveraging the Laravel framework and a
 * Mina Naguib
 * Remonda Refaat
 
+Here are screenshots that show the Candella E-commerce application in use.
+
+**Sign Up**
+![Sign Up](/assets/register.png?raw=true "Sign Up")
+
+---
+
+
+**Login**
+![Login](/assets/loggg.png?raw=true "Login")
+
+---
+
+**Home Page**
+![Home Page](/assets/home.png?raw=true "Home Page")
+
+---
+
+**Post Detail Page**
+![Item Detail](/assets/postdesc.png?raw=true "Post Detail Page")
+
+---
+
+**Profile Page**
+![Shopping Cart](/assets/profile.png?raw=true "Profile Page")
+
+---
+
+**Create Post**
+![Delivery Details](/assets/publish.png?raw=true "Create Post")
+
+---
+
+**Search**
+![Check Out](/assets/search.png?raw=true "Search")
+
+---
+
+**Following**
+![Contact Us](/assets/following.png?raw=true "Following")
+
+
 ## Tech Stack
 * Laravel
 * PHP
 * JavaScript
+* jQuery
 * AJAX
 * MySQL
+* Blade
+* Css
 * Bootstrap
 * TailWind
