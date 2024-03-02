@@ -30,7 +30,10 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
+        $followings = Auth::user()->followings;
+        $posts = Post::whereIn('user_id', $followings->pluck('id'))
+        ->latest()
+        ->get();
         $comments=Comment::all();
         $commentlike=CommentLike::all();
         $userid = Auth::user()->id;
@@ -52,72 +55,72 @@ class PostController extends Controller
     public function store(Request $request)
     {
 
-            $request->validate([
-                'caption' => 'string',
-                'hashtag_name' => 'string',
-                'croppedImageDataUrls.*' => 'required',
-                'videoDataUrls.*' => 'required',
-            ]);
-            $post = new Post();
-            $post->caption = $request->caption;
-            $post->user_id = Auth::user()->id;
-            $post->save();
-
+        $request->validate([
+            'caption' => 'string',
+            'hashtag_name' => 'string|nullable',
+            'croppedImageDataUrls.*' => 'required',
+            'videoDataUrls.*' => 'required',
+        ]);
+        $post = new Post();
+        $post->caption = $request->caption;
+        $post->user_id = Auth::user()->id;
+        $post->save();
 
         // }
         // $post->save();
-// Decode the JSON string containing croppedImageDataUrls
-$croppedImageDataUrls = json_decode($request->croppedImageDataUrls);
+        // Decode the JSON string containing croppedImageDataUrls
+        $croppedImageDataUrls = json_decode($request->croppedImageDataUrls);
 
-foreach ($croppedImageDataUrls as $imageDataUrl) {
-// Remove the data URI scheme from the image URL
-$imageDataUrl = preg_replace('#^data:image/\w+;base64,#i', '', $imageDataUrl);
-// Decode the base64-encoded image data into binary data
-$imageData = base64_decode($imageDataUrl);
-// Generate a unique filename for the image
+        foreach ($croppedImageDataUrls as $imageDataUrl) {
+            // Remove the data URI scheme from the image URL
+            $imageDataUrl = preg_replace('#^data:image/\w+;base64,#i', '', $imageDataUrl);
+            // Decode the base64-encoded image data into binary data
+            $imageData = base64_decode($imageDataUrl);
+            // Generate a unique filename for the image
 
-$filename = uniqid() . '.png';
-// Store the image data directly in the storage directory
-$path = Storage::put('public/images/' . $filename, $imageData);
+            $filename = uniqid() . '.png';
+            // Store the image data directly in the storage directory
+            $path = Storage::put('public/images/' . $filename, $imageData);
 
-$path = str_replace('public/', 'storage/', $path);
+            $path = str_replace('public/', 'storage/', $path);
 
-// Save the image path to the database
-$media = new Media();
-$media->media_url = $filename;
-$media->post_id = $post->id;
-$media->save();
-}
+            // Save the image path to the database
+            $media = new Media();
+            $media->media_url = $filename;
+            $media->post_id = $post->id;
+            $media->save();
+        }
 
-// Decode the JSON string containing videoDataUrls
-$videoDataUrls = json_decode($request->videoDataUrls);
+        // Decode the JSON string containing videoDataUrls
+        $videoDataUrls = json_decode($request->videoDataUrls);
 
-foreach ($videoDataUrls as $videoDataUrl) {
+        foreach ($videoDataUrls as $videoDataUrl) {
 
-$videoDataUrl = preg_replace('#^data:video/\w+;base64,#i', '', $videoDataUrl);
-$videoData = base64_decode($videoDataUrl);
-$filename = uniqid() . '.mp4';
-$path = Storage::put('public/images/' . $filename, $videoData);
-$path = str_replace('public/', 'storage/', $path);
-$media = new Media();
-$media->media_url = $filename;
-$media->post_id = $post->id;
-$media->save();
-}
+            $videoDataUrl = preg_replace('#^data:video/\w+;base64,#i', '', $videoDataUrl);
+            $videoData = base64_decode($videoDataUrl);
+            $filename = uniqid() . '.mp4';
+            $path = Storage::put('public/images/' . $filename, $videoData);
+            $path = str_replace('public/', 'storage/', $path);
+            $media = new Media();
+            $media->media_url = $filename;
+            $media->post_id = $post->id;
+            $media->save();
+        }
 
-if ($request->has('hashtag_name')) {
-    $hashtags = $request['hashtag_name'];
-    $hashtagsArray = explode(' ', $hashtags);
-    foreach ($hashtagsArray as $tag) {
-        $hashtag = new Hashtag();
-        $hashtag->hashtag_name = $tag;
-        $hashtag->post_id = $post->id;
-        $hashtag->save();
+        if ($request->has('hashtag_name')) {
+            $hashtags = $request['hashtag_name'];
+            $hashtagsArray = explode(' ', $hashtags);
+            foreach ($hashtagsArray as $tag) {
+                $hashtag = new Hashtag();
+                $hashtag->hashtag_name = $tag;
+                $hashtag->post_id = $post->id;
+                $hashtag->save();
+            }
+
+        }
+        return redirect()->back()->with('success', 'Post created successfully');
     }
 
-}
-return redirect()->back()->with('success', 'Post created successfully');
-        }
 
 
 

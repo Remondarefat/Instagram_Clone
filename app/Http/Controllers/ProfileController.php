@@ -19,7 +19,6 @@ class ProfileController extends Controller
     /**
      * Display the user's profile form.
      */
-
     public function edit(Request $request): View
     {
 
@@ -48,17 +47,17 @@ class ProfileController extends Controller
             $data['avatar'] = $avatarPath;
     }
 
-        $user = Auth::user();
+    $user = Auth::user();
 
-        $userUpdate = User::findOrFail($user->id);
-        $userUpdate->update($data);
-        $posts = Post::all();
-        $comments=Comment::all();
-        $commentlike=CommentLike::all();
-        $userid = Auth::user()->id;
-        $like = Like::where('user_id', Auth::user()->id)->get();
+    $userUpdate = User::findOrFail($user->id);
+    $userUpdate->update($data);
+    $posts = Post::all();
+    $comments=Comment::all();
+    $commentlike=CommentLike::all();
+    $userid = Auth::user()->id;
+    $like = Like::where('user_id', Auth::user()->id)->get();
 
-        return view('posts.home', ['commentlike'=>$commentlike,'posts' => $posts, 'like' => $like, 'userid' => $userid,'comments'=>$comments]);
+    return view('posts.home', ['commentlike'=>$commentlike,'posts' => $posts, 'like' => $like, 'userid' => $userid,'comments'=>$comments]);
 
     }
 

@@ -116,4 +116,3 @@ Route::post('/toggle-comment-like/{commentId}', [CommentLikeController::class, '
 Route::post('posts/{id}/save', [PostSavedController::class, 'store'])->name('saved.posts.store');
 Route::delete('/saved-posts/{id}', [PostSavedController::class, 'destroy'])->name('saved-posts.destroy');
 Route::get('/saved-posts', [PostSavedController::class, 'index'])->name('saved.posts.index');
-

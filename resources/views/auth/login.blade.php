@@ -1,7 +1,7 @@
 <x-guest-layout>
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
-    
+
 
     <form method="POST" action="{{ route('login') }}" class="p-5 border-solid border-2 ">
         @csrf
@@ -36,16 +36,16 @@
         </div>
 
         <div class="mt-4">
-            
+
             <button class="bg-[#0ea5e9] hover:bg-blue-600 text-white font-bold py-2 px-20 block w-full rounded-md  fs-md  ">
                 {{ __('Sign in') }}
             </button>
                 <div class="or-container p-3">
                     <span class="or-word text-light fw-bold">OR</span>
                 </div>
-                
-                
-                <div class="text-center "> 
+
+
+                <div class="text-center ">
                 <a class="text-blue-500 pe-2"  href="{{route('auth.socialite.redirect', ['provider' => 'facebook'])}}">Log in With Facebook Account</a>
                 <i class="fa-brands fa-facebook text-2xl"></i>
                 </div>
@@ -60,6 +60,6 @@
         </div>
     </form>
     <div class=" border-solid border-2 mt-3 p-5 text-center ">
-        Don't have an account? <a href="{{route('')}}" class="text-blue-500">registration</a>
+        Don't have an account? <a href="{{route('register')}}" class="text-blue-500">registration</a>
     </div>
 </x-guest-layout>

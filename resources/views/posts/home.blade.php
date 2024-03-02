@@ -11,13 +11,13 @@
                 <img class="rounded-circle im-com me-md-2" src="{{Storage::url($post->user->avatar)}}" alt="">
             @endif
             <h4>{{$post->user->username}}</h4>
-            <input type="text">
+
         </div>
-            <div id="carouselExample" class="carousel slide text-center cur">
+            <div id="carouselExample" class="carousel slide text-center cur mt-md-2">
                 <div class="carousel-inner">
                     @foreach ($post->media as $media )
                     <div class="carousel-item active">
-                    <a href="{{route('postDesc.show',$post->id)}}"><img class="w-100 h-100 me-md-2" src="{{ asset("/images/$media->media_url") }}"  alt=""></a>
+                    <a href="{{route('postDesc.show',$post->id)}}"><img class="w-100 h-100 me-md-2" src="{{asset("storage/images/$media->media_url")}}"  alt=""></a>
                     </div>
                     @endforeach
                 </div>
@@ -106,7 +106,6 @@
                                 <h6 class="bold mt-md-2">{{$post->user->username}}</h6>
                                 <p class=" p-0 m-0  ms-md-2">{{$post->caption}}</p>
                                 @foreach ($post->hashtags as $hashtag )
-                                <input type="submit" value="{{$hashtag->hashtag_name}}">
                                 <a href="/hashtag" class=" p-0 m-0  ms-md-2 hash">{{$hashtag->hashtag_name}}</a>
                                 @endforeach
                             </div>
